@@ -13,6 +13,7 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
+import java.util.Objects;
 import java.util.UUID;
 
 /**
@@ -39,18 +40,66 @@ public class UserService {
     return this.userRepository.findAll();
   }
 
-  public User createUser(User newUser) {
-    newUser.setToken(UUID.randomUUID().toString());
-    newUser.setStatus(UserStatus.OFFLINE);
-    checkIfUserExists(newUser);
-    // saves the given entity but data is only persisted in the database once
-    // flush() is called
-    newUser = userRepository.save(newUser);
-    userRepository.flush();
+    public User createUser(User newUser) {
+        //so that it won't be possible to register with empty fields through Postman
+        //the Frontend checks already if fields are empty or not
+        if (newUser.getUsername() == null || newUser.getUsername().length() == 0 ||
+                newUser.getPassword() == null || newUser.getPassword().length() == 0) {
+            String baseErrorMessage = "Given Username or Password is empty.";
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST,
+                    String.format(baseErrorMessage));
+        }
+        if (newUser.getUsername().length() > 20) {
+            String baseErrorMessage = "Username is too long. (max. 20 characters)";
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST,
+                    String.format(baseErrorMessage));
+        }
+        checkIfUserExists(newUser);
+        newUser.setToken(UUID.randomUUID().toString());
+        newUser.setStatus(UserStatus.ONLINE);
+        // saves the given entity but data is only persisted in the database once
+        // flush() is called
+        newUser = userRepository.save(newUser);
+        userRepository.flush();
 
-    log.debug("Created Information for User: {}", newUser);
-    return newUser;
-  }
+        log.debug("Created Information for User: {}", newUser);
+        return newUser;
+    }
+
+    public User loginUser(User user) {
+        User userByUsername = userRepository.findByUsername(user.getUsername());
+        if (userByUsername != null && Objects.equals(userByUsername.getPassword(), user.getPassword())) {
+            userByUsername.setStatus(UserStatus.ONLINE);
+            userRepository.save(userByUsername);
+            userRepository.flush();
+            user.setStatus(UserStatus.ONLINE);
+            user.setToken(userByUsername.getToken());
+            user.setPassword(""); //for security reasons so that the returned user doesn't store the password
+            user.setId(userByUsername.getId());
+            return user;
+        }
+        String baseErrorMessage = "User not known or wrong password.";
+        throw new ResponseStatusException(HttpStatus.BAD_REQUEST,
+                String.format(baseErrorMessage));
+    }
+
+    public void logoutUser(String token) {
+        User userByToken = userRepository.findByToken(token);
+        if (userByToken != null) {
+            userByToken.setStatus(UserStatus.OFFLINE);
+            userRepository.save(userByToken);
+            userRepository.flush();
+        }
+    }
+
+    public String getLoggedInUsername(String token) {
+        User userByToken = userRepository.findByToken(token);
+        if (userByToken != null) {
+            return userByToken.getUsername();
+        }
+        //should never return null because the token was just checked prior
+        return null;
+    }
 
   /**
    * This is a helper method that will check the uniqueness criteria of the
@@ -64,16 +113,11 @@ public class UserService {
    */
   private void checkIfUserExists(User userToBeCreated) {
     User userByUsername = userRepository.findByUsername(userToBeCreated.getUsername());
-    User userByName = userRepository.findByName(userToBeCreated.getName());
 
-    String baseErrorMessage = "The %s provided %s not unique. Therefore, the user could not be created!";
-    if (userByUsername != null && userByName != null) {
+    String baseErrorMessage = "The username provided is not unique and already taken. Therefore, the user could not be created!";
+    if (userByUsername != null) {
       throw new ResponseStatusException(HttpStatus.BAD_REQUEST,
-          String.format(baseErrorMessage, "username and the name", "are"));
-    } else if (userByUsername != null) {
-      throw new ResponseStatusException(HttpStatus.BAD_REQUEST, String.format(baseErrorMessage, "username", "is"));
-    } else if (userByName != null) {
-      throw new ResponseStatusException(HttpStatus.BAD_REQUEST, String.format(baseErrorMessage, "name", "is"));
+          String.format(baseErrorMessage));
     }
   }
 }
