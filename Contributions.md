@@ -15,13 +15,13 @@ https://github.com/sopra-fs23-group-40/Client/issues/7
 
 #### Thomas Stoller 
 
-Issue 1
+Issue 2
 
 Issue 2
 
 #### Paul Grünenwald
 
-Issue 1
+[Create all 21 subclasses of the Block Superclass #40](https://github.com/sopra-fs23-group-40/Server/issues/40)
 
 Issue 2
 
