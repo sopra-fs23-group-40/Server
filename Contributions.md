@@ -15,9 +15,9 @@ https://github.com/sopra-fs23-group-40/Client/issues/7
 
 #### Thomas Stoller 
 
-Issue 2
+https://github.com/sopra-fs23-group-40/Server/issues/39
 
-Issue 2
+https://github.com/sopra-fs23-group-40/Client/issues/8
 
 #### Paul Grünenwald
 
