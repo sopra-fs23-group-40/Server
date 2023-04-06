@@ -1,9 +1,5 @@
 ## Week 1
 
-
-Justin          Isue 1          Isue 2
-Paul            Issue 1         Isue 2
-
 <table>
     <tbody>
         <tr>
