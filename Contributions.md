@@ -1,12 +1,12 @@
 ## Week 1
     
-##### Karoline Siarsky 
+Karoline Siarsky 
 
 Issue 1
     
 Issue 2
     
-  
+ ---
   
   
 ##### Thomas Stoller 
