@@ -1,8 +1,114 @@
 package ch.uzh.ifi.hase.soprafs23.game.blocks;
 
-public interface Block {
+/* public interface Block {
     void rotate();
     int getLength();
     int getHeight();
     Cell[][] getBlock();
+} */
+// I would prefer to use an abstract class instead of an interface, i think interfaces are a good choice for methods that can be implemented by unrelated classes, but i think here abstract classes are a better since we want to use common methods only in subclasses.
+
+public abstract class Block {
+    protected Player player;
+    protected boolean played;
+    protected CellStatus cellStatus;
+    protected Cell[][] shape;
+    protected int numberOfSquares; //maybe useful for end of the game
+    protected final int length;
+    protected final int height;
+
+    public Block(Player player, CellStatus cellStatus) {
+        this.player = player;
+        this.played = false;
+        this.cellStatus = cellStatus;
+    }
+
+    public boolean isPlayed() {
+        return played;
+    }
+
+    public void setPlayed(boolean played) {
+        this.played = played;
+    }
+
+    public Cell[][] getShape() {
+        return shape;
+    }
+
+    public Player getPlayer() {
+        return player;
+    }
+
+    public int getNumberOfSquares() {
+        return numberOfSquares;
+    }
+
+    public int getLength() {
+        return length;
+    }
+
+    public int getHeight() {
+        return height;
+    }
+
+    public abstract String getBlockName();
+
+    public void flipHorizontal() {
+        Cell[][] newShape = new Cell[height][length];
+    
+        for (int i = 0; i < height; i++) {
+            for (int j = 0; j < length; j++) {
+                newShape[i][j] = shape[i][length - j - 1];
+            }
+        }
+
+        shape = newShape;
+    }
+    
+    public void flipVertical() {
+        Cell[][] newShape = new Cell[height][length];
+    
+        for (int i = 0; i < height; i++) {
+            for (int j = 0; j < length; j++) {
+                newShape[i][j] = shape[height - i - 1][j];
+            }
+        }
+    
+        shape = newShape;
+    }
+    
+    public void rotateClockwise() {
+        int numRows = shape.length;
+        int numCols = shape[0].length;
+        Cell[][] newShape = new Cell[numCols][numRows];
+    
+        for (int i = 0; i < numRows; i++) {
+            for (int j = 0; j < numCols; j++) {
+                newShape[j][numRows - i - 1] = shape[i][j];
+            }
+        }
+    
+        shape = newShape;
+        int temp = length;
+        length = height;
+        height = temp;
+    }
+    
+    public void rotateCounterclockwise() {
+        int numRows = shape.length;
+        int numCols = shape[0].length;
+        Cell[][] newShape = new Cell[numCols][numRows];
+    
+        for (int i = 0; i < numRows; i++) {
+            for (int j = 0; j < numCols; j++) {
+                newShape[numCols - j - 1][i] = shape[i][j];
+            }
+        }
+    
+        shape = newShape;
+        int temp = length;
+        length = height;
+        height = temp;
+    }
 }
+
