@@ -37,5 +37,7 @@ https://github.com/sopra-fs23-group-40/Server/issues/37
 
 https://github.com/sopra-fs23-group-40/Server/issues/36
 
+https://github.com/sopra-fs23-group-40/Server/issues/41
+
 ## Week 2
 
