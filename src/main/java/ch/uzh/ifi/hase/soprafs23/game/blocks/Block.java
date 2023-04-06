@@ -1,4 +1,4 @@
-package ch.uzh.ifi.hase.soprafs23.service.blocks;
+package ch.uzh.ifi.hase.soprafs23.game.blocks;
 
 public interface Block {
     void rotate();

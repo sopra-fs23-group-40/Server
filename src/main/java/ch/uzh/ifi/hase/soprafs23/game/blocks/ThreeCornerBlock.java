@@ -1,4 +1,4 @@
-package ch.uzh.ifi.hase.soprafs23.service.blocks;
+package ch.uzh.ifi.hase.soprafs23.game.blocks;
 
 public class ThreeCornerBlock implements Block{
     private int numberOfSquares = 3; //maybe useful for end of the game

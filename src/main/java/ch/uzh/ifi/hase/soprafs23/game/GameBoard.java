@@ -1,8 +1,8 @@
-package ch.uzh.ifi.hase.soprafs23.service.game;
+package ch.uzh.ifi.hase.soprafs23.game;
 
-import ch.uzh.ifi.hase.soprafs23.service.blocks.Block;
-import ch.uzh.ifi.hase.soprafs23.service.blocks.Cell;
-import ch.uzh.ifi.hase.soprafs23.service.blocks.CellStatus;
+import ch.uzh.ifi.hase.soprafs23.game.blocks.Block;
+import ch.uzh.ifi.hase.soprafs23.game.blocks.Cell;
+import ch.uzh.ifi.hase.soprafs23.game.blocks.CellStatus;
 
 public class GameBoard {
     private Cell[][] board;
