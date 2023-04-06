@@ -1,5 +1,16 @@
 ## Week 1
 
+<table border="1">
+      <tr>
+        <td style='border:none;'>one</td>
+        <td style='border:none;'>two</td>
+      </tr>
+      <tr>
+        <td style='border:none;'>one</td>
+        <td style='border:none;'>two</td>
+    </tr>
+    </table>
+    
 <table>
     <tbody>
         <tr>
