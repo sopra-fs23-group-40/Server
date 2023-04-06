@@ -12,7 +12,7 @@ Issue 1
 
 Issue 2
 
-### Paul Grünenwald
+#### Paul Grünenwald
 
 Issue 1
 
