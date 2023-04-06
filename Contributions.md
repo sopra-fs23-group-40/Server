@@ -27,9 +27,13 @@ Issue 2
 
 #### Thomas Joos
 
-Issue 1
+Added menu button on the overview view and closed 3 issues:
 
-Issue 2
+https://github.com/sopra-fs23-group-40/Client/issues/14
+
+https://github.com/sopra-fs23-group-40/Client/issues/15
+
+https://github.com/sopra-fs23-group-40/Client/issues/16
 
 #### Justin Verhoek
 
