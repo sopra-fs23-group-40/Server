@@ -9,7 +9,7 @@
             <td>Issue 2</td>
         </tr>
         <tr>
-            <td>Justin Verhoek </td>
+            <td style='border:none;'>Justin Verhoek </td>
             <td>Issue 1</td>
             <td>Issue 2</td>
         </tr>
