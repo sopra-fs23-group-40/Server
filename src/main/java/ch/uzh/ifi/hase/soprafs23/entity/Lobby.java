@@ -1,5 +1,7 @@
 package ch.uzh.ifi.hase.soprafs23.entity;
+
 import ch.uzh.ifi.hase.soprafs23.constant.LobbyStatus;
+import ch.uzh.ifi.hase.soprafs23.constant.LobbyType;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -35,6 +37,9 @@ public class Lobby implements Serializable {
 
     @Column(nullable = false)
     private LobbyStatus status;
+
+    @Column(nullable = false)
+    private LobbyType is_private;
 
     public Long getLobby_id() {
         return lobby_id;
@@ -74,5 +79,13 @@ public class Lobby implements Serializable {
 
     public void setStatus(LobbyStatus status) {
         this.status = status;
+    }
+
+    public LobbyType getIs_private() {
+        return is_private;
+    }
+
+    public void setIs_private(LobbyType is_private) {
+        this.is_private = is_private;
     }
 }
