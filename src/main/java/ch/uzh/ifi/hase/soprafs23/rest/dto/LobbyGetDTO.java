@@ -4,7 +4,7 @@ import ch.uzh.ifi.hase.soprafs23.constant.LobbyType;
 
 public class LobbyGetDTO {
     private String name;
-    private LobbyType is_private;
+    private LobbyType lobbyType;
 
     public String getName() {
         return name;
@@ -14,11 +14,11 @@ public class LobbyGetDTO {
         this.name = name;
     }
 
-    public LobbyType getIs_private() {
-        return is_private;
+    public LobbyType getLobbyType() {
+        return lobbyType;
     }
 
-    public void setIs_private(LobbyType is_private) {
-        this.is_private = is_private;
+    public void setLobbyType(LobbyType lobbyType) {
+        this.lobbyType = lobbyType;
     }
 }

@@ -5,7 +5,6 @@ public class LobbyPostDTO {
 
     private String password;
 
-
     public String getToken() {
         return token;
     }

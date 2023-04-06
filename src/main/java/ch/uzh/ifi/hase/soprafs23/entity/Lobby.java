@@ -24,7 +24,7 @@ public class Lobby implements Serializable {
 
     @Id
     @GeneratedValue
-    private Long lobby_id;
+    private Long lobbyId;
 
     @Column(nullable = false)
     private String host;
@@ -39,14 +39,14 @@ public class Lobby implements Serializable {
     private LobbyStatus status;
 
     @Column(nullable = false)
-    private LobbyType is_private;
+    private LobbyType lobbyType;
 
-    public Long getLobby_id() {
-        return lobby_id;
+    public Long getLobbyId() {
+        return lobbyId;
     }
 
-    public void setLobby_id(Long lobby_id) {
-        this.lobby_id = lobby_id;
+    public void setLobbyId(Long lobby_id) {
+        this.lobbyId = lobby_id;
     }
 
     public String getHost() {
@@ -69,8 +69,8 @@ public class Lobby implements Serializable {
         return lobbyToken;
     }
 
-    public void setLobbyToken(String lobbyToken) {
-        this.lobbyToken = lobbyToken;
+    public void setLobbyToken(String lobby_token) {
+        this.lobbyToken = lobby_token;
     }
 
     public LobbyStatus getStatus() {
@@ -81,11 +81,11 @@ public class Lobby implements Serializable {
         this.status = status;
     }
 
-    public LobbyType getIs_private() {
-        return is_private;
+    public LobbyType getLobbyType() {
+        return lobbyType;
     }
 
-    public void setIs_private(LobbyType is_private) {
-        this.is_private = is_private;
+    public void setLobbyType(LobbyType is_private) {
+        this.lobbyType = is_private;
     }
 }
