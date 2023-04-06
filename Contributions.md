@@ -1,8 +1,9 @@
 ## Week 1
 
-#### Karoline Siarsky  Issue 1  Issue 2
+Karoline Siarsky  Issue 1  Issue 2
 
----
+<pre>
+Karoline        Issue 1     Issue 2<pre>
 
 #### Thomas Stoller 
 
