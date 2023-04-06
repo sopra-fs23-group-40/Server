@@ -1,9 +1,4 @@
 ## Week 1
-Paul Grünenwald 
-Justin Verhoek 
-Karoline Siarsky 
-Thomas Stoller
-Thomas Joos 
 
 <table>
     <tbody>
