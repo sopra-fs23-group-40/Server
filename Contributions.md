@@ -1,7 +1,6 @@
 ## Week 1
 
-→foo→baz→→bim
-
+    foo     pass    by
  - Karoline Siarsky
    - Issue 1
    - Issue 2
