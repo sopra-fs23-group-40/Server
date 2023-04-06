@@ -1,8 +1,10 @@
 package ch.uzh.ifi.hase.soprafs23.rest.dto;
 
+import ch.uzh.ifi.hase.soprafs23.constant.LobbyType;
+
 public class LobbyGetDTO {
     private String name;
-    private Boolean is_private;
+    private LobbyType is_private;
 
     public String getName() {
         return name;
@@ -12,11 +14,11 @@ public class LobbyGetDTO {
         this.name = name;
     }
 
-    public Boolean getIs_private() {
+    public LobbyType getIs_private() {
         return is_private;
     }
 
-    public void setIs_private(Boolean is_private) {
+    public void setIs_private(LobbyType is_private) {
         this.is_private = is_private;
     }
 }
