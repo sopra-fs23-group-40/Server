@@ -1,7 +1,7 @@
 
 ## Week 1
 
-Karoline Siarsky
+#### Karoline Siarsky
 
 Issue 1
 
