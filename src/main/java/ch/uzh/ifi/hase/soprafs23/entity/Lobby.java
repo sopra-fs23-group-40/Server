@@ -33,7 +33,7 @@ public class Lobby implements Serializable {
     private String name;
 
     @Column(nullable = false, unique = true)
-    private String lobby_token;
+    private String lobbyToken;
 
     @Column(nullable = false)
     private LobbyStatus status;
@@ -65,12 +65,12 @@ public class Lobby implements Serializable {
         this.name = name;
     }
 
-    public String getLobby_token() {
-        return lobby_token;
+    public String getLobbyToken() {
+        return lobbyToken;
     }
 
-    public void setLobby_token(String lobby_token) {
-        this.lobby_token = lobby_token;
+    public void setLobbyToken(String lobbyToken) {
+        this.lobbyToken = lobbyToken;
     }
 
     public LobbyStatus getStatus() {

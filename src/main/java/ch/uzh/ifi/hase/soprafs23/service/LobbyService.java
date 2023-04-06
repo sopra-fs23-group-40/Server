@@ -16,7 +16,7 @@ import java.util.List;
 @Transactional
 public class LobbyService {
 
-    private final Logger log = LoggerFactory.getLogger(ch.uzh.ifi.hase.soprafs23.service.LobbyService.class);
+    private final Logger log = LoggerFactory.getLogger(LobbyService.class);
 
     private final LobbyRepository lobbyRepository;
 

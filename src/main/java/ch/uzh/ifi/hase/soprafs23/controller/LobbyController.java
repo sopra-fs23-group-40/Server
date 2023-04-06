@@ -28,14 +28,14 @@ public class LobbyController {
      * @param lobbyPostDTO: includes the token and a username of the host
      * @return Password for the lobby
      */
-    @PostMapping
+    @PostMapping("/lobby")
     @ResponseStatus(HttpStatus.OK)
     @ResponseBody
     public String createLobby(@RequestBody LobbyPostDTO lobbyPostDTO) {
         return "";
     }
 
-    @GetMapping
+    @GetMapping("/lobbies")
     @ResponseStatus(HttpStatus.OK)
     @ResponseBody
     public List<LobbyGetDTO> getLobbies(@RequestHeader(value = "token") String token) {
@@ -51,8 +51,8 @@ public class LobbyController {
         return lobbyGetDTOs;
     }
 
-    @PutMapping
-    @ResponseStatus
+    @PostMapping("/joinLobby/{lobbyName}")
+    @ResponseStatus(HttpStatus.ACCEPTED)
     @ResponseBody
     public void joinLobby() {
 
