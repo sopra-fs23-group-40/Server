@@ -55,6 +55,7 @@ public class UserController {
         }
     }
 
+    // TODO: Delete/Change this method to getAllLobbies
     @GetMapping("/users")
     @ResponseStatus(HttpStatus.OK)
     @ResponseBody
