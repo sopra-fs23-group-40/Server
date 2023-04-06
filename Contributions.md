@@ -1,6 +1,6 @@
 ## Week 1
 
-    foo     pass    by
+foo     pass    by
  - Karoline Siarsky
    - Issue 1
    - Issue 2
