@@ -27,9 +27,9 @@ Issue 2
 
 #### Justin Verhoek
 
-Issue 1
+https://github.com/sopra-fs23-group-40/Server/issues/37
 
-Issue 2
+https://github.com/sopra-fs23-group-40/Server/issues/36
 
 ## Week 2
 
