@@ -5,7 +5,17 @@
 Issue 1
     
 Issue 2
-    
+
+
+<dl>
+  <dt>Karoline Siarsky </dt>
+  <dd>Issue 1</dd>
+  <dd>Issue 2</dd>
+
+  <dt>Thomas Stoller </dt>
+   <dd>Issue 1</dd>
+  <dd>Issue 2</dd>
+</dl>
 
   
 #### Thomas Stoller 
@@ -25,12 +35,4 @@ Issue 2
   - Issue 2
 
 ## Week 2
-
-*   This is a list item with two paragraphs.
-
-    This is the second paragraph in the list item. You're
-only required to indent the first line. Lorem ipsum dolor
-sit amet, consectetuer adipiscing elit.
-
-*   Another item in the same list.
 
