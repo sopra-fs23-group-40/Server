@@ -1,4 +1,5 @@
 package ch.uzh.ifi.hase.soprafs23.game.blocks;
+import ch.uzh.ifi.hase.soprafs23.game.Player;
 
 /* public interface Block {
     void rotate();
@@ -50,6 +51,8 @@ public abstract class Block {
     public int getHeight() {
         return height;
     }
+
+    public abstract Cell[][] getBlock();
 
     public abstract String getBlockName();
 

@@ -1,5 +1,7 @@
 package ch.uzh.ifi.hase.soprafs23.game.blocks;
-
+import ch.uzh.ifi.hase.soprafs23.game.Player;
+import ch.uzh.ifi.hase.soprafs23.game.blocks.Cell;
+import ch.uzh.ifi.hase.soprafs23.game.blocks.CellStatus;
 
 
 /* Class for a block akin to:
@@ -33,5 +35,5 @@ public class Block13 extends Block {
     public Cell[][] getBlock() {
         return shape;
     }
-    
+
 }
