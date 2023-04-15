@@ -49,9 +49,10 @@ https://github.com/sopra-fs23-group-40/Server/issues/41
 
 #### Paul Grünenwald
 
-#44
+[#44](https://github.com/sopra-fs23-group-40/Server/issues/44)
 
-#32
+[#42](https://github.com/sopra-fs23-group-40/Server/issues/42)
+
 
 #### Thomas Joos
 
