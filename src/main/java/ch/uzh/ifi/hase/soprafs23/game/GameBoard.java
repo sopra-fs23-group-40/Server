@@ -26,7 +26,7 @@ public class GameBoard {
     }
 
     public void placeBlock(int row, int col, Block block){
-        Cell[][] piece = block.getBlock();
+        Cell[][] piece = block.getShape();
         for (int i = 0; i < piece.length; i++){
             for (int j = 0; j < piece.length; j++) {
                 board[row+i][col+j].setStatus(piece[i][j].getStatus());
@@ -34,56 +34,66 @@ public class GameBoard {
         }
     }
 
-    public boolean canPlacePiece(int x, int y, Block block) {
-        Cell[][] piece = block.getBlock();
+    public boolean canPlacePiece(int y, int x, Block block) {
+        Cell[][] piece = block.getShape();
         int length = block.getLength();
         int height = block.getHeight();
         //check if piece is outside the board
-        if (x + block.getLength() > board.length || y + block.getHeight() > board.length) {
+        if (x + length > board.length || y + height > board.length) {
             return false;
         }
         //check that the piece is not overlapping with other pieces
-        for (int i = 0; i < length; i++) {
-            for (int j = 0; j < height; j++) {
+        for (int i = 0; i < height; i++) {
+            for (int j = 0; j < length; j++) {
                 if (piece[i][j].getStatus() != CellStatus.NEUTRAL &&
-                        board[x + i][y + j].getStatus() != CellStatus.NEUTRAL) {
+                        board[y + i][x + j].getStatus() != CellStatus.NEUTRAL) {
                     return false;
                 }
             }
         }
         //check that the piece is not touching a piece of same status along an edge
-        for (int i = 0; i < length; i++) {
-            for (int j = 0; j < height; j++) {
+        for (int i = 0; i < height; i++) {
+            for (int j = 0; j < length; j++) {
                 if (piece[i][j].getStatus() == CellStatus.PLAYER1) {
                     //check the left edge
-                    if (board[x-1][y].getStatus() == CellStatus.PLAYER1){return false;}
+                    if (x+j-1 >= 0 && board[y+i][x+j-1].getStatus() == CellStatus.PLAYER1){return false;}
                     //check the right edge
-                    if (board[x+1][y].getStatus() == CellStatus.PLAYER1){return false;}
+                    if (x+j+1 < size && board[y][x+j+1].getStatus() == CellStatus.PLAYER1){return false;}
                     //check the edge above
-                    if (board[x][y+1].getStatus() == CellStatus.PLAYER1){return false;}
+                    if (y+i-1 >= 0 && board[y+i-1][x].getStatus() == CellStatus.PLAYER1){return false;}
                     //check the edge below
-                    if (board[x][y-1].getStatus() == CellStatus.PLAYER1){return false;}
+                    if (y+i+1 < size && board[y+i+1][x].getStatus() == CellStatus.PLAYER1){return false;}
                 }
             }
         }
+        //check if the piece is a corner piece
+        //upper-left corner of the board
+        if (y == 0 && x == 0 && board[0][0].getStatus() == CellStatus.NEUTRAL){ return true;}
+        //upper-right corner of the board
+        else if (y == 0 && x+length == size && board[0][size-1].getStatus()== CellStatus.NEUTRAL) {return true;}
+        //lower-left corner of the board
+        else if (y+height == size && x == 0 && board[size-1][0].getStatus()== CellStatus.NEUTRAL) {return true;}
+        //lower-right corner of the board
+        else if (y+height == size && x+length == size && board[size-1][size-1].getStatus()== CellStatus.NEUTRAL) {return true;}
+
         //check that the piece touches a piece of the same status in a corner
-        for (int i = 0; i < length; i++) {
-            for (int j = 0; j < height; j++) {
+        for (int i = 0; i < height; i++) {
+            for (int j = 0; j < length; j++) {
                 if (piece[i][j].getStatus() == CellStatus.PLAYER1) {
                     // Check upper-left corner
-                    if (i > 0 && j > 0 && board[x + i - 1][y + j - 1].getStatus() == CellStatus.PLAYER1) {
+                    if (y-1 >= 0 && x-1 >= 0 && board[y+i-1][x+j-1].getStatus() == CellStatus.PLAYER1) {
                         return true;
                     }
                     // Check upper-right corner
-                    if (i < length - 1 && j > 0 && board[x + i + 1][y + j - 1].getStatus() == CellStatus.PLAYER1) {
+                    if (y-1 >= 0 && x+j+1 < size && board[y+i-1][x+j+1].getStatus() == CellStatus.PLAYER1) {
                         return true;
                     }
                     // Check lower-left corner
-                    if (i > 0 && j < height - 1 && board[x + i - 1][y + j + 1].getStatus() == CellStatus.PLAYER1) {
+                    if (y+i+1 < size && x-1 >= 0 && board[y+i+1][x+j-1].getStatus() == CellStatus.PLAYER1) {
                         return true;
                     }
                     // Check lower-right corner
-                    if (i < length - 1 && j < height - 1 && board[x + i + 1][y + j + 1].getStatus() == CellStatus.PLAYER1) {
+                    if (y+i+1 < size && x+j+1 < size && board[y+i+1][x+j+1].getStatus() == CellStatus.PLAYER1) {
                         return true;
                     }
                 }
@@ -91,5 +101,4 @@ public class GameBoard {
         }
         return false;
     }
-
 }
