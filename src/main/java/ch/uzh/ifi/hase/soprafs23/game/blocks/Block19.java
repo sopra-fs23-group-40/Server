@@ -26,4 +26,9 @@ public class Block19 extends Block {
     public String getBlockName() {
         return "Block19";
     }
+
+    @Override
+    public Cell[][] getBlock() {
+        return shape;
+    }
 }

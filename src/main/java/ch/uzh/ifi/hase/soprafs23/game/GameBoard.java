@@ -5,15 +5,19 @@ import ch.uzh.ifi.hase.soprafs23.game.blocks.Cell;
 import ch.uzh.ifi.hase.soprafs23.game.blocks.CellStatus;
 
 public class GameBoard {
+    private final int size = 20; // As all of the boards are 20x20
     private Cell[][] board;
-    private final int size;
+
 
     public GameBoard(int size){
-        this.size = size;
         this.board = new Cell[size][size];
     }
 
-    public void buildBoard(){
+    public GameBoard() {
+
+	}
+
+	public void buildBoard(){
         for (int row = 0; row < size; row++){
             for (int col=0; col < size; col++){
                 board[row][col] = new Cell(row, col, CellStatus.NEUTRAL);

@@ -30,4 +30,9 @@ public class Block14 extends Block {
     public String getBlockName() {
         return "Block14";
     }
+
+    @Override
+    public Cell[][] getBlock() {
+        return shape;
+    }
 }
