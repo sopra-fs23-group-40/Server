@@ -43,3 +43,16 @@ https://github.com/sopra-fs23-group-40/Server/issues/41
 
 ## Week 2
 
+#### Karoline Siarsky
+
+#### Thomas Stoller 
+
+#### Paul Grünenwald
+
+#44
+
+#32
+
+#### Thomas Joos
+
+#### Justin Verhoek
