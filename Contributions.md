@@ -56,4 +56,8 @@ https://github.com/sopra-fs23-group-40/Server/issues/41
 
 #### Thomas Joos
 
+Added logout button in the overview menu:
+
+https://github.com/sopra-fs23-group-40/Client/issues/17
+
 #### Justin Verhoek
