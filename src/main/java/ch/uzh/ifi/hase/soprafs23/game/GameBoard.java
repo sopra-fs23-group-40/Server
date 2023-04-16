@@ -5,28 +5,23 @@ import ch.uzh.ifi.hase.soprafs23.game.blocks.Cell;
 import ch.uzh.ifi.hase.soprafs23.game.blocks.CellStatus;
 
 public class GameBoard {
-    private final int size = 20; // As all of the boards are 20x20
+    private final int size = 20;
     private Cell[][] board;
 
-
-    public GameBoard(int size){
-        this.board = new Cell[size][size];
-    }
-
     public GameBoard() {
-
+        buildBoard();
 	}
 
-	public void buildBoard(){
+	private void buildBoard(){
         for (int row = 0; row < size; row++){
             for (int col=0; col < size; col++){
-                board[row][col] = new Cell(row, col, CellStatus.NEUTRAL);
+                board[row][col] = new Cell(CellStatus.NEUTRAL);
             }
         }
     }
 
     public void placeBlock(int row, int col, Block block){
-        Cell[][] piece = block.getShape();
+        Cell[][] piece = block.getBlock();
         for (int i = 0; i < piece.length; i++){
             for (int j = 0; j < piece.length; j++) {
                 board[row+i][col+j].setStatus(piece[i][j].getStatus());
@@ -35,7 +30,7 @@ public class GameBoard {
     }
 
     public boolean canPlacePiece(int y, int x, Block block) {
-        Cell[][] piece = block.getShape();
+        Cell[][] piece = block.getBlock();
         int length = block.getLength();
         int height = block.getHeight();
         //check if piece is outside the board

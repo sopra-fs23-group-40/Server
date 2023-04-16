@@ -1,22 +1,14 @@
 package ch.uzh.ifi.hase.soprafs23.game.blocks;
 import ch.uzh.ifi.hase.soprafs23.game.Player;
 
-/* public interface Block {
-    void rotate();
-    int getLength();
-    int getHeight();
-    Cell[][] getBlock();
-} */
-// I would prefer to use an abstract class instead of an interface, i think interfaces are a good choice for methods that can be implemented by unrelated classes, but i think here abstract classes are a better since we want to use common methods only in subclasses.
-
 public abstract class Block {
     protected Player player;
     protected boolean played;
     protected CellStatus cellStatus;
     protected Cell[][] shape;
     protected int numberOfSquares; //maybe useful for end of the game
-    protected final int length;
-    protected final int height;
+    protected int length;
+    protected int height;
 
     public Block(Player player, CellStatus cellStatus) {
         this.player = player;
