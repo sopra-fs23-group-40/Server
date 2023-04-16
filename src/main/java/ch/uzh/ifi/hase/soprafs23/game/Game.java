@@ -3,7 +3,6 @@ import java.time.LocalDateTime;
 import java.util.UUID;
 
 import ch.uzh.ifi.hase.soprafs23.game.blocks.CellStatus;
-import ch.uzh.ifi.hase.soprafs23.game.GameBoard;
 
 
 public class Game {
