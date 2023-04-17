@@ -21,8 +21,7 @@ public class GameBoard {
         }
     }
 
-   
-    public Cell[][] getBoard() {
+    public Cell[][] getGameBoard() {
         return board;
     }
 
