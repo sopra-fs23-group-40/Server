@@ -9,6 +9,7 @@ public class GameBoard {
     private Cell[][] board;
 
     public GameBoard() {
+        this.board = new Cell[size][size];
         buildBoard();
 	}
 
@@ -20,7 +21,12 @@ public class GameBoard {
         }
     }
 
-    public void placeBlock(int row, int col, Block block){
+   
+    public Cell[][] getBoard() {
+        return board;
+    }
+
+    public void placeBlock(Player player, int row, int col, Block block){
         Cell[][] piece = block.getBlock();
         for (int i = 0; i < piece.length; i++){
             for (int j = 0; j < piece.length; j++) {
