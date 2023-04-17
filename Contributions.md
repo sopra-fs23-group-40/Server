@@ -65,3 +65,19 @@ https://github.com/sopra-fs23-group-40/Client/issues/17
 https://github.com/sopra-fs23-group-40/Server/issues/41
 
 https://github.com/sopra-fs23-group-40/Server/issues/45
+
+## Week 3
+
+#### Karoline Siarsky
+
+#### Thomas Stoller 
+
+#### Paul Grünenwald
+
+[#46](https://github.com/sopra-fs23-group-40/Server/issues/46)
+
+#### Thomas Joos
+
+#### Justin Verhoek
+
+
