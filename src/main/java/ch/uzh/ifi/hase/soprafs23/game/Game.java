@@ -19,6 +19,8 @@ public class Game {
         this.players = new Player[2];
         this.players[0] = new Player(CellStatus.PLAYER1);
         this.players[1] = new Player(CellStatus.PLAYER2);
+        this.players[2] = new Player(CellStatus.PLAYER3);
+        this.players[3] = new Player(CellStatus.PLAYER4);
         this.currentPlayer = this.players[0];
         //this.gameStatus = GameStatus.WAITING_FOR_PLAYER;
         this.creationDate = LocalDateTime.now();
