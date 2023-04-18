@@ -7,6 +7,7 @@ import ch.uzh.ifi.hase.soprafs23.rest.dto.LobbyGetDTO;
 import ch.uzh.ifi.hase.soprafs23.rest.dto.LobbyPostDTO;
 import ch.uzh.ifi.hase.soprafs23.rest.mapper.DTOMapper;
 import ch.uzh.ifi.hase.soprafs23.service.LobbyService;
+import org.hibernate.cfg.NotYetImplementedException;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
@@ -30,7 +31,7 @@ public class LobbyController {
     @ResponseStatus(HttpStatus.OK)
     @ResponseBody
     public String createLobby(@RequestBody LobbyPostDTO lobbyPostDTO) {
-        return "";
+        throw new NotYetImplementedException("Not yet implemented");
     }
 
     @GetMapping("/lobbies")
@@ -53,7 +54,7 @@ public class LobbyController {
     @ResponseStatus(HttpStatus.ACCEPTED)
     @ResponseBody
     public void joinLobby() {
-
+        throw new NotYetImplementedException("Not yet implemented");
     }
 
 }
