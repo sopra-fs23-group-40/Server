@@ -78,6 +78,16 @@ https://github.com/sopra-fs23-group-40/Server/issues/45
 
 #### Thomas Joos
 
+Added logout button in the overview menu:
+https://github.com/sopra-fs23-group-40/Client/issues/17
+
+Closed the User Story for the Menu in the top right corner as all subtasks are now completed:
+https://github.com/sopra-fs23-group-40/Server/issues/34
+
+Added the Rules view to display the Game's Rules as they are in the Mockups:
+https://github.com/sopra-fs23-group-40/Client/issues/19 <br>
+_(As in the Mockups, we have a separate page for the Rules instead of a box)_
+
 #### Justin Verhoek
 
 
