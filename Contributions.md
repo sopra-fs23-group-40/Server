@@ -44,6 +44,11 @@ https://github.com/sopra-fs23-group-40/Server/issues/41
 ## Week 2
 
 #### Karoline Siarsky
+https://github.com/sopra-fs23-group-40/Server/issues/53
+
+https://github.com/sopra-fs23-group-40/Server/issues/54
+
+https://github.com/sopra-fs23-group-40/Client/issues/24
 
 #### Thomas Stoller 
 
