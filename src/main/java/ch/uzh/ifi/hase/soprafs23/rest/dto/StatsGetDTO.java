@@ -6,6 +6,10 @@ public class StatsGetDTO {
     private int gamesWon;
     private int minutesPlayed;
 
+    private float winPercentage;
+
+    private int blocksPlaced;
+
     public int getGamesPlayed() {
         return gamesPlayed;
     }
@@ -28,6 +32,20 @@ public class StatsGetDTO {
 
     public void setMinutesPlayed(int minutesPlayed) {
         this.minutesPlayed = minutesPlayed;
+    }
+    public float getWinPercentage() {
+        return winPercentage;
+    }
+
+    public void setWinPercentage(float winPercentage) {
+        this.winPercentage = winPercentage;
+    }
+    public int getBlocksPlaced() {
+        return blocksPlaced;
+    }
+
+    public void setBlocksPlaced(int blocksPlaced) {
+        this.blocksPlaced = blocksPlaced;
     }
 
 }

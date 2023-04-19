@@ -15,6 +15,12 @@ public class Statistics implements Serializable {
     private int minutesPlayed;
 
     @Column(nullable = false)
+    private float winPercentage;
+
+    @Column(nullable = false)
+    private int blocksPlaced;
+
+    @Column(nullable = false)
     private Long userId;
 
     @Id
@@ -51,6 +57,21 @@ public class Statistics implements Serializable {
 
     public Long getId() {
         return id;
+    }
+
+    public float getWinPercentage() {
+        return winPercentage;
+    }
+
+    public void setWinPercentage(float winPercentage) {
+        this.winPercentage = winPercentage;
+    }
+    public int getBlocksPlaced() {
+        return blocksPlaced;
+    }
+
+    public void setBlocksPlaced(int blocksPlaced) {
+        this.blocksPlaced = blocksPlaced;
     }
     public Long getUserId() {
         return userId;

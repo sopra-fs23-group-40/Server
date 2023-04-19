@@ -79,6 +79,8 @@ public class UserService {
         stat.setGamesPlayed(0);
         stat.setGamesWon(0);
         stat.setMinutesPlayed(0);
+        stat.setWinPercentage(0);
+        stat.setBlocksPlaced(0);
         return stat;
     }
 
