@@ -38,8 +38,8 @@ public class LobbyService {
         newLobby.setHost(username);
         newLobby.setLobbyToken(lobbyToken);
         newLobby.setStatus(LobbyStatus.WAITING);
-        newLobby.setName("Lobby " + newLobby.getLobbyId());
         newLobby.setLobbyType(LobbyType.PRIVATE);
+        newLobby.setName(username + "'s Lobby");
 
         lobbyRepository.save(newLobby);
 
