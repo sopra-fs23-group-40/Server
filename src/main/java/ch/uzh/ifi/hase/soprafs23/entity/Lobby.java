@@ -45,8 +45,8 @@ public class Lobby implements Serializable {
         return lobbyId;
     }
 
-    public void setLobbyId(Long lobby_id) {
-        this.lobbyId = lobby_id;
+    public void setLobbyId(Long lobbyId) {
+        this.lobbyId = lobbyId;
     }
 
     public String getHost() {
