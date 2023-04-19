@@ -70,6 +70,9 @@ _(As in the Mockups, we have a separate page for the Rules instead of a box)_
 Implemented the createLobby REST Endpoint, closing issue 38:
 https://github.com/sopra-fs23-group-40/Server/issues/38
 
+Added functionality to list all waiting lobbies in the client (but it is not yet clickable, thus not completed):
+https://github.com/sopra-fs23-group-40/Client/issues/3
+
 #### Justin Verhoek
 
 https://github.com/sopra-fs23-group-40/Server/issues/41
