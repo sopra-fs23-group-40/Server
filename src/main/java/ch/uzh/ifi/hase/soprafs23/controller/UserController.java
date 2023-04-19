@@ -1,6 +1,8 @@
 package ch.uzh.ifi.hase.soprafs23.controller;
 
+import ch.uzh.ifi.hase.soprafs23.entity.Statistics;
 import ch.uzh.ifi.hase.soprafs23.entity.User;
+import ch.uzh.ifi.hase.soprafs23.rest.dto.StatsGetDTO;
 import ch.uzh.ifi.hase.soprafs23.rest.dto.UserGetDTO;
 import ch.uzh.ifi.hase.soprafs23.rest.dto.UserPostDTO;
 import ch.uzh.ifi.hase.soprafs23.rest.mapper.DTOMapper;
@@ -130,5 +132,14 @@ public class UserController {
         checkToken(token);
         return userService.getLoggedInUsername(token);
 
+    }
+
+    @GetMapping("/statistics")
+    @ResponseStatus(HttpStatus.OK)
+    @ResponseBody
+    public StatsGetDTO getUserStatistics(@RequestHeader(value = "token") String token) {
+        checkToken(token);
+        Statistics userStatistics = userService.getStatistics(token);
+        return DTOMapper.INSTANCE.convertEntityToStatsGetDTO(userStatistics);
     }
 }

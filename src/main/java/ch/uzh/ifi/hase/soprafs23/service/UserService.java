@@ -1,7 +1,9 @@
 package ch.uzh.ifi.hase.soprafs23.service;
 
 import ch.uzh.ifi.hase.soprafs23.constant.UserStatus;
+import ch.uzh.ifi.hase.soprafs23.entity.Statistics;
 import ch.uzh.ifi.hase.soprafs23.entity.User;
+import ch.uzh.ifi.hase.soprafs23.repository.StatisticsRepository;
 import ch.uzh.ifi.hase.soprafs23.repository.UserRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -30,10 +32,12 @@ public class UserService {
   private final Logger log = LoggerFactory.getLogger(UserService.class);
 
   private final UserRepository userRepository;
+  private final StatisticsRepository statisticsRepository;
 
   @Autowired
-  public UserService(@Qualifier("userRepository") UserRepository userRepository) {
+  public UserService(@Qualifier("userRepository") UserRepository userRepository, StatisticsRepository statisticsRepository) {
     this.userRepository = userRepository;
+    this.statisticsRepository = statisticsRepository;
   }
 
   public List<User> getUsers() {
@@ -61,9 +65,21 @@ public class UserService {
         // flush() is called
         newUser = userRepository.save(newUser);
         userRepository.flush();
+        Statistics statistics = createStatisticsNewUser();
+        statistics.setUserId(newUser.getId());
+        statisticsRepository.save(statistics);
+        statisticsRepository.flush();
 
         log.debug("Created Information for User: {}", newUser);
         return newUser;
+    }
+
+    private Statistics createStatisticsNewUser() {
+        Statistics stat = new Statistics();
+        stat.setGamesPlayed(0);
+        stat.setGamesWon(0);
+        stat.setMinutesPlayed(0);
+        return stat;
     }
 
     public User loginUser(User user) {
@@ -105,6 +121,11 @@ public class UserService {
     public boolean checkAuthentication(String username, String token) {
         User userByUsername = userRepository.findByUsername(username);
         return userByUsername != null && userByUsername.getToken().equals(token);
+    }
+
+    public Statistics getStatistics(String token) {
+      User userByToken = userRepository.findByToken(token);
+      return statisticsRepository.findByUserId(userByToken.getId());
     }
 
   /**
