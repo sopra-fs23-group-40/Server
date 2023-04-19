@@ -33,7 +33,9 @@ public interface DTOMapper {
     UserGetDTO convertEntityToUserGetDTO(User user);
 
     @Mapping(source = "name", target = "name")
+    @Mapping(source = "lobbyId", target = "lobbyId")
     @Mapping(source = "lobbyType", target = "lobbyType")
+    @Mapping(source = "lobbyToken", target = "lobbyToken")
     LobbyGetDTO convertEntityToLobbyGetDTO(Lobby lobby);
 
     StatsGetDTO convertEntityToStatsGetDTO(Statistics statistics);
