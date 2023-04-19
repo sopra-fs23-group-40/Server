@@ -5,6 +5,7 @@ import ch.uzh.ifi.hase.soprafs23.constant.LobbyStatus;
 import ch.uzh.ifi.hase.soprafs23.entity.Lobby;
 import ch.uzh.ifi.hase.soprafs23.rest.dto.LobbyGetDTO;
 import ch.uzh.ifi.hase.soprafs23.rest.dto.LobbyPostDTO;
+import ch.uzh.ifi.hase.soprafs23.rest.dto.UserAuthDTO;
 import ch.uzh.ifi.hase.soprafs23.rest.mapper.DTOMapper;
 import ch.uzh.ifi.hase.soprafs23.service.LobbyService;
 import org.hibernate.cfg.NotYetImplementedException;
@@ -53,8 +54,15 @@ public class LobbyController {
     @PostMapping("/joinLobby/{lobbyName}")
     @ResponseStatus(HttpStatus.ACCEPTED)
     @ResponseBody
-    public void joinLobby() {
-        throw new NotYetImplementedException("Not yet implemented");
+    public void joinLobby(@PathVariable String lobbyName) {
+        throw new NotYetImplementedException("Not yet implemented " + lobbyName);
+    }
+
+    @GetMapping("/createLobby")
+    @ResponseStatus(HttpStatus.OK)
+    @ResponseBody
+    public void createLobby(@RequestBody UserAuthDTO userAuthDTO) {
+        lobbyService.createLobby(userAuthDTO.getUsername(), userAuthDTO.getToken());
     }
 
 }

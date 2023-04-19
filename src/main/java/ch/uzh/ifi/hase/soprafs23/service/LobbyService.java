@@ -2,6 +2,7 @@ package ch.uzh.ifi.hase.soprafs23.service;
 
 import ch.uzh.ifi.hase.soprafs23.entity.Lobby;
 import ch.uzh.ifi.hase.soprafs23.repository.LobbyRepository;
+import org.hibernate.cfg.NotYetImplementedException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,4 +26,8 @@ public class LobbyService {
     }
 
     public List<Lobby> getLobbies(){return this.lobbyRepository.findAll();}
+
+    public void createLobby(String username, String token) {
+        throw new NotYetImplementedException("Not yet implemented");
+    }
 }
