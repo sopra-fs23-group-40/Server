@@ -8,9 +8,11 @@ import ch.uzh.ifi.hase.soprafs23.rest.dto.LobbyPostDTO;
 import ch.uzh.ifi.hase.soprafs23.rest.dto.UserAuthDTO;
 import ch.uzh.ifi.hase.soprafs23.rest.mapper.DTOMapper;
 import ch.uzh.ifi.hase.soprafs23.service.LobbyService;
+import ch.uzh.ifi.hase.soprafs23.service.UserService;
 import org.hibernate.cfg.NotYetImplementedException;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.util.*;
 
@@ -18,9 +20,11 @@ import java.util.*;
 public class LobbyController {
 
     private final LobbyService lobbyService;
+    private final UserService userService;
 
-    LobbyController(LobbyService lobbyService) {
+    LobbyController(LobbyService lobbyService, UserService userService) {
         this.lobbyService = lobbyService;
+        this.userService = userService;
     }
 
     /***
@@ -42,6 +46,8 @@ public class LobbyController {
         List<Lobby> lobbies = lobbyService.getLobbies();
         List<LobbyGetDTO> lobbyGetDTOs = new ArrayList<>();
 
+        // TODO: Authentication with token
+
         // convert each user to the API representation
         for (Lobby lobby : lobbies) {
             if (lobby.getStatus() == LobbyStatus.WAITING) {
@@ -62,7 +68,13 @@ public class LobbyController {
     @ResponseStatus(HttpStatus.OK)
     @ResponseBody
     public void createLobby(@RequestBody UserAuthDTO userAuthDTO) {
-        lobbyService.createLobby(userAuthDTO.getUsername(), userAuthDTO.getToken());
+        if(userService.checkAuthentication(userAuthDTO.getUsername(), userAuthDTO.getToken())) {
+            lobbyService.createLobby(userAuthDTO.getUsername(), userAuthDTO.getToken());
+        } else {
+            throw new ResponseStatusException(HttpStatus.UNAUTHORIZED,
+                    "User authentication failed.");
+        }
+
     }
 
 }

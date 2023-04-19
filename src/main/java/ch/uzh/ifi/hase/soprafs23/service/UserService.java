@@ -101,6 +101,12 @@ public class UserService {
         return null;
     }
 
+    // merge with method above?
+    public boolean checkAuthentication(String username, String token) {
+        User userByUsername = userRepository.findByUsername(username);
+        return userByUsername != null && userByUsername.getToken().equals(token);
+    }
+
   /**
    * This is a helper method that will check the uniqueness criteria of the
    * username and the name
@@ -120,4 +126,5 @@ public class UserService {
           String.format(baseErrorMessage));
     }
   }
+
 }
