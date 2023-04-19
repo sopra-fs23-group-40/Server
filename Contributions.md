@@ -47,6 +47,13 @@ https://github.com/sopra-fs23-group-40/Server/issues/41
 
 #### Thomas Stoller 
 
+https://github.com/sopra-fs23-group-40/Server/issues/2
+
+which includes : https://github.com/sopra-fs23-group-40/Client/issues/20
+https://github.com/sopra-fs23-group-40/Client/issues/21
+https://github.com/sopra-fs23-group-40/Client/issues/22
+https://github.com/sopra-fs23-group-40/Client/issues/23
+
 #### Paul Grünenwald
 
 [#44](https://github.com/sopra-fs23-group-40/Server/issues/44)
