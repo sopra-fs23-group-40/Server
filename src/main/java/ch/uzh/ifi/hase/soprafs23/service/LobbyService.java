@@ -1,8 +1,9 @@
 package ch.uzh.ifi.hase.soprafs23.service;
 
+import ch.uzh.ifi.hase.soprafs23.constant.LobbyStatus;
+import ch.uzh.ifi.hase.soprafs23.constant.LobbyType;
 import ch.uzh.ifi.hase.soprafs23.entity.Lobby;
 import ch.uzh.ifi.hase.soprafs23.repository.LobbyRepository;
-import org.hibernate.cfg.NotYetImplementedException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,6 +12,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.UUID;
 
 @Service
 @Transactional
@@ -27,7 +29,19 @@ public class LobbyService {
 
     public List<Lobby> getLobbies(){return this.lobbyRepository.findAll();}
 
-    public void createLobby(String username, String token) {
-        throw new NotYetImplementedException("Not yet implemented");
+    public void createLobby(String username) {
+
+        Lobby newLobby = new Lobby();
+
+        String lobbyToken = UUID.randomUUID().toString().substring(0, 7);
+
+        newLobby.setHost(username);
+        newLobby.setLobbyToken(lobbyToken);
+        newLobby.setStatus(LobbyStatus.WAITING);
+        newLobby.setName("Lobby " + newLobby.getLobbyId());
+        newLobby.setLobbyType(LobbyType.PRIVATE);
+
+        lobbyRepository.save(newLobby);
+
     }
 }

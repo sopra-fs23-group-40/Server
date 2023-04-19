@@ -69,7 +69,7 @@ public class LobbyController {
     @ResponseBody
     public void createLobby(@RequestBody UserAuthDTO userAuthDTO) {
         if(userService.checkAuthentication(userAuthDTO.getUsername(), userAuthDTO.getToken())) {
-            lobbyService.createLobby(userAuthDTO.getUsername(), userAuthDTO.getToken());
+            lobbyService.createLobby(userAuthDTO.getUsername());
         } else {
             throw new ResponseStatusException(HttpStatus.UNAUTHORIZED,
                     "User authentication failed.");
