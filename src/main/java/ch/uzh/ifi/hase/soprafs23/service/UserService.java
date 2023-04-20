@@ -35,7 +35,7 @@ public class UserService {
   private final StatisticsRepository statisticsRepository;
 
   @Autowired
-  public UserService(@Qualifier("userRepository") UserRepository userRepository, StatisticsRepository statisticsRepository) {
+  public UserService(@Qualifier("userRepository") UserRepository userRepository, @Qualifier("statisticsRepository") StatisticsRepository statisticsRepository) {
     this.userRepository = userRepository;
     this.statisticsRepository = statisticsRepository;
   }
@@ -67,6 +67,7 @@ public class UserService {
         userRepository.flush();
         Statistics statistics = createStatisticsNewUser();
         statistics.setUserId(newUser.getId());
+        System.out.println(newUser.getId());
         statisticsRepository.save(statistics);
         statisticsRepository.flush();
 
