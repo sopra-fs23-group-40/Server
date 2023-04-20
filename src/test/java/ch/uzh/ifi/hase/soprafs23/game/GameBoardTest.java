@@ -1,18 +1,17 @@
 package ch.uzh.ifi.hase.soprafs23.game;
 
 import ch.uzh.ifi.hase.soprafs23.game.blocks.CellStatus;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
 
 class GameBoardTest {
-    private Player player1;
-    private Player player2;
-    private Player player3;
-    private Player player4;
-    private GameBoard gameBoard;
-
+    private final Player player1 = new Player(CellStatus.PLAYER1);
+    private final Player player2 = new Player(CellStatus.PLAYER2);
+    private final Player player3 = new Player(CellStatus.PLAYER3);
+    private final Player player4 = new Player(CellStatus.PLAYER4);
+    private final GameBoard gameBoard = new GameBoard();
+/*
     @BeforeEach
     public void setup() {
         this.player1 = new Player(CellStatus.PLAYER1);
@@ -21,6 +20,8 @@ class GameBoardTest {
         this.player4 = new Player(CellStatus.PLAYER4);
         this.gameBoard = new GameBoard();
     }
+
+ */
 
     @Test
     void placeBlock() {
