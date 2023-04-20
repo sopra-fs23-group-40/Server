@@ -7,6 +7,8 @@ import java.io.Serializable;
 @Entity
 @Table(name = "STATISTICS")
 public class Statistics implements Serializable {
+
+    private static final long serialVersionUID = 1L;
     @Column(nullable = false)
     private int gamesPlayed;
     @Column(nullable = false)
