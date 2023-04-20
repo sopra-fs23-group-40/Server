@@ -16,8 +16,8 @@ public class Block2 extends Block {
         this.shape = new Cell[][] {
             {new Cell(cellStatus), new Cell(cellStatus)}};
 
-        this.numberOfSquares = 1;
-        this.length = 1;
+        this.numberOfSquares = 2;
+        this.length = 2;
         this.height = 1;
     }
 

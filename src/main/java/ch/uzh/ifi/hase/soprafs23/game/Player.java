@@ -10,6 +10,7 @@ public class Player {
     public Player(CellStatus cellStatus) {
         // Constructor logic here
         this.status = cellStatus;
+        this.inventory = new Inventory(this);
         this.blocks = new Block[] {
                 new Block1(this, cellStatus),
                 new Block2(this, cellStatus),
