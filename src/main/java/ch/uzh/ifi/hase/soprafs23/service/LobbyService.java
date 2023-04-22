@@ -51,7 +51,7 @@ public class LobbyService {
         return newLobby;
     }
 
-    public LobbyType change_lobbytype(String username, long id) {
+    public LobbyType changeLobbytype(String username, long id) {
         Lobby this_lobby = lobbyRepository.findByHost(username);
         Lobby id_lobby = lobbyRepository.findByLobbyId(id);
         if (this_lobby == null) {
@@ -95,4 +95,14 @@ public class LobbyService {
         }
         return this_lobby.getHost().equals(username);
     }
+
+    public Lobby getLobby(long id) {
+        Lobby this_lobby = lobbyRepository.findByLobbyId(id);
+        if (this_lobby == null){
+            String baseErrorMessage = "There is no lobby with this Id!";
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, String.format(baseErrorMessage));
+        }
+        return this_lobby;
+    }
+
 }

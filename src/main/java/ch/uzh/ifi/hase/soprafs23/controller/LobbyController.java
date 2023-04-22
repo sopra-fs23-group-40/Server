@@ -62,31 +62,30 @@ public class LobbyController {
     @PostMapping("/createLobby")
     @ResponseStatus(HttpStatus.OK)
     @ResponseBody
-    public ResponseEntity<LobbyGetDTO> createLobby(@RequestBody UserAuthDTO userAuthDTO) {
+    public String createLobby(@RequestBody UserAuthDTO userAuthDTO) {
         if (!userService.checkAuthentication(userAuthDTO.getUsername(), userAuthDTO.getToken())) {
             throw new ResponseStatusException(HttpStatus.UNAUTHORIZED,
                     "User authentication failed.");
         }
         Lobby created_lobby = lobbyService.createLobby(userAuthDTO.getUsername());
-        return ResponseEntity.status(HttpStatus.CREATED)
-                .body(DTOMapper.INSTANCE.convertEntityToLobbyGetDTO(created_lobby));
+        return created_lobby.getLobbyToken();
     }
 
     @PutMapping("/lobbytype/{id}")
     @ResponseStatus(HttpStatus.OK)
     @ResponseBody
-    public LobbyType change_lobbytype(@PathVariable(value = "id") Long id, @RequestBody UserAuthDTO userAuthDTO){
+    public LobbyType changeLobbytype(@PathVariable(value = "id") Long id, @RequestBody UserAuthDTO userAuthDTO) {
         if (!userService.checkAuthentication(userAuthDTO.getUsername(), userAuthDTO.getToken())) {
             throw new ResponseStatusException(HttpStatus.UNAUTHORIZED,
                     "User authentication failed.");
         }
-        return lobbyService.change_lobbytype(userAuthDTO.getUsername(), id);
+        return lobbyService.changeLobbytype(userAuthDTO.getUsername(), id);
     }
 
     @DeleteMapping("/deletelobby/{id}")
     @ResponseStatus(HttpStatus.OK)
     @ResponseBody
-    public void deleteLobby(@RequestBody UserAuthDTO userAuthDTO){
+    public void deleteLobby(@RequestBody UserAuthDTO userAuthDTO) {
         if (!userService.checkAuthentication(userAuthDTO.getUsername(), userAuthDTO.getToken())) {
             throw new ResponseStatusException(HttpStatus.UNAUTHORIZED,
                     "User authentication failed.");
@@ -97,11 +96,30 @@ public class LobbyController {
     @GetMapping("/lobby/{id}/checkhost")
     @ResponseStatus(HttpStatus.OK)
     @ResponseBody
-    public boolean isHost(@PathVariable(value = "id") Long id, @RequestBody UserAuthDTO userAuthDTO){
+    public boolean isHost(@PathVariable(value = "id") Long id, @RequestBody UserAuthDTO userAuthDTO) {
         if (!userService.checkAuthentication(userAuthDTO.getUsername(), userAuthDTO.getToken())) {
             throw new ResponseStatusException(HttpStatus.UNAUTHORIZED,
                     "User authentication failed.");
         }
         return lobbyService.checkIfHost(userAuthDTO.getUsername(), id);
     }
+
+    @GetMapping("/lobby/{id}")
+    @ResponseStatus(HttpStatus.OK)
+    @ResponseBody
+    public ResponseEntity<LobbyGetDTO> getLobby(@PathVariable(value = "id") long id, @RequestBody UserAuthDTO userAuthDTO) {
+        if (!userService.checkAuthentication(userAuthDTO.getUsername(), userAuthDTO.getToken())) {
+            throw new ResponseStatusException(HttpStatus.UNAUTHORIZED,
+                    "User authentication failed.");
+        }
+        Lobby lobby = lobbyService.getLobby(id);
+        Lobby ret_lobby = new Lobby();
+        ret_lobby.setLobbyId(lobby.getLobbyId());
+        ret_lobby.setPlayerList(lobby.getPlayerList());
+        ret_lobby.setName(lobby.getName());
+        ret_lobby.setLobbyType(lobby.getLobbyType());
+        return ResponseEntity.status(HttpStatus.FOUND)
+                .body(DTOMapper.INSTANCE.convertEntityToLobbyGetDTO(ret_lobby));
+    }
+
 }

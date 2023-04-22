@@ -41,6 +41,9 @@ public class Lobby implements Serializable {
     @Column(nullable = false)
     private LobbyType lobbyType;
 
+    @Column(nullable = false)
+    private String playerList;
+
     public Long getLobbyId() {
         return lobbyId;
     }
@@ -88,4 +91,13 @@ public class Lobby implements Serializable {
     public void setLobbyType(LobbyType is_private) {
         this.lobbyType = is_private;
     }
+
+    public String getPlayerList() {
+        return playerList;
+    }
+
+    public void setPlayerList(String playerList) {
+        this.playerList = playerList;
+    }
+
 }

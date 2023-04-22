@@ -7,6 +7,7 @@ public class LobbyGetDTO {
     private long lobbyId;
     private LobbyType lobbyType;
     private String lobbyToken;
+    private String playerList;
 
     public String getName() {
         return name;
@@ -38,5 +39,13 @@ public class LobbyGetDTO {
 
     public void setLobbyToken(String lobbyToken) {
         this.lobbyToken = lobbyToken;
+    }
+
+    public String getPlayerList() {
+        return playerList;
+    }
+
+    public void setPlayerList(String playerList) {
+        this.playerList = playerList;
     }
 }
