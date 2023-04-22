@@ -9,7 +9,6 @@ import ch.uzh.ifi.hase.soprafs23.rest.dto.UserAuthDTO;
 import ch.uzh.ifi.hase.soprafs23.rest.mapper.DTOMapper;
 import ch.uzh.ifi.hase.soprafs23.service.LobbyService;
 import ch.uzh.ifi.hase.soprafs23.service.UserService;
-import org.hibernate.cfg.NotYetImplementedException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -48,11 +47,16 @@ public class LobbyController {
         return lobbyGetDTOs;
     }
 
-    @PostMapping("/joinLobby/{lobbyName}")
+    @PostMapping("/joinLobby/{id}")
     @ResponseStatus(HttpStatus.ACCEPTED)
     @ResponseBody
-    public void joinLobby(@PathVariable String lobbyName) {
-        throw new NotYetImplementedException("Not yet implemented " + lobbyName);
+    public void joinLobby(@PathVariable(value = "id") Long id, @RequestBody String passcode, @RequestHeader(value = "token") String token, @RequestHeader(value = "username") String username) {
+        UserAuthDTO userAuthDTO = DTOMapper.INSTANCE.convertVariablesToUserAuthDTO(username, token);
+        if (!userService.checkAuthentication(userAuthDTO.getUsername(), userAuthDTO.getToken())) {
+            throw new ResponseStatusException(HttpStatus.UNAUTHORIZED,
+                    "User authentication failed.");
+        }
+
     }
 
     /***
