@@ -80,7 +80,7 @@ public class LobbyController {
             throw new ResponseStatusException(HttpStatus.UNAUTHORIZED,
                     "User authentication failed.");
         }
-        return lobbyService.change_lobbytype(userAuthDTO.getUsername());
+        return lobbyService.change_lobbytype(userAuthDTO.getUsername(), id);
     }
 
     @DeleteMapping("/deletelobby/{id}")

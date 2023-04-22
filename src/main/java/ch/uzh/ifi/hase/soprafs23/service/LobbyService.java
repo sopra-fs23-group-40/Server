@@ -51,19 +51,30 @@ public class LobbyService {
         return newLobby;
     }
 
-    public LobbyType change_lobbytype(String username) {
+    public LobbyType change_lobbytype(String username, long id) {
         Lobby this_lobby = lobbyRepository.findByHost(username);
+        Lobby id_lobby = lobbyRepository.findByLobbyId(id);
         if (this_lobby == null) {
-            String baseErrorMessage = "The user isn't the host of this Lobby!";
+            String baseErrorMessage = "The user isn't the host of any lobby!";
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, String.format(baseErrorMessage));
         }
-        if (this_lobby.getLobbyType() == LobbyType.PRIVATE) {
-            this_lobby.setLobbyType(LobbyType.PUBLIC);
+        if (id_lobby == null){
+            String baseErrorMessage = "There is no lobby with this id!";
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, String.format(baseErrorMessage));
+        }
+
+        if (this_lobby != id_lobby){
+            String baseErrorMessage = "This user isn't the host of the chosen lobby!";
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, String.format(baseErrorMessage));
+        }
+
+        if (id_lobby.getLobbyType() == LobbyType.PRIVATE) {
+            id_lobby.setLobbyType(LobbyType.PUBLIC);
         }
         else {
-            this_lobby.setLobbyType(LobbyType.PRIVATE);
+            id_lobby.setLobbyType(LobbyType.PRIVATE);
         }
-        return this_lobby.getLobbyType();
+        return id_lobby.getLobbyType();
     }
 
     public void deleteLobby(String username){
