@@ -39,7 +39,7 @@ public class LobbyService {
 
         Lobby newLobby = new Lobby();
         String lobbyToken = UUID.randomUUID().toString().substring(0, 7);
-
+        newLobby.setPlayerList(username);
         newLobby.setHost(username);
         newLobby.setLobbyToken(lobbyToken);
         newLobby.setStatus(LobbyStatus.WAITING);

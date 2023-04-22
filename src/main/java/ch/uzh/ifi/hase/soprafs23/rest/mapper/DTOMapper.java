@@ -39,4 +39,6 @@ public interface DTOMapper {
     LobbyGetDTO convertEntityToLobbyGetDTO(Lobby lobby);
 
     StatsGetDTO convertEntityToStatsGetDTO(Statistics statistics);
+
+    UserAuthDTO convertVariablesToUserAuthDTO(String username, String token);
 }
