@@ -4,8 +4,6 @@ import ch.uzh.ifi.hase.soprafs23.constant.LobbyStatus;
 import ch.uzh.ifi.hase.soprafs23.constant.LobbyType;
 import ch.uzh.ifi.hase.soprafs23.entity.Lobby;
 import ch.uzh.ifi.hase.soprafs23.repository.LobbyRepository;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.HttpStatus;
@@ -20,7 +18,7 @@ import java.util.UUID;
 @Transactional
 public class LobbyService {
 
-    private final Logger log = LoggerFactory.getLogger(LobbyService.class);
+    //private final Logger log = LoggerFactory.getLogger(LobbyService.class);
 
     private final LobbyRepository lobbyRepository;
 
@@ -66,5 +64,24 @@ public class LobbyService {
             this_lobby.setLobbyType(LobbyType.PRIVATE);
         }
         return this_lobby.getLobbyType();
+    }
+
+    public void deleteLobby(String username){
+        Lobby this_lobby = lobbyRepository.findByHost(username);
+        if (this_lobby == null){
+            String baseErrorMessage = "The user doesn't have a lobby!";
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, String.format(baseErrorMessage));
+        }
+        lobbyRepository.delete(this_lobby);
+        lobbyRepository.flush();
+    }
+
+    public boolean checkIfHost(String username, long id){
+        Lobby this_lobby = lobbyRepository.findByLobbyId(id);
+        if (this_lobby == null){
+            String baseErrorMessage = "There is no lobby with this Id!";
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, String.format(baseErrorMessage));
+        }
+        return this_lobby.getHost().equals(username);
     }
 }

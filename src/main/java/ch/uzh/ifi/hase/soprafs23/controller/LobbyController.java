@@ -82,4 +82,26 @@ public class LobbyController {
         }
         return lobbyService.change_lobbytype(userAuthDTO.getUsername());
     }
+
+    @DeleteMapping("/deletelobby/{id}")
+    @ResponseStatus(HttpStatus.OK)
+    @ResponseBody
+    public void deleteLobby(@RequestBody UserAuthDTO userAuthDTO){
+        if (!userService.checkAuthentication(userAuthDTO.getUsername(), userAuthDTO.getToken())) {
+            throw new ResponseStatusException(HttpStatus.UNAUTHORIZED,
+                    "User authentication failed.");
+        }
+        lobbyService.deleteLobby(userAuthDTO.getUsername());
+    }
+
+    @GetMapping("/lobby/{id}/checkhost")
+    @ResponseStatus(HttpStatus.OK)
+    @ResponseBody
+    public boolean isHost(@PathVariable(value = "id") Long id, @RequestBody UserAuthDTO userAuthDTO){
+        if (!userService.checkAuthentication(userAuthDTO.getUsername(), userAuthDTO.getToken())) {
+            throw new ResponseStatusException(HttpStatus.UNAUTHORIZED,
+                    "User authentication failed.");
+        }
+        return lobbyService.checkIfHost(userAuthDTO.getUsername(), id);
+    }
 }
