@@ -61,11 +61,11 @@ https://github.com/sopra-fs23-group-40/Client/issues/23
 
 #### Paul Grünenwald
 
-[#44](https://github.com/sopra-fs23-group-40/Server/issues/44)
+In the Player class generate all blocks and give them the status corresponding with the player [#44](https://github.com/sopra-fs23-group-40/Server/issues/44)
 
-[#42](https://github.com/sopra-fs23-group-40/Server/issues/42)
+Implement Player Class [#42](https://github.com/sopra-fs23-group-40/Server/issues/42)
 
-[#46](https://github.com/sopra-fs23-group-40/Server/issues/46)
+When placing a block remove the block from the inventory [#46](https://github.com/sopra-fs23-group-40/Server/issues/46)
 
 #### Thomas Joos
 
