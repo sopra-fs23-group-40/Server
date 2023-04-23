@@ -51,4 +51,25 @@ public class Game {
     public GameBoard getGameBoard() {
         return gameboard;
     }
+
+    public void addPlayer(Player player) {
+        // Check if the game already has four players
+        if (players.length >= 4) {
+            throw new RuntimeException("Game already has four players");
+        }
+
+        // Find the next free slot in the players array
+        int nextSlot = -1;
+        for (int i = 0; i < players.length; i++) {
+            if (players[i] == null) {
+                nextSlot = i;
+                break;
+            }
+        }
+
+        // Add the player to the next free slot
+        if (nextSlot != -1) {
+            players[nextSlot] = player;
+        }
+    }
 }
