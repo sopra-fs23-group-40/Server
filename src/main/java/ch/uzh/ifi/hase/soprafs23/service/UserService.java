@@ -67,7 +67,6 @@ public class UserService {
         userRepository.flush();
         Statistics statistics = createStatisticsNewUser();
         statistics.setUserId(newUser.getId());
-        System.out.println(newUser.getId());
         statisticsRepository.save(statistics);
         statisticsRepository.flush();
 

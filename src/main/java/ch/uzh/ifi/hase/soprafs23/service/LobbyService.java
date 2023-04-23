@@ -40,7 +40,6 @@ public class LobbyService {
 
         Lobby newLobby = new Lobby();
         String lobbyToken = UUID.randomUUID().toString().substring(0, 7);
-        System.out.println("Token: " +lobbyToken);
         newLobby.setPlayerList(username);
         newLobby.setHost(username);
         newLobby.setLobbyToken(lobbyToken);
@@ -115,12 +114,10 @@ public class LobbyService {
     }
 
     private void join(Lobby lobby, String username) {
-        System.out.println("LobbyListOld: "+lobby.getPlayerList());
         String newPlayerList = lobby.getPlayerList()+","+username;
         lobby.setPlayerList(newPlayerList);
         lobbyRepository.save(lobby);
         lobbyRepository.flush();
-        System.out.println("LobbyListNew: "+lobby.getPlayerList());
     }
 
     public void joinLobby(Long id, String passcode, String username) {
@@ -152,7 +149,6 @@ public class LobbyService {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, String.format(baseErrorMessage));
         }
         String[] list = this_lobby.getPlayerList().split(",");
-        System.out.println(list);
         boolean inList = false;
         boolean first = true;
         String newlist = "";
@@ -174,7 +170,6 @@ public class LobbyService {
             String baseErrorMessage = "There is no player with that username in the lobby!";
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, String.format(baseErrorMessage));
         }
-        System.out.println(newlist);
         this_lobby.setPlayerList(newlist);
         lobbyRepository.save(this_lobby);
         lobbyRepository.flush();
