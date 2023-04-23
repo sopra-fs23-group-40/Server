@@ -5,6 +5,7 @@ import ch.uzh.ifi.hase.soprafs23.constant.LobbyStatus;
 import ch.uzh.ifi.hase.soprafs23.constant.LobbyType;
 import ch.uzh.ifi.hase.soprafs23.entity.Lobby;
 import ch.uzh.ifi.hase.soprafs23.rest.dto.LobbyGetDTO;
+import ch.uzh.ifi.hase.soprafs23.rest.dto.LobbyPutDTO;
 import ch.uzh.ifi.hase.soprafs23.rest.dto.UserAuthDTO;
 import ch.uzh.ifi.hase.soprafs23.rest.mapper.DTOMapper;
 import ch.uzh.ifi.hase.soprafs23.service.LobbyService;
@@ -47,16 +48,16 @@ public class LobbyController {
         return lobbyGetDTOs;
     }
 
-    @PostMapping("/joinLobby/{id}")
+    @PostMapping("/joinLobby")
     @ResponseStatus(HttpStatus.ACCEPTED)
     @ResponseBody
-    public void joinLobby(@PathVariable(value = "id") Long id, @RequestBody String passcode, @RequestHeader(value = "token") String token, @RequestHeader(value = "username") String username) {
+    public void joinLobby(@RequestBody LobbyPutDTO lobbyPutDTO, @RequestHeader(value = "token") String token, @RequestHeader(value = "username") String username) {
         UserAuthDTO userAuthDTO = DTOMapper.INSTANCE.convertVariablesToUserAuthDTO(username, token);
         if (!userService.checkAuthentication(userAuthDTO.getUsername(), userAuthDTO.getToken())) {
             throw new ResponseStatusException(HttpStatus.UNAUTHORIZED,
                     "User authentication failed.");
         }
-        lobbyService.joinLobby(id, passcode, userAuthDTO.getUsername());
+        lobbyService.joinLobby(lobbyPutDTO.getId(), lobbyPutDTO.getPasscode(), userAuthDTO.getUsername());
     }
 
     /***
@@ -78,7 +79,7 @@ public class LobbyController {
     @PutMapping("/lobbytype/{id}")
     @ResponseStatus(HttpStatus.OK)
     @ResponseBody
-    public LobbyType changeLobbytype(@PathVariable(value = "id") Long id, @RequestBody UserAuthDTO userAuthDTO) {
+    public LobbyType changeLobbyType(@PathVariable(value = "id") Long id, @RequestBody UserAuthDTO userAuthDTO) {
         if (!userService.checkAuthentication(userAuthDTO.getUsername(), userAuthDTO.getToken())) {
             throw new ResponseStatusException(HttpStatus.UNAUTHORIZED,
                     "User authentication failed.");
