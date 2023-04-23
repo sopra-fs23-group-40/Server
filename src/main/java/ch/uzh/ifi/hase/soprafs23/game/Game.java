@@ -16,7 +16,7 @@ public class Game {
     public Game() {
         this.gameId = UUID.randomUUID().toString();
         this.gameboard = new GameBoard();
-        this.players = new Player[2];
+        this.players = new Player[4];
         this.players[0] = new Player(CellStatus.PLAYER1);
         this.players[1] = new Player(CellStatus.PLAYER2);
         this.players[2] = new Player(CellStatus.PLAYER3);
@@ -38,13 +38,17 @@ public class Game {
                                 block.rotateClockwise();
                             }
                             block.rotateClockwise();
-                            block.flipHorizontal();
+                            block.flipVertical();
                         }
                     }
                 }
             }
         }
         return true;
+    }
+
+    public GameBoard getGameboard() {
+        return gameboard;
     }
 }
 

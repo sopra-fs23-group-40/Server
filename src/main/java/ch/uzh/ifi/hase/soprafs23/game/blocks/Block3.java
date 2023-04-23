@@ -14,7 +14,7 @@ public class Block3 extends Block {
         super(player, cellStatus);
 
         this.shape = new Cell[][] {
-            {new Cell(cellStatus), new Cell(cellStatus)}};
+            {new Cell(cellStatus), new Cell(cellStatus), new Cell(cellStatus)}};
 
         this.numberOfSquares = 3;
         this.length = 3;
