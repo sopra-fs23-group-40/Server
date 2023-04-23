@@ -19,9 +19,9 @@ https://github.com/sopra-fs23-group-40/Client/issues/8
 
 #### Paul Grünenwald
 
-[Create all 21 subclasses of the Block Superclass #40](https://github.com/sopra-fs23-group-40/Server/issues/40)
+Create all 21 subclasses of the Block Superclass [#40](https://github.com/sopra-fs23-group-40/Server/issues/40)
 
-[Implement the function to rotate/flip a block #35](https://github.com/sopra-fs23-group-40/Server/issues/35)
+Implement the function to rotate/flip a block [#35](https://github.com/sopra-fs23-group-40/Server/issues/35)
 
 #### Thomas Joos
 
