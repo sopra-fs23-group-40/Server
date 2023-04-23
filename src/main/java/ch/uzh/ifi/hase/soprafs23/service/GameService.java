@@ -7,6 +7,7 @@ import ch.uzh.ifi.hase.soprafs23.game.Player;
 
 public class GameService {
 
+
     public void placeBlock(Game game, Player player, int row, int col, Block block) {
         GameBoard board = game.getGameBoard();
 
@@ -16,4 +17,6 @@ public class GameService {
         // Remove the block from the player's inventory
         player.getInventory().removeBlock(block);
     }
+
+
 }
