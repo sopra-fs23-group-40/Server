@@ -76,6 +76,8 @@ public class LobbyService {
         else {
             id_lobby.setLobbyType(LobbyType.PRIVATE);
         }
+        lobbyRepository.save(id_lobby);
+        lobbyRepository.flush();
         return id_lobby.getLobbyType();
     }
 
@@ -174,5 +176,7 @@ public class LobbyService {
         }
         System.out.println(newlist);
         this_lobby.setPlayerList(newlist);
+        lobbyRepository.save(this_lobby);
+        lobbyRepository.flush();
     }
 }
