@@ -12,6 +12,7 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
+import java.util.Objects;
 import java.util.UUID;
 
 @Service
@@ -105,4 +106,31 @@ public class LobbyService {
         return this_lobby;
     }
 
+    private void join(Lobby lobby, String username) {
+        String newPlayerList = lobby.getPlayerList()+","+username;
+        lobby.setPlayerList(newPlayerList);
+    }
+
+    public void joinLobby(Long id, String passcode, String username) {
+        // TODO: maybe check if player already in a lobby? But if one is already in a lobby,
+        //  the frontend should redirect the user to the lobby if the user wants to access another page
+        Lobby lobby = getLobby(id);
+
+        // TODO: might change column with "int maxPlayers" in Lobby. Atm, default lobby size is 4
+        if(lobby.getPlayerList().split(",").length >= lobby.getMaxPlayers()) {
+            String baseErrorMessage = "The lobby is already full!";
+            throw new ResponseStatusException(HttpStatus.CONFLICT, String.format(baseErrorMessage));
+        }
+
+        if(lobby.getLobbyType() == LobbyType.PUBLIC) {
+            join(lobby, username);
+        }
+        else {
+            if(!Objects.equals(lobby.getLobbyToken(), passcode)) {
+                String baseErrorMessage = "Wrong passcode!";
+                throw new ResponseStatusException(HttpStatus.NOT_FOUND, String.format(baseErrorMessage));
+            }
+            join(lobby, username);
+        }
+    }
 }

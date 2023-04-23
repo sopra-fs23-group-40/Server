@@ -56,7 +56,7 @@ public class LobbyController {
             throw new ResponseStatusException(HttpStatus.UNAUTHORIZED,
                     "User authentication failed.");
         }
-
+        lobbyService.joinLobby(id, passcode, userAuthDTO.getUsername());
     }
 
     /***
