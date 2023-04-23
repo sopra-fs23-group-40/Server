@@ -25,14 +25,15 @@ public class Game {
         //this.gameStatus = GameStatus.WAITING_FOR_PLAYER;
         this.creationDate = LocalDateTime.now();
     }
-    public boolean isGameOver(){
+
+    public boolean isGameOver() {
         for (Player player : players) {
             for (int i = 0; i < 20; i++) {
                 for (int j = 0; j < 20; j++) {
                     for (Block block : player.getInventory().getUnplayedBlocks()) {
                         for (int flip = 0; flip < 1; flip++) {
                             for (int rot = 0; rot < 4; rot++) {
-                                if (gameboard.canPlacePiece(i, j, block)){
+                                if (gameboard.canPlacePiece(i, j, block)) {
                                     return false;
                                 }
                                 block.rotateClockwise();
@@ -47,8 +48,7 @@ public class Game {
         return true;
     }
 
-    public GameBoard getGameboard() {
+    public GameBoard getGameBoard() {
         return gameboard;
     }
 }
-
