@@ -99,6 +99,9 @@ https://github.com/sopra-fs23-group-40/Server/issues/45
 
 #### Paul Grünenwald
 
+[Added method to add player to game #56](https://github.com/sopra-fs23-group-40/Server/issues/56)
+
+
 #### Thomas Joos
 
 #### Justin Verhoek
