@@ -59,12 +59,12 @@ public class LobbyService {
             String baseErrorMessage = "The user isn't the host of any lobby!";
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, String.format(baseErrorMessage));
         }
-        if (id_lobby == null){
+        if (id_lobby == null) {
             String baseErrorMessage = "There is no lobby with this id!";
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, String.format(baseErrorMessage));
         }
 
-        if (this_lobby != id_lobby){
+        if (this_lobby != id_lobby) {
             String baseErrorMessage = "This user isn't the host of the chosen lobby!";
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, String.format(baseErrorMessage));
         }
@@ -78,19 +78,24 @@ public class LobbyService {
         return id_lobby.getLobbyType();
     }
 
-    public void deleteLobby(String username){
-        Lobby this_lobby = lobbyRepository.findByHost(username);
-        if (this_lobby == null){
+    public void deleteLobby(String username, long id) {
+        Lobby id_lobby = lobbyRepository.findByLobbyId(id);
+        Lobby host_lobby = lobbyRepository.findByHost(username);
+        if (host_lobby == null || id_lobby == null) {
             String baseErrorMessage = "The user doesn't have a lobby!";
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, String.format(baseErrorMessage));
         }
-        lobbyRepository.delete(this_lobby);
+        if (host_lobby != id_lobby){
+            String baseErrorMessage = "This user isn't the host of the lobby!";
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, String.format(baseErrorMessage));
+        }
+        lobbyRepository.delete(id_lobby);
         lobbyRepository.flush();
     }
 
-    public boolean checkIfHost(String username, long id){
+    public boolean checkIfHost(String username, long id) {
         Lobby this_lobby = lobbyRepository.findByLobbyId(id);
-        if (this_lobby == null){
+        if (this_lobby == null) {
             String baseErrorMessage = "There is no lobby with this Id!";
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, String.format(baseErrorMessage));
         }
@@ -99,7 +104,7 @@ public class LobbyService {
 
     public Lobby getLobby(long id) {
         Lobby this_lobby = lobbyRepository.findByLobbyId(id);
-        if (this_lobby == null){
+        if (this_lobby == null) {
             String baseErrorMessage = "There is no lobby with this Id!";
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, String.format(baseErrorMessage));
         }
@@ -132,5 +137,37 @@ public class LobbyService {
             }
             join(lobby, username);
         }
+    }
+    public void leaveLobby(String username, long id) {
+        Lobby this_lobby = lobbyRepository.findByLobbyId(id);
+        if (this_lobby == null) {
+            String baseErrorMessage = "There is no lobby with this Id!";
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, String.format(baseErrorMessage));
+        }
+        String[] list = this_lobby.getPlayerList().split(",");
+        System.out.println(list);
+        boolean inList = false;
+        boolean first = true;
+        String newlist = "";
+        for (String s : list) {
+            if (s.equals(username)) {
+                inList = true;
+            }
+            else {
+                if (first) {
+                    newlist = newlist + s;
+                    first = false;
+                }
+                else {
+                    newlist = newlist + "," + s;
+                }
+            }
+        }
+        if (!inList) {
+            String baseErrorMessage = "There is no player with that username in the lobby!";
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, String.format(baseErrorMessage));
+        }
+        System.out.println(newlist);
+        this_lobby.setPlayerList(newlist);
     }
 }
