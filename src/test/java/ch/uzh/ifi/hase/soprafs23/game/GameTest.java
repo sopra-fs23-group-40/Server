@@ -7,10 +7,10 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class GameTest {
     private Game game = new Game();
-    Player player1 = new Player(CellStatus.PLAYER1);
+    Player player1 = new Player(CellStatus.PLAYER1, "TestName");
     @Test
     void isGameOverCannotPlaceReturnTrue(){
-        GameBoard gameBoard = game.getGameboard();
+        GameBoard gameBoard = game.getGameBoard();
         for (int i = 0; i<20;i+=2){
             for (int j = 0; j<20;j+=2){
                 gameBoard.placeBlock(player1,i,j,player1.getBlocks()[0]);
@@ -27,7 +27,7 @@ class GameTest {
     }
     @Test
     void isGameOverCanPlaceReturnFalse(){
-        GameBoard gameBoard = game.getGameboard();
+        GameBoard gameBoard = game.getGameBoard();
         gameBoard.placeBlock(player1,0,0,player1.getBlocks()[5]);
         assertFalse(game.isGameOver());
     }
