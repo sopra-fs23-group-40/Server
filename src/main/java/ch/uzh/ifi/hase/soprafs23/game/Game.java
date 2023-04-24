@@ -30,7 +30,7 @@ public class Game {
         for (Player player : players) {
             for (int i = 0; i < 20; i++) {
                 for (int j = 0; j < 20; j++) {
-                    for (Block block : player.getInventory()) {
+                    for (Block block : player.getInventory().getBlocks()) {
                         for (int flip = 0; flip < 1; flip++) {
                             for (int rot = 0; rot < 4; rot++) {
                                 if (gameboard.canPlacePiece(i, j, block)) {

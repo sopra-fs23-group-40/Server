@@ -52,8 +52,8 @@ public class Player {
         return blocks;
     }
 
-    public List<Block> getInventory() {
-        return inventory.getBlocks();
+    public Inventory getInventory() {
+        return inventory;
     }
 
     public void setPlayerName(String playerName) {
