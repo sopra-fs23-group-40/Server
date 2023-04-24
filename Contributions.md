@@ -99,12 +99,13 @@ https://github.com/sopra-fs23-group-40/Server/issues/45
 
 ### Paul Grünenwald
 
-Post mapping to create a game [#55](https://github.com/sopra-fs23-group-40/Server/issues/55) 
+Implement POST mapping to create a game [#55](https://github.com/sopra-fs23-group-40/Server/issues/55) 
 
-Post mapping to add player to a game  [#56](https://github.com/sopra-fs23-group-40/Server/issues/56) 
+Implement POST mapping to add player to a game  [#56](https://github.com/sopra-fs23-group-40/Server/issues/56) 
 
-Get mapping for a player's inventory  [#59](https://github.com/sopra-fs23-group-40/Server/issues/59) 
+Implement GET mapping for a player's inventory  [#59](https://github.com/sopra-fs23-group-40/Server/issues/59) 
 
+Implement PUT mapping to place a block  [#60](https://github.com/sopra-fs23-group-40/Server/issues/60) 
 
 
 
