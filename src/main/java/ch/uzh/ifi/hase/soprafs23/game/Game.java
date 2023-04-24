@@ -30,7 +30,7 @@ public class Game {
         for (Player player : players) {
             for (int i = 0; i < 20; i++) {
                 for (int j = 0; j < 20; j++) {
-                    for (Block block : player.getInventory().getUnplayedBlocks()) {
+                    for (Block block : player.getInventory()) {
                         for (int flip = 0; flip < 1; flip++) {
                             for (int rot = 0; rot < 4; rot++) {
                                 if (gameboard.canPlacePiece(i, j, block)) {
@@ -52,7 +52,7 @@ public class Game {
         return gameboard;
     }
 
-    public void addPlayer(String playerName) {
+    public String addPlayer(String playerName) {
 
         // Find the next free slot in the players array
         int nextSlot = -1;
@@ -75,9 +75,13 @@ public class Game {
         if (nextSlot != -1) {
             players[nextSlot].setPlayerName(playerName);
         }
+
+        return players[nextSlot].getPlayerId();
     }
 
     public String getId() {
         return gameId;
     }
+
+
 }
