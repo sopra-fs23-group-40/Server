@@ -50,12 +50,12 @@ public class GameController {
     @PostMapping("/games/{gameId}/players")
     @ResponseStatus(HttpStatus.CREATED)
     @ResponseBody
-    public void addPlayerToGame(@PathVariable String gameId, @RequestBody String playerName) {
+    public String addPlayerToGame(@PathVariable String gameId, @RequestBody String playerName) {
         // Retrieve the game with the given ID from the GameService
         Game game = gameService.getGameById(gameId);
 
         // Add the player to the game using the addPlayer method
-        game.addPlayer(playerName);
+        return game.addPlayer(playerName);
     }
 
     @GetMapping("/games/{gameId}/{playerId}/inventory")
