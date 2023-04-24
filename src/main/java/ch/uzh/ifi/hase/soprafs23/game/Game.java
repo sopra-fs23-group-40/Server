@@ -72,4 +72,8 @@ public class Game {
             players[nextSlot] = player;
         }
     }
+
+    public String getId() {
+        return gameId;
+    }
 }

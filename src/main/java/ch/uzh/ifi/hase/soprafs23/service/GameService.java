@@ -5,8 +5,19 @@ import ch.uzh.ifi.hase.soprafs23.game.Game;
 import ch.uzh.ifi.hase.soprafs23.game.GameBoard;
 import ch.uzh.ifi.hase.soprafs23.game.Player;
 
+import java.util.ArrayList;
+import java.util.List;
+
+
 public class GameService {
 
+    private List<Game> games = new ArrayList<>();
+
+    public Game createGame( ) {
+        Game newGame = new Game();
+        games.add(newGame);
+        return newGame;
+    }
 
     public void placeBlock(Game game, Player player, int row, int col, Block block) {
         GameBoard board = game.getGameBoard();

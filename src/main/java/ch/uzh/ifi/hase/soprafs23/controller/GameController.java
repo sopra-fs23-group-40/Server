@@ -2,6 +2,7 @@ package ch.uzh.ifi.hase.soprafs23.controller;
 
 import ch.uzh.ifi.hase.soprafs23.game.Game;
 import ch.uzh.ifi.hase.soprafs23.rest.dto.GameGetDTO;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import ch.uzh.ifi.hase.soprafs23.rest.mapper.DTOMapper;
 import org.springframework.http.HttpStatus;
@@ -10,6 +11,9 @@ import ch.uzh.ifi.hase.soprafs23.service.GameService;
 
 @RestController
 public class GameController {
+
+    @Autowired
+    private GameService gameService;
 
     /*
     @GetMapping("/{gameId)}")
@@ -23,12 +27,14 @@ public class GameController {
     }
      */
 
-
-
     @PostMapping("/games")
-    @ResponseStatus(HttpStatus.ACCEPTED)
+    @ResponseStatus(HttpStatus.CREATED)
     @ResponseBody
-    public void createGame() {
-        Game game = new Game();
+    public String createGame() {
+        // Create a new game using the GameService
+        Game game = gameService.createGame();
+
+        // Return the ID of the newly created game
+        return game.getId();
     }
 }
