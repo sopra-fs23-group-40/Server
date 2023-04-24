@@ -5,17 +5,17 @@ import ch.uzh.ifi.hase.soprafs23.game.Game;
 import ch.uzh.ifi.hase.soprafs23.game.GameBoard;
 import ch.uzh.ifi.hase.soprafs23.game.Player;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashMap;
+import java.util.Map;
 
 
 public class GameService {
 
-    private List<Game> games = new ArrayList<>();
+    private Map<String, Game> games = new HashMap<>();
 
-    public Game createGame( ) {
+    public Game createGame() {
         Game newGame = new Game();
-        games.add(newGame);
+        games.put(newGame.getId(), newGame);
         return newGame;
     }
 
@@ -30,4 +30,11 @@ public class GameService {
     }
 
 
+    public Game getGameById(String gameId) {
+        if (games.containsKey(gameId)) {
+            return games.get(gameId);
+        } else {
+            throw new RuntimeException("Game with ID " + gameId + " not found.");
+        }
+    }
 }
