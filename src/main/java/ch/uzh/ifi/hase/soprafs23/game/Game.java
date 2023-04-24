@@ -82,6 +82,18 @@ public class Game {
     public String getId() {
         return gameId;
     }
+    public Player getPlayerById(String playerId) {
+        if (playerId == null) {
+            throw new IllegalArgumentException("playerId cannot be null");
+        }
+
+        for (Player player : players) {
+            if (player != null && player.getPlayerId().equals(playerId)) {
+                return player;
+            }
+        }
+        return null; // return null if no player with the specified playerId is found
+    }
 
 
 }
