@@ -68,15 +68,16 @@ public class GameController {
         Player player = game.getPlayerById(playerId);
 
         // Create a new list of BlockGetDTO objects based on the player's blocks
-        List<BlockGetDTO> BlockGetDTOs = new ArrayList<>();
+        List<BlockGetDTO> blockGetDTOs = new ArrayList<>();
         for (Block block : player.getInventory().getBlocks()) {
-            BlockGetDTO BlockGetDTO = new BlockGetDTO(block.getBlockName(), block.getLength(), block.getHeight(), block.getShape());
-            BlockGetDTOs.add(BlockGetDTO);
+            BlockGetDTO blockGetDTO = new BlockGetDTO(block.getBlockName(), block.getLength(), block.getHeight(), block.getShape());
+            blockGetDTOs.add(blockGetDTO);
         }
 
         // Return the list of BlockGetDTO objects
-        return BlockGetDTOs;
+        return blockGetDTOs;
     }
+
 
     @GetMapping("/games/{gameId}/status")
     @ResponseStatus(HttpStatus.OK)
