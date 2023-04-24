@@ -15,10 +15,10 @@ class GameBoardTest {
 
     @BeforeEach
     public void setup() {
-        this.player1 = new Player(CellStatus.PLAYER1);
-        this.player2 = new Player(CellStatus.PLAYER2);
-        this.player3 = new Player(CellStatus.PLAYER3);
-        this.player4 = new Player(CellStatus.PLAYER4);
+        this.player1 = new Player(CellStatus.PLAYER1, null);
+        this.player2 = new Player(CellStatus.PLAYER2, null);
+        this.player3 = new Player(CellStatus.PLAYER3, null);
+        this.player4 = new Player(CellStatus.PLAYER4, null);
         this.gameBoard = new GameBoard();
     }
 
