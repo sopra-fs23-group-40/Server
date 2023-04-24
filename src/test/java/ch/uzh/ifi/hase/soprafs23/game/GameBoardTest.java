@@ -27,7 +27,7 @@ class GameBoardTest {
     @Test
     void placeBlock() {
         gameBoard.placeBlock(player1, 0, 0, player1.getBlocks()[1]);
-        assert (gameBoard.getBoard()[0][0].getStatus() == CellStatus.PLAYER1);
+        assert (gameBoard.getGameBoard()[0][0].getStatus() == CellStatus.PLAYER1);
     }
 
     @Test
