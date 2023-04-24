@@ -82,7 +82,7 @@ public class GameController {
     @GetMapping("/games/{gameId}/status")
     @ResponseStatus(HttpStatus.OK)
     @ResponseBody
-    public CellStatus[] getGameBoard(@PathVariable String gameId) {
+    public CellStatus[][] getGameBoard(@PathVariable String gameId) {
 
         // Retrieve the player object from the game by gameId and playerId
         Game game = gameService.getGameById(gameId);
