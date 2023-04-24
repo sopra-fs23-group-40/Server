@@ -1,10 +1,13 @@
 package ch.uzh.ifi.hase.soprafs23.controller;
 
 import ch.uzh.ifi.hase.soprafs23.game.Game;
+import ch.uzh.ifi.hase.soprafs23.game.GameBoard;
 import ch.uzh.ifi.hase.soprafs23.game.Inventory;
 import ch.uzh.ifi.hase.soprafs23.game.Player;
 import ch.uzh.ifi.hase.soprafs23.game.blocks.Block;
+import ch.uzh.ifi.hase.soprafs23.game.blocks.CellStatus;
 import ch.uzh.ifi.hase.soprafs23.rest.dto.BlockGetDTO;
+import ch.uzh.ifi.hase.soprafs23.rest.dto.GameBoardGetDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.http.HttpStatus;
@@ -54,7 +57,7 @@ public class GameController {
         game.addPlayer(playerName);
     }
 
-    @GetMapping("/games/{gameId}/{playerId}/inventories")
+    @GetMapping("/games/{gameId}/{playerId}/inventory")
     @ResponseStatus(HttpStatus.OK)
     @ResponseBody
     public List<BlockGetDTO> getPlayerInventory(@PathVariable String gameId, @PathVariable String playerId) {
@@ -72,6 +75,21 @@ public class GameController {
 
         // Return the list of BlockGetDTO objects
         return BlockGetDTOs;
+    }
+
+    @GetMapping("/games/{gameId}/status")
+    @ResponseStatus(HttpStatus.OK)
+    @ResponseBody
+    public CellStatus[] getGameBoard(@PathVariable String gameId) {
+
+        // Retrieve the player object from the game by gameId and playerId
+        Game game = gameService.getGameById(gameId);
+        GameBoard gameBoard = game.getGameBoard();
+
+        // Create GameGetDTO
+        GameBoardGetDTO gameBoardGetDTO = new GameBoardGetDTO(gameBoard);
+
+        return gameBoardGetDTO.getGameBoard();
     }
 
 }
