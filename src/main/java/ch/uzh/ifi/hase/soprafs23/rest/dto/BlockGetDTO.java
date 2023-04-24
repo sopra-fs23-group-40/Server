@@ -10,20 +10,23 @@ public class BlockGetDTO {
     private int length;
     private int height;
 
-    private CellStatus[] shape;
+    private CellStatus[][] shape;
 
-    public BlockGetDTO(String blockName, int length, int height, Cell[][] shape) {
+    public BlockGetDTO(String blockName, int length, int height, Cell[][] cells) {
         this.blockName = blockName;
         this.length = length;
         this.height = height;
-        // Flatten the 2D array to a 1D array
-        this.shape = Arrays.stream(shape)
-                .flatMap(Arrays::stream)
-                .map(Cell::getStatus)
-                .toArray(CellStatus[]::new);
+
+        this.shape = new CellStatus[cells.length][cells[0].length];
+
+        for (int i = 0; i < cells.length; i++) {
+            for (int j = 0; j < cells[0].length; j++) {
+                shape[i][j] = cells[i][j].getStatus();
+            }
+        }
     }
 
-    public CellStatus[] getShape() {
+    public CellStatus[][] getShape() {
         return shape;
     }
 }
