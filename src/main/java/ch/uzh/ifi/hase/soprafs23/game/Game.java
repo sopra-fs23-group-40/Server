@@ -52,7 +52,7 @@ public class Game {
         return gameboard;
     }
 
-    public void addPlayer(Player player) {
+    public void addPlayer(String playerName) {
 
         // Find the next free slot in the players array
         int nextSlot = -1;
@@ -73,7 +73,7 @@ public class Game {
 
         // Add the player to the next free slot
         if (nextSlot != -1) {
-            players[nextSlot] = player;
+            players[nextSlot].setPlayerName(playerName);
         }
     }
 

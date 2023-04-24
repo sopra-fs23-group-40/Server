@@ -1,6 +1,7 @@
 package ch.uzh.ifi.hase.soprafs23.controller;
 
 import ch.uzh.ifi.hase.soprafs23.game.Game;
+import ch.uzh.ifi.hase.soprafs23.game.Player;
 import ch.uzh.ifi.hase.soprafs23.rest.dto.GameGetDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -37,4 +38,16 @@ public class GameController {
         // Return the ID of the newly created game
         return game.getId();
     }
+
+    @PostMapping("/games/{gameId}/players")
+    @ResponseStatus(HttpStatus.CREATED)
+    @ResponseBody
+    public void addPlayerToGame(@PathVariable String gameId, @RequestBody String playerName) {
+        // Retrieve the game with the given ID from the GameService
+        Game game = gameService.getGameById(gameId);
+
+        // Add the player to the game using the addPlayer method
+        game.addPlayer(playerName);
+    }
+
 }

@@ -1,15 +1,21 @@
 package ch.uzh.ifi.hase.soprafs23.game;
-
+import java.util.UUID;
 import ch.uzh.ifi.hase.soprafs23.game.blocks.*;
 
 public class Player {
+
+
     private Block[] blocks;
     private Inventory inventory;
     private final CellStatus status;
+    private String playerId;
+    private String playerName;
 
-    public Player(CellStatus cellStatus) {
-        // Constructor logic here
+
+    public Player(CellStatus cellStatus, String playerName) {
         this.status = cellStatus;
+        this.playerName = playerName;
+        this.playerId = UUID.randomUUID().toString();
         this.inventory = new Inventory(this);
         this.blocks = new Block[] {
                 new Block1(this, cellStatus),
@@ -49,8 +55,15 @@ public class Player {
         return inventory;
     }
 
+    public void setPlayerName(String playerName) {
+        this.playerName = playerName;
+    }
 
     public CellStatus getStatus() {
         return status;
+    }
+
+    public String getPlayerName() {
+        return playerName;
     }
 }
