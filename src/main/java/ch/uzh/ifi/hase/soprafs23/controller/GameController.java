@@ -12,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.http.HttpStatus;
 import ch.uzh.ifi.hase.soprafs23.service.GameService;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -91,5 +92,30 @@ public class GameController {
 
         return gameBoardGetDTO.getGameBoard();
     }
+
+    @PutMapping("/games/{gameId}/{playerId}/move")
+    @ResponseStatus(HttpStatus.OK)
+    @ResponseBody
+    public void placeBlock(@PathVariable String gameId, @PathVariable String playerId, String blockName, int row, int column) {
+        // Retrieve the game with the given ID from the GameService
+        Game game = gameService.getGameById(gameId);
+        Player player = game.getPlayerById(playerId);
+        Inventory inventory = player.getInventory();
+        GameBoard gameBoard = game.getGameBoard();
+        Block block = inventory.getBlockByBlockName(blockName);
+
+        // Check whether move is valid
+        if (!gameBoard.canPlacePiece(row, column, block)) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Invalid move");
+        }
+
+        // Remove block from inventory and add it to gameBoard
+        inventory.removeBlock(block);
+        gameBoard.placeBlock(player, row, column, block);
+    }
+
+    // TO DO: Flip Block
+
+    // TO DO: Rotate Block
 
 }

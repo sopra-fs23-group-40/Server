@@ -37,4 +37,14 @@ public class Inventory {
         }
         return unplayedBlocks;
     }
+
+    public Block getBlockByBlockName(String blockName) {
+        for (Block block : blocks) {
+            if (block.getBlockName().equals(blockName)) {
+                return block;
+            }
+        }
+        throw new RuntimeException("Block not found in inventory: " + blockName);
+    }
+
 }
