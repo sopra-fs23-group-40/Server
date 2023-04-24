@@ -17,10 +17,10 @@ public class Game {
         this.gameId = UUID.randomUUID().toString();
         this.gameboard = new GameBoard();
         this.players = new Player[4];
-        this.players[0] = new Player(CellStatus.PLAYER1);
-        this.players[1] = new Player(CellStatus.PLAYER2);
-        this.players[2] = new Player(CellStatus.PLAYER3);
-        this.players[3] = new Player(CellStatus.PLAYER4);
+        this.players[0] = new Player(CellStatus.PLAYER1, null);
+        this.players[1] = new Player(CellStatus.PLAYER2, null);
+        this.players[2] = new Player(CellStatus.PLAYER3, null);
+        this.players[3] = new Player(CellStatus.PLAYER4, null);
         this.currentPlayer = this.players[0];
         //this.gameStatus = GameStatus.WAITING_FOR_PLAYER;
         this.creationDate = LocalDateTime.now();
@@ -53,10 +53,6 @@ public class Game {
     }
 
     public void addPlayer(Player player) {
-        // Check if the game already has four players
-        if (players.length >= 4) {
-            throw new RuntimeException("Game already has four players");
-        }
 
         // Find the next free slot in the players array
         int nextSlot = -1;
@@ -64,7 +60,15 @@ public class Game {
             if (players[i] == null) {
                 nextSlot = i;
                 break;
+            } else if (players[i].getPlayerName() == null) {
+                nextSlot = i;
+                break;
             }
+        }
+
+        // Throw an exception if there are no free slots
+        if (nextSlot == -1) {
+            throw new RuntimeException("No free slots in the players array");
         }
 
         // Add the player to the next free slot
