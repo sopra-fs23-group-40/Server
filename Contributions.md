@@ -103,6 +103,9 @@ Post mapping to create a game [#55](https://github.com/sopra-fs23-group-40/Serve
 
 Post mapping to add player to a game  [#56](https://github.com/sopra-fs23-group-40/Server/issues/56) 
 
+Get mapping for a player's inventory  [#59](https://github.com/sopra-fs23-group-40/Server/issues/59) 
+
+
 
 
 
