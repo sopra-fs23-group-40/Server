@@ -99,9 +99,10 @@ https://github.com/sopra-fs23-group-40/Server/issues/45
 
 ### Paul Grünenwald
 
-Added method to add player to game  [#56](https://github.com/sopra-fs23-group-40/Server/issues/56) 
+Post mapping to create a game [#55](https://github.com/sopra-fs23-group-40/Server/issues/55) 
 
-Added GameController, GameGetDTO, GamePostDTO tentative post mapping createGame() [#55](https://github.com/sopra-fs23-group-40/Server/issues/55) 
+Post mapping to add player to a game  [#56](https://github.com/sopra-fs23-group-40/Server/issues/56) 
+
 
 
 
