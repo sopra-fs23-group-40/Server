@@ -1,4 +1,5 @@
 package ch.uzh.ifi.hase.soprafs23.game;
+import java.util.List;
 import java.util.UUID;
 import ch.uzh.ifi.hase.soprafs23.game.blocks.*;
 
@@ -51,8 +52,8 @@ public class Player {
         return blocks;
     }
 
-    public Inventory getInventory() {
-        return inventory;
+    public List<Block> getInventory() {
+        return inventory.getBlocks();
     }
 
     public void setPlayerName(String playerName) {
@@ -65,5 +66,9 @@ public class Player {
 
     public String getPlayerName() {
         return playerName;
+    }
+
+    public String getPlayerId() {
+        return playerId;
     }
 }

@@ -11,7 +11,6 @@ public class Inventory {
         this.blocks = new ArrayList<>();
     }
 
-
     public List<Block> getBlocks() {
         return blocks;
     }
