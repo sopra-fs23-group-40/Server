@@ -39,7 +39,13 @@ public class GameController {
     @PostMapping("/games")
     @ResponseStatus(HttpStatus.CREATED)
     @ResponseBody
-    public String createGame() {
+    public String createGame(@PathVariable String lobbyId, @RequestHeader(value = "token") String token, @RequestHeader(value = "username") String username) {
+
+        // TODO: Check if lobby exists
+        // TODO: get players from Lobby
+        // TODO: check if player is the host of the lobby
+        // TODO: check if enough players are in the lobby
+
         // Create a new game using the GameService
         Game game = gameService.createGame();
 
