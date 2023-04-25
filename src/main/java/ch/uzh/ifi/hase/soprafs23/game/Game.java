@@ -1,5 +1,6 @@
 package ch.uzh.ifi.hase.soprafs23.game;
 import java.time.LocalDateTime;
+import java.util.List;
 import java.util.UUID;
 
 import ch.uzh.ifi.hase.soprafs23.game.blocks.Block;
@@ -93,6 +94,10 @@ public class Game {
             }
         }
         return null; // return null if no player with the specified playerId is found
+    }
+
+    public Player[] getPlayers() {
+        return players;
     }
 
 

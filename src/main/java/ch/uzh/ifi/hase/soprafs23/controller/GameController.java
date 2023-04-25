@@ -9,6 +9,7 @@ import ch.uzh.ifi.hase.soprafs23.game.blocks.Block;
 import ch.uzh.ifi.hase.soprafs23.game.blocks.CellStatus;
 import ch.uzh.ifi.hase.soprafs23.rest.dto.BlockGetDTO;
 import ch.uzh.ifi.hase.soprafs23.rest.dto.GameBoardGetDTO;
+import ch.uzh.ifi.hase.soprafs23.rest.dto.PlayerGetDTO;
 import ch.uzh.ifi.hase.soprafs23.rest.dto.UserAuthDTO;
 import ch.uzh.ifi.hase.soprafs23.rest.mapper.DTOMapper;
 import ch.uzh.ifi.hase.soprafs23.service.LobbyService;
@@ -76,6 +77,20 @@ public class GameController {
 
         // Return the ID of the newly created game
         return game.getId();
+    }
+
+    @GetMapping("/games/{gameId}/players")
+    @ResponseStatus(HttpStatus.OK)
+    @ResponseBody
+    public List<PlayerGetDTO> getPlayers(@PathVariable String gameId) {
+        // Retrieve the game with the given ID from the GameService
+        Game game = gameService.getGameById(gameId);
+        List<PlayerGetDTO> playerGetDTOS = new ArrayList<>();
+        for(Player player: game.getPlayers()) {
+            PlayerGetDTO playerGetDTO = new PlayerGetDTO(player.getPlayerName(), player.getPlayerId());
+            playerGetDTOS.add(playerGetDTO);
+        }
+        return playerGetDTOS;
     }
 
     @PostMapping("/games/{gameId}/players")
