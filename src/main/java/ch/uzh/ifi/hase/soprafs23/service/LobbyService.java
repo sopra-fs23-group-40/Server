@@ -137,7 +137,7 @@ public class LobbyService {
         else {
             if(!Objects.equals(lobby.getLobbyToken(), passcode)) {
                 String baseErrorMessage = "Wrong passcode!";
-                throw new ResponseStatusException(HttpStatus.NOT_FOUND, String.format(baseErrorMessage));
+                throw new ResponseStatusException(HttpStatus.BAD_REQUEST, String.format(baseErrorMessage));
             }
             join(lobby, username);
         }

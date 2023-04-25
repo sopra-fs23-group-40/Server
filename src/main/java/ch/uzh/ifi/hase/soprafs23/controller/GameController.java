@@ -9,7 +9,10 @@ import ch.uzh.ifi.hase.soprafs23.game.blocks.Block;
 import ch.uzh.ifi.hase.soprafs23.game.blocks.CellStatus;
 import ch.uzh.ifi.hase.soprafs23.rest.dto.BlockGetDTO;
 import ch.uzh.ifi.hase.soprafs23.rest.dto.GameBoardGetDTO;
+import ch.uzh.ifi.hase.soprafs23.rest.dto.UserAuthDTO;
+import ch.uzh.ifi.hase.soprafs23.rest.mapper.DTOMapper;
 import ch.uzh.ifi.hase.soprafs23.service.LobbyService;
+import ch.uzh.ifi.hase.soprafs23.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.http.HttpStatus;
@@ -28,6 +31,9 @@ public class GameController {
     @Autowired
     private LobbyService lobbyService;
 
+    @Autowired
+    private UserService userService;
+
     /*
     @GetMapping("/{gameId)}")
     @ResponseStatus(HttpStatus.OK)
@@ -43,8 +49,9 @@ public class GameController {
     @PostMapping("/games")
     @ResponseStatus(HttpStatus.CREATED)
     @ResponseBody
-    public String createGame(@PathVariable String lobbyId, @RequestHeader(value = "token") String token, @RequestHeader(value = "username") String username) {
-
+    public String createGame(@RequestBody String lobbyId, @RequestHeader(value = "token") String token, @RequestHeader(value = "username") String username) {
+        UserAuthDTO userAuthDTO = DTOMapper.INSTANCE.convertVariablesToUserAuthDTO(username, token);
+        userService.checkAuthentication(userAuthDTO.getUsername(), userAuthDTO.getToken());
         // gets the lobby from the lobbyService (check if lobby exists is already included)
         Lobby lobby = lobbyService.getLobby(Long.parseLong(lobbyId));
 

@@ -120,9 +120,12 @@ public class UserService {
     }
 
     // merge with method above?
-    public boolean checkAuthentication(String username, String token) {
+    public void checkAuthentication(String username, String token) {
         User userByUsername = userRepository.findByUsername(username);
-        return userByUsername != null && userByUsername.getToken().equals(token);
+        if (!(userByUsername != null && userByUsername.getToken().equals(token))) {
+            throw new ResponseStatusException(HttpStatus.UNAUTHORIZED,
+                    "User authentication failed.");
+        }
     }
 
     public Statistics getStatistics(String token) {
@@ -130,7 +133,7 @@ public class UserService {
       return statisticsRepository.findByUserId(userByToken.getId());
     }
 
-  /**
+    /**
    * This is a helper method that will check the uniqueness criteria of the
    * username and the name
    * defined in the User entity. The method will do nothing if the input is unique
