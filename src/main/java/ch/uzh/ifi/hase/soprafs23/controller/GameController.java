@@ -61,12 +61,19 @@ public class GameController {
                     "The user is not the host of this lobby! Only the host can start the lobby.");
         }
 
-        // TODO: Check if enough players are in the lobby
+        // checks if exactly 4 players are in the lobby
+        if(lobby.getPlayerList().split(",").length != lobby.getMaxPlayers()) {
+            String baseErrorMessage = "The lobby doesn't have exactly 4 players!";
+            throw new ResponseStatusException(HttpStatus.CONFLICT, String.format(baseErrorMessage));
+        }
 
         // Create a new game using the GameService
         Game game = gameService.createGame();
 
-        // TODO: get players from Lobby and add them to the game
+        // adds the playerNames to the new game
+        for(String playerName: lobby.getPlayerList().split(",")) {
+            game.addPlayer(playerName);
+        }
 
         // Return the ID of the newly created game
         return game.getId();
