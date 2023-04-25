@@ -78,6 +78,7 @@ public class LobbyService {
         lobbyRepository.save(id_lobby);
         lobbyRepository.flush();
         return id_lobby.getLobbyType();
+        // TODO: Inform other players about this change (lobby type changed)
     }
 
     public void deleteLobby(String username, long id) {
@@ -93,6 +94,7 @@ public class LobbyService {
         }
         lobbyRepository.delete(id_lobby);
         lobbyRepository.flush();
+        // TODO: Inform other players about this change (lobby deleted)
     }
 
     public boolean checkIfHost(String username, long id) {
@@ -118,6 +120,7 @@ public class LobbyService {
         lobby.setPlayerList(newPlayerList);
         lobbyRepository.save(lobby);
         lobbyRepository.flush();
+        // TODO: Inform other players about this change (player joined)
     }
 
     public void joinLobby(Long id, String passcode, String username) {
