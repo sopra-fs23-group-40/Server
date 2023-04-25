@@ -1,5 +1,6 @@
 package ch.uzh.ifi.hase.soprafs23.controller;
 
+import ch.uzh.ifi.hase.soprafs23.entity.Lobby;
 import ch.uzh.ifi.hase.soprafs23.game.Game;
 import ch.uzh.ifi.hase.soprafs23.game.GameBoard;
 import ch.uzh.ifi.hase.soprafs23.game.Inventory;
@@ -8,6 +9,7 @@ import ch.uzh.ifi.hase.soprafs23.game.blocks.Block;
 import ch.uzh.ifi.hase.soprafs23.game.blocks.CellStatus;
 import ch.uzh.ifi.hase.soprafs23.rest.dto.BlockGetDTO;
 import ch.uzh.ifi.hase.soprafs23.rest.dto.GameBoardGetDTO;
+import ch.uzh.ifi.hase.soprafs23.service.LobbyService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.http.HttpStatus;
@@ -17,12 +19,14 @@ import org.springframework.web.server.ResponseStatusException;
 import java.util.ArrayList;
 import java.util.List;
 
-
 @RestController
 public class GameController {
 
     @Autowired
     private GameService gameService;
+
+    @Autowired
+    private LobbyService lobbyService;
 
     /*
     @GetMapping("/{gameId)}")
@@ -41,13 +45,21 @@ public class GameController {
     @ResponseBody
     public String createGame(@PathVariable String lobbyId, @RequestHeader(value = "token") String token, @RequestHeader(value = "username") String username) {
 
-        // TODO: Check if lobby exists
-        // TODO: get players from Lobby
-        // TODO: check if player is the host of the lobby
-        // TODO: check if enough players are in the lobby
+        // gets the lobby from the lobbyService (check if lobby exists is already included)
+        Lobby lobby = lobbyService.getLobby(Long.parseLong(lobbyId));
+
+        // checks if the user is the host of the lobby
+        if(!lobby.getHost().equals(username)) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST,
+                    "The user is not the host of this lobby! Only the host can start the lobby.");
+        }
+
+        // TODO: Check if enough players are in the lobby
 
         // Create a new game using the GameService
         Game game = gameService.createGame();
+
+        // TODO: get players from Lobby and add them to the game
 
         // Return the ID of the newly created game
         return game.getId();
