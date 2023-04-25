@@ -134,6 +134,15 @@ public class LobbyService {
             throw new ResponseStatusException(HttpStatus.CONFLICT, String.format(baseErrorMessage));
         }
 
+        // check if lobby getPlayerList already contains the player
+        String[] list = lobby.getPlayerList().split(",");
+        for (String s : list) {
+            if (s.equals(username)) {
+                String baseErrorMessage = "The player is already in the lobby!";
+                throw new ResponseStatusException(HttpStatus.CONFLICT, String.format(baseErrorMessage));
+            }
+        }
+
         if(lobby.getLobbyType() == LobbyType.PUBLIC) {
             join(lobby, username);
         }
