@@ -9,6 +9,7 @@ import ch.uzh.ifi.hase.soprafs23.rest.dto.LobbyPutDTO;
 import ch.uzh.ifi.hase.soprafs23.rest.dto.UserAuthDTO;
 import ch.uzh.ifi.hase.soprafs23.rest.mapper.DTOMapper;
 import ch.uzh.ifi.hase.soprafs23.service.LobbyService;
+import ch.uzh.ifi.hase.soprafs23.service.SSE;
 import ch.uzh.ifi.hase.soprafs23.service.UserService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -22,10 +23,12 @@ public class LobbyController {
 
     private final LobbyService lobbyService;
     private final UserService userService;
+    private final SSE sse;
 
-    LobbyController(LobbyService lobbyService, UserService userService) {
+    LobbyController(LobbyService lobbyService, UserService userService, SSE sse) {
         this.lobbyService = lobbyService;
         this.userService = userService;
+        this.sse = sse;
     }
 
 
@@ -54,6 +57,7 @@ public class LobbyController {
         UserAuthDTO userAuthDTO = DTOMapper.INSTANCE.convertVariablesToUserAuthDTO(username, token);
         userService.checkAuthentication(userAuthDTO.getUsername(), userAuthDTO.getToken());
         lobbyService.joinLobby(lobbyPutDTO.getId(), lobbyPutDTO.getPasscode(), userAuthDTO.getUsername());
+        sse.send("JOINED");
     }
 
     /***
@@ -98,7 +102,7 @@ public class LobbyController {
     @GetMapping("/lobby/{id}")
     @ResponseStatus(HttpStatus.OK)
     @ResponseBody
-    public ResponseEntity<LobbyGetDTO> getLobby(@PathVariable(value = "id") long id, @RequestHeader(value = "token") String token, @RequestHeader(value = "username") String username ) {
+    public ResponseEntity<LobbyGetDTO> getLobby(@PathVariable(value = "id") long id, @RequestHeader(value = "token") String token, @RequestHeader(value = "username") String username) {
         UserAuthDTO userAuthDTO = DTOMapper.INSTANCE.convertVariablesToUserAuthDTO(username, token);
         userService.checkAuthentication(userAuthDTO.getUsername(), userAuthDTO.getToken());
         Lobby lobby = lobbyService.getLobby(id);
@@ -117,8 +121,9 @@ public class LobbyController {
     @PutMapping("/leavelobby/{id}")
     @ResponseStatus(HttpStatus.OK)
     @ResponseBody
-    public void leaveLobby(@PathVariable(value = "id") long id, @RequestBody UserAuthDTO userAuthDTO){
+    public void leaveLobby(@PathVariable(value = "id") long id, @RequestBody UserAuthDTO userAuthDTO) {
         userService.checkAuthentication(userAuthDTO.getUsername(), userAuthDTO.getToken());
         lobbyService.leaveLobby(userAuthDTO.getUsername(), id);
+        sse.send("LEFT");
     }
 }
