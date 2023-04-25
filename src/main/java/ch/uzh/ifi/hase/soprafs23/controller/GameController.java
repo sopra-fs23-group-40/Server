@@ -13,7 +13,6 @@ import ch.uzh.ifi.hase.soprafs23.rest.dto.UserAuthDTO;
 import ch.uzh.ifi.hase.soprafs23.rest.mapper.DTOMapper;
 import ch.uzh.ifi.hase.soprafs23.service.LobbyService;
 import ch.uzh.ifi.hase.soprafs23.service.UserService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.http.HttpStatus;
 import ch.uzh.ifi.hase.soprafs23.service.GameService;
@@ -24,16 +23,17 @@ import java.util.List;
 
 @RestController
 public class GameController {
+    private final GameService gameService;
 
-    @Autowired
-    private GameService gameService;
+    private final LobbyService lobbyService;
 
-    @Autowired
-    private LobbyService lobbyService;
+    private final UserService userService;
 
-    @Autowired
-    private UserService userService;
-
+    GameController(LobbyService lobbyService, UserService userService, GameService gameService) {
+        this.lobbyService = lobbyService;
+        this.userService = userService;
+        this.gameService = gameService;
+    }
     /*
     @GetMapping("/{gameId)}")
     @ResponseStatus(HttpStatus.OK)
@@ -49,11 +49,11 @@ public class GameController {
     @PostMapping("/games")
     @ResponseStatus(HttpStatus.CREATED)
     @ResponseBody
-    public String createGame(@RequestBody String lobbyId, @RequestHeader(value = "token") String token, @RequestHeader(value = "username") String username) {
+    public String createGame(@RequestBody long lobbyId, @RequestHeader(value = "token") String token, @RequestHeader(value = "username") String username) {
         UserAuthDTO userAuthDTO = DTOMapper.INSTANCE.convertVariablesToUserAuthDTO(username, token);
         userService.checkAuthentication(userAuthDTO.getUsername(), userAuthDTO.getToken());
         // gets the lobby from the lobbyService (check if lobby exists is already included)
-        Lobby lobby = lobbyService.getLobby(Long.parseLong(lobbyId));
+        Lobby lobby = lobbyService.getLobby(lobbyId);
 
         // checks if the user is the host of the lobby
         if(!lobby.getHost().equals(username)) {
@@ -63,11 +63,10 @@ public class GameController {
 
         // checks if exactly 4 players are in the lobby
         if(lobby.getPlayerList().split(",").length != lobby.getMaxPlayers()) {
-            String baseErrorMessage = "The lobby doesn't have exactly 4 players!";
-            throw new ResponseStatusException(HttpStatus.CONFLICT, String.format(baseErrorMessage));
+            throw new ResponseStatusException(HttpStatus.CONFLICT,
+                    "The lobby doesn't have exactly 4 players!");
         }
 
-        // Create a new game using the GameService
         Game game = gameService.createGame();
 
         // adds the playerNames to the new game
