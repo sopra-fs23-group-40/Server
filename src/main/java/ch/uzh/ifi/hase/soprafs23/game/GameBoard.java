@@ -103,6 +103,7 @@ public class GameBoard {
             return true;
         }
 
+        // TODO: I got an error that I cannot place Block6 on board. Couldn't check yet if this works for that block
         //check that the piece touches a piece of the same status in a corner
         for (int i = 0; i < height; i++) {
             for (int j = 0; j < length; j++) {
