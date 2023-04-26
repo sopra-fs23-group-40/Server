@@ -143,7 +143,7 @@ public class GameController {
     @PutMapping("/games/{gameId}/{playerId}/move")
     @ResponseStatus(HttpStatus.OK)
     @ResponseBody
-    public void placeBlock(@PathVariable String gameId, @PathVariable String playerId, String blockName, int row, int column) {
+    public void placeBlock(@PathVariable String gameId, @PathVariable String playerId, @RequestBody String blockName, @RequestBody int row, @RequestBody int column) {
         // Retrieve the game with the given ID from the GameService
         Game game = gameService.getGameById(gameId);
         Player player = game.getPlayerById(playerId);
