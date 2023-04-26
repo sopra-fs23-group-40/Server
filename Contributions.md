@@ -97,8 +97,21 @@ https://github.com/sopra-fs23-group-40/Server/issues/45
 
 Added PlayerGetDTO and implemented getPlayers() endpoint to get all players in a game by given gameID: https://github.com/sopra-fs23-group-40/Server/issues/63
 
-Implemented /joinLobby endpoint and added joinLobby method in LobbyService: [21e0b23](https://github.com/sopra-fs23-group-40/Server/commit/21e0b23a8849d8f160de168b2cf280604418d7e9)
+Implemented /joinLobby endpoint and added joinLobby method in LobbyService: https://github.com/sopra-fs23-group-40/Server/issues/57
 
+Added LobbyPutDTO: [f5c8253](https://github.com/sopra-fs23-group-40/Server/commit/f5c82536b41045e451c21a9e9129ef6f85d5a211)
+
+Closed issue adding Locks to Overview with: [a3c363d](https://github.com/sopra-fs23-group-40/Client/commit/a3c363df6bca36b661b8d5785bdab97b6826ebcd)
+
+Added JoinPrivateLobby View: [53c3885](https://github.com/sopra-fs23-group-40/Client/commit/53c3885b9cf776743e1be8dc134cd73cc5a794ca) and Closed with https://github.com/sopra-fs23-group-40/Server/issues/30
+
+Added joinPublicLobby method in Overview and get redirected directly to the public lobby: [738423c](https://github.com/sopra-fs23-group-40/Client/commit/738423c877c627072d0793ea3a5144961aba0b22)
+
+Added startGame() function in Lobby.js and get redirected to game: [76112f5](https://github.com/sopra-fs23-group-40/Client/commit/76112f5d28fb7c901393139648bd0c105a7e55ef)
+
+Used the external API for the Avatars in Lobby and on the Profile Page: https://github.com/sopra-fs23-group-40/Client/issues/30
+
+Closed createGame() in GameController method with: [14688f0](https://github.com/sopra-fs23-group-40/Server/commit/14688f046fd056ad9e17acd13d6586d3b23a06b5)
 
 ### Thomas Stoller 
 
