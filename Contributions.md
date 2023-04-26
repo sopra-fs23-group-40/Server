@@ -97,7 +97,7 @@ https://github.com/sopra-fs23-group-40/Server/issues/45
 
 Added PlayerGetDTO and implemented getPlayers() endpoint to get all players in a game by given gameID: https://github.com/sopra-fs23-group-40/Server/issues/63
 
-Implemented /joinLobby endpoint and added joinLobby method in LobbyService: https://github.com/sopra-fs23-group-40/Server/commit/21e0b23a8849d8f160de168b2cf280604418d7e9
+Implemented /joinLobby endpoint and added joinLobby method in LobbyService: [21e0b23]
 
 
 ### Thomas Stoller 
