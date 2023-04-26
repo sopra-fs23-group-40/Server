@@ -115,6 +115,41 @@ Closed createGame() in GameController method with: [14688f0](https://github.com/
 
 ### Thomas Stoller 
 
+https://github.com/sopra-fs23-group-40/Server/issues/67
+
+which includes Tasks: https://github.com/sopra-fs23-group-40/Client/issues/27, https://github.com/sopra-fs23-group-40/Client/issues/28, https://github.com/sopra-fs23-group-40/Server/issues/70, https://github.com/sopra-fs23-group-40/Server/issues/71, https://github.com/sopra-fs23-group-40/Server/issues/72
+
+Server:
+Added findByLobbyId in LobbyRepository
+Added delete lobby and check host Rest points in LobbyController and the corresponding services in LobbyService
+https://github.com/sopra-fs23-group-40/Server/commit/c7c6201d07e3c1c5914c243c78e1124487fb8993
+
+Added playerlist to Lobby Entity & LobbyGetDTO.
+Added getLobby restpoint & service.
+https://github.com/sopra-fs23-group-40/Server/commit/8f9cc0b8f4b62b079072b8f134fa73c22e0d3921
+
+Added in build.gradle: implementation 'org.springframework.boot:spring-boot-starter-webflux' & testImplementation 'org.springframework.boot:spring-boot-starter-test'
+Added SSE to LobbyController and to leave and join methods.
+Added LobbyHandler for the SSE
+Added SSE for the SSE functions
+https://github.com/sopra-fs23-group-40/Server/commit/ca346b28f18b60d7d9e77cf01672c2bbb1a54518
+
+
+Client:
+Added leavelobby/deletelobby in Lobby.js
+https://github.com/sopra-fs23-group-40/Client/commit/b58388b9365f971ea3396084ee38a02007809107
+
+Added Eventsource
+https://github.com/sopra-fs23-group-40/Client/commit/55041a9a45701c8e54883b098798a28faace40f3
+
+Changed eventsource URL (added baseURL to also make it work on GoogleCloud
+made token and username 'global' since we use it a lot.
+Added 2 different reactions to Events.
+https://github.com/sopra-fs23-group-40/Client/commit/fa1c45525d22bba8291684135c30eaa69a6eed65
+
+
+
+
 ### Paul Grünenwald
 
 Implement POST mapping to create a game [#55](https://github.com/sopra-fs23-group-40/Server/issues/55) 
