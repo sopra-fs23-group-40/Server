@@ -4,6 +4,7 @@ package ch.uzh.ifi.hase.soprafs23.controller;
 import ch.uzh.ifi.hase.soprafs23.constant.LobbyStatus;
 import ch.uzh.ifi.hase.soprafs23.constant.LobbyType;
 import ch.uzh.ifi.hase.soprafs23.entity.Lobby;
+import ch.uzh.ifi.hase.soprafs23.entity.LobbyEvent;
 import ch.uzh.ifi.hase.soprafs23.rest.dto.LobbyGetDTO;
 import ch.uzh.ifi.hase.soprafs23.rest.dto.LobbyPutDTO;
 import ch.uzh.ifi.hase.soprafs23.rest.dto.UserAuthDTO;
@@ -57,7 +58,7 @@ public class LobbyController {
         UserAuthDTO userAuthDTO = DTOMapper.INSTANCE.convertVariablesToUserAuthDTO(username, token);
         userService.checkAuthentication(userAuthDTO.getUsername(), userAuthDTO.getToken());
         lobbyService.joinLobby(lobbyPutDTO.getId(), lobbyPutDTO.getPasscode(), userAuthDTO.getUsername());
-        sse.send("JOINED");
+        sse.send(new LobbyEvent("JOINED", lobbyPutDTO.getId()));
     }
 
     /***
@@ -88,7 +89,7 @@ public class LobbyController {
         UserAuthDTO userAuthDTO = DTOMapper.INSTANCE.convertVariablesToUserAuthDTO(username, token);
         userService.checkAuthentication(userAuthDTO.getUsername(), userAuthDTO.getToken());
         lobbyService.deleteLobby(userAuthDTO.getUsername(), id);
-        sse.send("DELETED");
+        sse.send(new LobbyEvent("DELETED", id));
     }
 
     @GetMapping("/lobby/{id}/checkhost")
@@ -125,6 +126,6 @@ public class LobbyController {
     public void leaveLobby(@PathVariable(value = "id") long id, @RequestBody UserAuthDTO userAuthDTO) {
         userService.checkAuthentication(userAuthDTO.getUsername(), userAuthDTO.getToken());
         lobbyService.leaveLobby(userAuthDTO.getUsername(), id);
-        sse.send("LEFT");
+        sse.send(new LobbyEvent("LEFT", id));
     }
 }
