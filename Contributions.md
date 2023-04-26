@@ -114,6 +114,32 @@ Implement PUT mapping to place a block  [#60](https://github.com/sopra-fs23-grou
 
 ### Thomas Joos
 
+Added an inventory which shows the Player's blocks: 
+https://github.com/sopra-fs23-group-40/Client/issues/25
+
+Added the functionality to pick up a block from the inventory: 
+https://github.com/sopra-fs23-group-40/Client/issues/9
+(functionality added, not graphically)
+
+Created the functionality to place a block (in the client):
+https://github.com/sopra-fs23-group-40/Client/issues/13
+
+Removing a block from the inventory once it has been placed:
+https://github.com/sopra-fs23-group-40/Client/issues/29
+
+Updated some of the Server's REST Endpoints and functionality to make it work together with the client (for tasks above in the client).
+
+https://github.com/sopra-fs23-group-40/Server/commit/de4f4419fb6f2844574518325a7422eb5cdaa745
+
+https://github.com/sopra-fs23-group-40/Server/commit/63bef120b4b160fec6111a0388db724102f5c2f9
+
+https://github.com/sopra-fs23-group-40/Server/commit/30347f21bbb5c08f1a871a7d5694e47405106fe4
+
+https://github.com/sopra-fs23-group-40/Server/commit/53490d7d38a7f4d41fb9a9f80cd76bc1eaad6f7b
+
+Updated some of the Client's layot for the LobbyView.
+
+
 ### Justin Verhoek
 
 
