@@ -7,10 +7,7 @@ import ch.uzh.ifi.hase.soprafs23.game.Inventory;
 import ch.uzh.ifi.hase.soprafs23.game.Player;
 import ch.uzh.ifi.hase.soprafs23.game.blocks.Block;
 import ch.uzh.ifi.hase.soprafs23.game.blocks.CellStatus;
-import ch.uzh.ifi.hase.soprafs23.rest.dto.BlockGetDTO;
-import ch.uzh.ifi.hase.soprafs23.rest.dto.GameBoardGetDTO;
-import ch.uzh.ifi.hase.soprafs23.rest.dto.PlayerGetDTO;
-import ch.uzh.ifi.hase.soprafs23.rest.dto.UserAuthDTO;
+import ch.uzh.ifi.hase.soprafs23.rest.dto.*;
 import ch.uzh.ifi.hase.soprafs23.rest.mapper.DTOMapper;
 import ch.uzh.ifi.hase.soprafs23.service.LobbyService;
 import ch.uzh.ifi.hase.soprafs23.service.UserService;
@@ -20,6 +17,7 @@ import ch.uzh.ifi.hase.soprafs23.service.GameService;
 import org.springframework.web.server.ResponseStatusException;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 @RestController
@@ -140,25 +138,35 @@ public class GameController {
         return gameBoardGetDTO.getGameBoard();
     }
 
-    @PutMapping("/games/{gameId}/{playerId}/move")
+    @PutMapping("/games/{gameId}/{username}/move")
     @ResponseStatus(HttpStatus.OK)
     @ResponseBody
-    public void placeBlock(@PathVariable String gameId, @PathVariable String playerId, @RequestBody String blockName, @RequestBody int row, @RequestBody int column) {
+    public void placeBlock(@PathVariable String gameId, @PathVariable String username, @RequestBody BlockPlaceDTO blockPlaceDTO) {
         // Retrieve the game with the given ID from the GameService
         Game game = gameService.getGameById(gameId);
-        Player player = game.getPlayerById(playerId);
+        if(game == null) throw new ResponseStatusException(HttpStatus.NOT_FOUND,
+                "Game with gameId " + gameId + " not found!");
+
+        Player player = game.getPlayerByUsername(username);
+        if(player == null) throw new ResponseStatusException(HttpStatus.NOT_FOUND,
+                "Player with username " + username + " not found!\n" +
+                "Players in game " + gameId + ": " + Arrays.stream(game.getPlayers()).map(Player::getPlayerName));
+
         Inventory inventory = player.getInventory();
         GameBoard gameBoard = game.getGameBoard();
-        Block block = inventory.getBlockByBlockName(blockName);
+        Block block = inventory.getBlockByBlockName(blockPlaceDTO.getBlockName());
+        if(block == null) throw new ResponseStatusException(HttpStatus.NOT_FOUND,
+                "Block with blockName " + blockPlaceDTO.getBlockName() + " not found!\n" +
+                        "Possible blocks: " + inventory.getBlocks());
 
         // Check whether move is valid
-        if (!gameBoard.canPlacePiece(row, column, block)) {
+        if (!gameBoard.canPlacePiece(blockPlaceDTO.getRow(), blockPlaceDTO.getColumn(), block)) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Invalid move");
         }
 
         // Remove block from inventory and add it to gameBoard
         inventory.removeBlock(block);
-        gameBoard.placeBlock(player, row, column, block);
+        gameBoard.placeBlock(player, blockPlaceDTO.getRow(), blockPlaceDTO.getColumn(), block);
     }
 
     // TO DO: Flip Block
