@@ -17,17 +17,16 @@ public class SSE {
         this.processor = processor;
     }
 
-    @PostMapping("/live-scores")
+    @PostMapping("/lobby-updates")
     @ResponseStatus(HttpStatus.CREATED)
-    public Mono<String> send(@RequestBody String liveScore) {
-        System.out.println("Received '{}'" + liveScore);
-        processor.publish(liveScore);
-        return Mono.just(liveScore);
+    public Mono<String> send(@RequestBody String message) {
+        processor.publish(message);
+        return Mono.just(message);
     }
 
-    @GetMapping(path = "/live-scores", produces = MediaType.TEXT_EVENT_STREAM_VALUE)
+    @GetMapping(path = "/lobby-updates", produces = MediaType.TEXT_EVENT_STREAM_VALUE)
     public Flux<ServerSentEvent<Object>> consumer() {
         return Flux.create(sink -> processor.subscribe(sink::next)).map(
-                liveScore -> ServerSentEvent.builder().data(liveScore).event("message").build());
+                message -> ServerSentEvent.builder().data(message).event("message").build());
     }
 }

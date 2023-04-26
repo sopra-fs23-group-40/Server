@@ -88,6 +88,7 @@ public class LobbyController {
         UserAuthDTO userAuthDTO = DTOMapper.INSTANCE.convertVariablesToUserAuthDTO(username, token);
         userService.checkAuthentication(userAuthDTO.getUsername(), userAuthDTO.getToken());
         lobbyService.deleteLobby(userAuthDTO.getUsername(), id);
+        sse.send("DELETED");
     }
 
     @GetMapping("/lobby/{id}/checkhost")
