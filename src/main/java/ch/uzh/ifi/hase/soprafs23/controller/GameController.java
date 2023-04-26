@@ -157,7 +157,8 @@ public class GameController {
         Block block = inventory.getBlockByBlockName(blockPlaceDTO.getBlockName());
         if(block == null) throw new ResponseStatusException(HttpStatus.NOT_FOUND,
                 "Block with blockName " + blockPlaceDTO.getBlockName() + " not found!\n" +
-                        "Possible blocks: " + inventory.getBlocks());
+                        "Possible blocks (from " + username + "'s inventory):\n"
+                        + inventory.getBlocks());
 
         // Check whether move is valid
         if (!gameBoard.canPlacePiece(blockPlaceDTO.getRow(), blockPlaceDTO.getColumn(), block)) {
