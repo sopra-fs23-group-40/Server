@@ -137,4 +137,9 @@ Updated some of the Client's layout for the LobbyView, commits [1da46f3](https:/
 
 ### Justin Verhoek
 
+created the gameboard in the front end https://github.com/sopra-fs23-group-40/Server/issues/58
+
+created test for the LobbyController https://github.com/sopra-fs23-group-40/Server/issues/64
+
+
 
