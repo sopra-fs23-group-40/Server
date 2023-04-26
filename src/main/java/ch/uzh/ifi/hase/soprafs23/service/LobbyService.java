@@ -78,6 +78,7 @@ public class LobbyService {
         lobbyRepository.save(id_lobby);
         lobbyRepository.flush();
         return id_lobby.getLobbyType();
+        // TODO: Inform other players about this change (lobby type changed)
     }
 
     public void deleteLobby(String username, long id) {
@@ -93,6 +94,7 @@ public class LobbyService {
         }
         lobbyRepository.delete(id_lobby);
         lobbyRepository.flush();
+        // TODO: Inform other players about this change (lobby deleted)
     }
 
     public boolean checkIfHost(String username, long id) {
@@ -118,6 +120,7 @@ public class LobbyService {
         lobby.setPlayerList(newPlayerList);
         lobbyRepository.save(lobby);
         lobbyRepository.flush();
+        // TODO: Inform other players about this change (player joined)
     }
 
     public void joinLobby(Long id, String passcode, String username) {
@@ -131,13 +134,22 @@ public class LobbyService {
             throw new ResponseStatusException(HttpStatus.CONFLICT, String.format(baseErrorMessage));
         }
 
+        // check if lobby getPlayerList already contains the player
+        String[] list = lobby.getPlayerList().split(",");
+        for (String s : list) {
+            if (s.equals(username)) {
+                String baseErrorMessage = "The player is already in the lobby!";
+                throw new ResponseStatusException(HttpStatus.CONFLICT, String.format(baseErrorMessage));
+            }
+        }
+
         if(lobby.getLobbyType() == LobbyType.PUBLIC) {
             join(lobby, username);
         }
         else {
             if(!Objects.equals(lobby.getLobbyToken(), passcode)) {
                 String baseErrorMessage = "Wrong passcode!";
-                throw new ResponseStatusException(HttpStatus.NOT_FOUND, String.format(baseErrorMessage));
+                throw new ResponseStatusException(HttpStatus.BAD_REQUEST, String.format(baseErrorMessage));
             }
             join(lobby, username);
         }

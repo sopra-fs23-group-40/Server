@@ -44,7 +44,7 @@ public class Inventory {
                 return block;
             }
         }
-        throw new RuntimeException("Block not found in inventory: " + blockName);
+        return null;
     }
 
 }

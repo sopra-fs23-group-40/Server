@@ -87,6 +87,11 @@ public class UserService {
     public User loginUser(User user) {
         User userByUsername = userRepository.findByUsername(user.getUsername());
         if (userByUsername != null && Objects.equals(userByUsername.getPassword(), user.getPassword())) {
+            if(userByUsername.getStatus() == UserStatus.ONLINE) {
+                String baseErrorMessage = "User is already logged in.";
+                throw new ResponseStatusException(HttpStatus.BAD_REQUEST,
+                        String.format(baseErrorMessage));
+            }
             userByUsername.setStatus(UserStatus.ONLINE);
             userRepository.save(userByUsername);
             userRepository.flush();
@@ -120,9 +125,12 @@ public class UserService {
     }
 
     // merge with method above?
-    public boolean checkAuthentication(String username, String token) {
+    public void checkAuthentication(String username, String token) {
         User userByUsername = userRepository.findByUsername(username);
-        return userByUsername != null && userByUsername.getToken().equals(token);
+        if (!(userByUsername != null && userByUsername.getToken().equals(token))) {
+            throw new ResponseStatusException(HttpStatus.UNAUTHORIZED,
+                    "User authentication failed.");
+        }
     }
 
     public Statistics getStatistics(String token) {
@@ -130,20 +138,20 @@ public class UserService {
       return statisticsRepository.findByUserId(userByToken.getId());
     }
 
-  /**
+    /**
    * This is a helper method that will check the uniqueness criteria of the
    * username and the name
    * defined in the User entity. The method will do nothing if the input is unique
    * and throw an error otherwise.
    *
-   * @param userToBeCreated
-   * @throws org.springframework.web.server.ResponseStatusException
+   * @param userToBeCreated User which should be created.
+   * @throws org.springframework.web.server.ResponseStatusException if username is not unique/already taken
    * @see User
    */
   private void checkIfUserExists(User userToBeCreated) {
     User userByUsername = userRepository.findByUsername(userToBeCreated.getUsername());
 
-    String baseErrorMessage = "The username provided is not unique and already taken. Therefore, the user could not be created!";
+    String baseErrorMessage = "User could not be created - provided username is not unique and already taken.";
     if (userByUsername != null) {
       throw new ResponseStatusException(HttpStatus.BAD_REQUEST,
           String.format(baseErrorMessage));

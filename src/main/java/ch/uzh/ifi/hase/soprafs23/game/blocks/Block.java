@@ -105,5 +105,10 @@ public abstract class Block {
         length = height;
         height = temp;
     }
+
+    @Override
+    public String toString() {
+        return getBlockName();
+    }
 }
 
