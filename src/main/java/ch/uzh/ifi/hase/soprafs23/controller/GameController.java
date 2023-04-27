@@ -102,14 +102,14 @@ public class GameController {
         return game.addPlayer(playerName);
     }
 
-    @GetMapping("/games/{gameId}/{playerId}/inventory")
+    @GetMapping("/games/{gameId}/{username}/inventory")
     @ResponseStatus(HttpStatus.OK)
     @ResponseBody
-    public List<BlockGetDTO> getPlayerInventory(@PathVariable String gameId, @PathVariable String playerId) {
+    public List<BlockGetDTO> getPlayerInventory(@PathVariable String gameId, @PathVariable String username) {
 
         // Retrieve the player object from the game by gameId and playerId
         Game game = gameService.getGameById(gameId);
-        Player player = game.getPlayerById(playerId);
+        Player player = game.getPlayerByUsername(username);
 
         // Create a new list of BlockGetDTO objects based on the player's blocks
         List<BlockGetDTO> blockGetDTOs = new ArrayList<>();
