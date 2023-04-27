@@ -58,6 +58,10 @@ public class UserService {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST,
                     String.format(baseErrorMessage));
         }
+        if(newUser.getUsername().contains(",")) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST,
+                    String.format("The Username cannot contain the character ,"));
+        }
         checkIfUserExists(newUser);
         newUser.setToken(UUID.randomUUID().toString());
         newUser.setStatus(UserStatus.ONLINE);

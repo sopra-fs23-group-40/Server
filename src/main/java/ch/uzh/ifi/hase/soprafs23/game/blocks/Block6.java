@@ -16,7 +16,7 @@ public class Block6 extends Block {
         super(player, cellStatus);
 
         this.shape = new Cell[][] {
-            {new Cell(CellStatus.NEUTRAL), new Cell(cellStatus), new Cell(CellStatus.NEUTRAL)},
+            {new Cell(CellStatus.NEUTRAL), new Cell(cellStatus), new Cell(cellStatus)},
             {new Cell(cellStatus),         new Cell(cellStatus), new Cell(CellStatus.NEUTRAL)}
         };
 
