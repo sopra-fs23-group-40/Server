@@ -1,5 +1,6 @@
 package ch.uzh.ifi.hase.soprafs23.controller;
 
+import ch.uzh.ifi.hase.soprafs23.entity.GameEvent;
 import ch.uzh.ifi.hase.soprafs23.entity.Lobby;
 import ch.uzh.ifi.hase.soprafs23.entity.LobbyEvent;
 import ch.uzh.ifi.hase.soprafs23.game.Game;
@@ -10,6 +11,7 @@ import ch.uzh.ifi.hase.soprafs23.game.blocks.Block;
 import ch.uzh.ifi.hase.soprafs23.game.blocks.CellStatus;
 import ch.uzh.ifi.hase.soprafs23.rest.dto.*;
 import ch.uzh.ifi.hase.soprafs23.rest.mapper.DTOMapper;
+import ch.uzh.ifi.hase.soprafs23.service.GameSSE;
 import ch.uzh.ifi.hase.soprafs23.service.LobbyService;
 import ch.uzh.ifi.hase.soprafs23.service.LobbySSE;
 import ch.uzh.ifi.hase.soprafs23.service.UserService;
@@ -32,11 +34,14 @@ public class GameController {
 
     private final LobbySSE lobbySse;
 
-    GameController(LobbyService lobbyService, UserService userService, GameService gameService, LobbySSE lobbySse) {
+    private final GameSSE gameSSE;
+
+    GameController(LobbyService lobbyService, UserService userService, GameService gameService, GameSSE gameSSE, LobbySSE lobbySse) {
         this.lobbyService = lobbyService;
         this.userService = userService;
         this.gameService = gameService;
         this.lobbySse = lobbySse;
+        this.gameSSE = gameSSE;
     }
     /*
     @GetMapping("/{gameId)}")
@@ -187,6 +192,7 @@ public class GameController {
         // Remove block from inventory and add it to gameBoard
         inventory.removeBlock(block);
         gameBoard.placeBlock(player, blockPlaceDTO.getRow(), blockPlaceDTO.getColumn(), block);
+        gameSSE.send(new GameEvent("MOVE", gameId));
     }
 
     // TO DO: Flip Block
