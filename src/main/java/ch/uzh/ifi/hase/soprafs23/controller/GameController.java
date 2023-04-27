@@ -54,6 +54,9 @@ public class GameController {
         // gets the lobby from the lobbyService (check if lobby exists is already included)
         Lobby lobby = lobbyService.getLobby(lobbyId);
 
+        if(lobby == null) throw new ResponseStatusException(HttpStatus.NOT_FOUND,
+                "Lobby with gameId " + lobbyId + " not found!");
+
         // checks if the user is the host of the lobby
         if(!lobby.getHost().equals(username)) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST,
@@ -83,6 +86,8 @@ public class GameController {
     public List<PlayerGetDTO> getPlayers(@PathVariable String gameId) {
         // Retrieve the game with the given ID from the GameService
         Game game = gameService.getGameById(gameId);
+        if(game == null) throw new ResponseStatusException(HttpStatus.NOT_FOUND,
+                "Game with gameId " + gameId + " not found!");
         List<PlayerGetDTO> playerGetDTOS = new ArrayList<>();
         for(Player player: game.getPlayers()) {
             PlayerGetDTO playerGetDTO = new PlayerGetDTO(player.getPlayerName(), player.getPlayerId());
@@ -97,6 +102,8 @@ public class GameController {
     public String addPlayerToGame(@PathVariable String gameId, @RequestBody String playerName) {
         // Retrieve the game with the given ID from the GameService
         Game game = gameService.getGameById(gameId);
+        if(game == null) throw new ResponseStatusException(HttpStatus.NOT_FOUND,
+                "Game with gameId " + gameId + " not found!");
 
         // Add the player to the game using the addPlayer method
         return game.addPlayer(playerName);
@@ -109,7 +116,11 @@ public class GameController {
 
         // Retrieve the player object from the game by gameId and playerId
         Game game = gameService.getGameById(gameId);
+        if(game == null) throw new ResponseStatusException(HttpStatus.NOT_FOUND,
+                "Game with gameId " + gameId + " not found!");
         Player player = game.getPlayerByUsername(username);
+        if(player == null) throw new ResponseStatusException(HttpStatus.NOT_FOUND,
+                "Player with username " + username + " not found!");
 
         // Create a new list of BlockGetDTO objects based on the player's blocks
         List<BlockGetDTO> blockGetDTOs = new ArrayList<>();
@@ -130,6 +141,8 @@ public class GameController {
 
         // Retrieve the player object from the game by gameId and playerId
         Game game = gameService.getGameById(gameId);
+        if(game == null) throw new ResponseStatusException(HttpStatus.NOT_FOUND,
+                "Game with gameId " + gameId + " not found!");
         GameBoard gameBoard = game.getGameBoard();
 
         // Create GameGetDTO
