@@ -25,7 +25,7 @@ public class GameBoard {
         return board;
     }
 
-    public void placeBlock(Player player, int row, int col, Block block){
+    public void placeBlock(int row, int col, Block block){
         Cell[][] piece = block.getBlock();
         for (int i = 0; i < block.getHeight(); i++){
             for (int j = 0; j < block.getLength(); j++) {
