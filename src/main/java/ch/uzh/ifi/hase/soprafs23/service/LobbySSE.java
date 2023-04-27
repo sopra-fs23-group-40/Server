@@ -25,6 +25,7 @@ public class LobbySSE {
         return Mono.just(event);
     }
 
+    @CrossOrigin
     @GetMapping(path = "/lobby-updates", produces = MediaType.TEXT_EVENT_STREAM_VALUE)
     public Flux<ServerSentEvent<Object>> consumer() {
         return Flux.create(sink -> processor.subscribe(sink::next)).map(
