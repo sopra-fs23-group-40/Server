@@ -195,4 +195,23 @@ created test for the LobbyController https://github.com/sopra-fs23-group-40/Serv
 
 ## Week 4
 
+### Karoline Siarsky
+
+
+
+### Thomas Stoller 
+
+
+
+### Paul Grünenwald
+
+
+
+### Thomas Joos
+
+
+
+### Justin Verhoek
+
+
 
