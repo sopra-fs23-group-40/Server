@@ -10,11 +10,11 @@ import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
 @RestController
-public class SSE {
+public class LobbySSE {
 
     private final LobbyHandler processor;
 
-    public SSE(LobbyHandler processor) {
+    public LobbySSE(LobbyHandler processor) {
         this.processor = processor;
     }
 

@@ -5,7 +5,7 @@ import ch.uzh.ifi.hase.soprafs23.entity.Lobby;
 import ch.uzh.ifi.hase.soprafs23.entity.User;
 import ch.uzh.ifi.hase.soprafs23.rest.dto.UserAuthDTO;
 import ch.uzh.ifi.hase.soprafs23.service.LobbyService;
-import ch.uzh.ifi.hase.soprafs23.service.SSE;
+import ch.uzh.ifi.hase.soprafs23.service.LobbySSE;
 import ch.uzh.ifi.hase.soprafs23.service.TokenAuthenticationService;
 import ch.uzh.ifi.hase.soprafs23.service.UserService;
 import com.fasterxml.jackson.core.JsonProcessingException;
@@ -43,7 +43,7 @@ class LobbyControllerTest {
     private LobbyService lobbyService;
 
     @MockBean
-    private SSE sse;
+    private LobbySSE lobbySse;
 
     @Test
     public void createLobby_Successful_ReturnStatusOK() throws Exception {

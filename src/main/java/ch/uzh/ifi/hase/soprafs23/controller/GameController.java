@@ -1,6 +1,7 @@
 package ch.uzh.ifi.hase.soprafs23.controller;
 
 import ch.uzh.ifi.hase.soprafs23.entity.Lobby;
+import ch.uzh.ifi.hase.soprafs23.entity.LobbyEvent;
 import ch.uzh.ifi.hase.soprafs23.game.Game;
 import ch.uzh.ifi.hase.soprafs23.game.GameBoard;
 import ch.uzh.ifi.hase.soprafs23.game.Inventory;
@@ -10,6 +11,7 @@ import ch.uzh.ifi.hase.soprafs23.game.blocks.CellStatus;
 import ch.uzh.ifi.hase.soprafs23.rest.dto.*;
 import ch.uzh.ifi.hase.soprafs23.rest.mapper.DTOMapper;
 import ch.uzh.ifi.hase.soprafs23.service.LobbyService;
+import ch.uzh.ifi.hase.soprafs23.service.LobbySSE;
 import ch.uzh.ifi.hase.soprafs23.service.UserService;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.http.HttpStatus;
@@ -28,10 +30,13 @@ public class GameController {
 
     private final UserService userService;
 
-    GameController(LobbyService lobbyService, UserService userService, GameService gameService) {
+    private final LobbySSE lobbySse;
+
+    GameController(LobbyService lobbyService, UserService userService, GameService gameService, LobbySSE lobbySse) {
         this.lobbyService = lobbyService;
         this.userService = userService;
         this.gameService = gameService;
+        this.lobbySse = lobbySse;
     }
     /*
     @GetMapping("/{gameId)}")
@@ -76,6 +81,7 @@ public class GameController {
             game.addPlayer(playerName);
         }
 
+        lobbySse.send(new LobbyEvent("START," + game.getId(), lobbyId));
         // Return the ID of the newly created game
         return game.getId();
     }
