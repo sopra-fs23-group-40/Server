@@ -10,7 +10,6 @@ import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
 @RestController
-@CrossOrigin(origins = "*")
 public class SSE {
 
     private final LobbyHandler processor;
@@ -26,6 +25,7 @@ public class SSE {
         return Mono.just(event);
     }
 
+    @CrossOrigin
     @GetMapping(path = "/lobby-updates", produces = MediaType.TEXT_EVENT_STREAM_VALUE)
     public Flux<ServerSentEvent<Object>> consumer() {
         return Flux.create(sink -> processor.subscribe(sink::next)).map(
