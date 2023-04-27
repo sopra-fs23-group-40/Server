@@ -183,9 +183,9 @@ https://github.com/sopra-fs23-group-40/Client/issues/13
 Removing a block from the inventory once it has been placed:
 https://github.com/sopra-fs23-group-40/Client/issues/29
 
-Updated some of the Server's REST Endpoints and functionality to make it work together with the client (for tasks above in the client). 
+Updated some of the Server's REST Endpoints and functionality to make it work together with the client (for tasks above in the client), commits [de4f441](https://github.com/sopra-fs23-group-40/Server/commit/de4f4419fb6f2844574518325a7422eb5cdaa745), [63bef12](https://github.com/sopra-fs23-group-40/Server/commit/63bef120b4b160fec6111a0388db724102f5c2f9), [30347f2](https://github.com/sopra-fs23-group-40/Server/commit/30347f21bbb5c08f1a871a7d5694e47405106fe4), [53490d7](https://github.com/sopra-fs23-group-40/Server/commit/53490d7d38a7f4d41fb9a9f80cd76bc1eaad6f7b).
 
-Updated some of the Client's layout for the LobbyView.
+Updated some of the Client's layout for the LobbyView, commits [1da46f3](https://github.com/sopra-fs23-group-40/Client/commit/1da46f3a0571911c5ff8a26a65e0277679e4e094), [fe56fd4](https://github.com/sopra-fs23-group-40/Client/commit/fe56fd4dc30d53cce1c9907fcad0884369aaa902), [bf77a09](https://github.com/sopra-fs23-group-40/Client/commit/bf77a09c9c0bf5c3ca1cb80147b0ccd5208be40a).
 
 ### Justin Verhoek
 
