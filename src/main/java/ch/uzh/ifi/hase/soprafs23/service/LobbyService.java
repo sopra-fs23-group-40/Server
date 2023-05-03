@@ -46,6 +46,7 @@ public class LobbyService {
         newLobby.setStatus(LobbyStatus.WAITING);
         newLobby.setLobbyType(LobbyType.PRIVATE);
         newLobby.setName(username + "'s Lobby");
+        newLobby.setCurrentPlayers(1);
 
         lobbyRepository.save(newLobby);
         lobbyRepository.flush();
@@ -118,6 +119,7 @@ public class LobbyService {
     private void join(Lobby lobby, String username) {
         String newPlayerList = lobby.getPlayerList()+","+username;
         lobby.setPlayerList(newPlayerList);
+        lobby.setCurrentPlayers(lobby.getCurrentPlayers() + 1);
         lobbyRepository.save(lobby);
         lobbyRepository.flush();
         // TODO: Inform other players about this change (player joined)
@@ -129,7 +131,7 @@ public class LobbyService {
         Lobby lobby = getLobby(id);
 
         // TODO: might change column with "int maxPlayers" in Lobby. Atm, default lobby size is 4
-        if(lobby.getPlayerList().split(",").length >= lobby.getMaxPlayers()) {
+        if(lobby.getCurrentPlayers() >= lobby.getMaxPlayers()) {
             String baseErrorMessage = "The lobby is already full!";
             throw new ResponseStatusException(HttpStatus.CONFLICT, String.format(baseErrorMessage));
         }
@@ -183,6 +185,7 @@ public class LobbyService {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, String.format(baseErrorMessage));
         }
         this_lobby.setPlayerList(newlist);
+        this_lobby.setCurrentPlayers(this_lobby.getCurrentPlayers()-1);
         lobbyRepository.save(this_lobby);
         lobbyRepository.flush();
     }

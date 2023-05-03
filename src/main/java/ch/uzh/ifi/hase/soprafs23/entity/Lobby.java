@@ -44,6 +44,9 @@ public class Lobby implements Serializable {
     @Column(nullable = false)
     private String playerList;
 
+    @Column(nullable = false)
+    private int currentPlayers;
+
     @Column
     private int maxPlayers = 4;
 
@@ -109,6 +112,14 @@ public class Lobby implements Serializable {
 
     public void setMaxPlayers(int maxPlayers) {
         this.maxPlayers = maxPlayers;
+    }
+
+    public int getCurrentPlayers() {
+        return currentPlayers;
+    }
+
+    public void setCurrentPlayers(int currentPlayers) {
+        this.currentPlayers = currentPlayers;
     }
 
 }
