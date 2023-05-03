@@ -24,6 +24,10 @@ public class Game {
 
     }
 
+    public Player getCurrentPlayer() {
+        return currentPlayer;
+    }
+
     public boolean checkPlayersTurn(Player player) {
         return currentPlayer == player;
     }

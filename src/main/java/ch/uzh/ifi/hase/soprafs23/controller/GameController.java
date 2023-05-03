@@ -21,7 +21,6 @@ import ch.uzh.ifi.hase.soprafs23.service.GameService;
 import org.springframework.web.server.ResponseStatusException;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 @RestController
@@ -89,6 +88,19 @@ public class GameController {
         lobbySse.send(new LobbyEvent("START," + game.getId(), lobbyId));
         // Return the ID of the newly created game
         return game.getId();
+    }
+
+    @GetMapping("/games/{gameId}/currentPlayer")
+    @ResponseStatus(HttpStatus.OK)
+    @ResponseBody
+    public PlayerGetDTO getCurrentPlayer(@PathVariable String gameId) {
+        // Retrieve the game with the given ID from the GameService
+        Game game = gameService.getGameById(gameId);
+        if(game == null) throw new ResponseStatusException(HttpStatus.NOT_FOUND,
+                "Game with gameId " + gameId + " not found!");
+
+        Player currentPlayer = game.getCurrentPlayer();
+        return new PlayerGetDTO(currentPlayer.getPlayerName(), currentPlayer.getPlayerId());
     }
 
     @GetMapping("/games/{gameId}/players")
