@@ -209,6 +209,8 @@ Add endpoint for rotating a block [#87](https://github.com/sopra-fs23-group-40/S
 
 Add endpoint for flipping a block [#88](https://github.com/sopra-fs23-group-40/Server/issues/88)
 
+Added buttons to flip/rotate a block [#11](https://github.com/sopra-fs23-group-40/Server/issues/11)
+
 
 
 ### Thomas Joos
