@@ -43,17 +43,7 @@ public class GameController {
         this.lobbySse = lobbySse;
         this.gameSSE = gameSSE;
     }
-    /*
-    @GetMapping("/{gameId)}")
-    @ResponseStatus(HttpStatus.OK)
-    public GameGetDTO getGameById(@PathVariable Long gameId) {
-        Game game = GameService.getGameById(gameId);
-        if (game == null) {
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Game not found");
-        }
-        return DTOMapper.INSTANCE.convertEntityToGameGetDTO(game);
-    }
-     */
+
 
     @PostMapping("/games")
     @ResponseStatus(HttpStatus.CREATED)
@@ -195,8 +185,63 @@ public class GameController {
         gameSSE.send(new GameEvent("MOVE", gameId));
     }
 
-    // TO DO: Flip Block
+    @PutMapping("/games/{gameId}/{username}/flip")
+    @ResponseStatus(HttpStatus.OK)
+    @ResponseBody
+    public void flipBlock(@PathVariable String gameId, @PathVariable String username, @RequestBody BlockFlipDTO blockFlipDTO) {
+        // Retrieve the game with the given ID from the GameService
+        Game game = gameService.getGameById(gameId);
+        if(game == null) throw new ResponseStatusException(HttpStatus.NOT_FOUND,
+                "Game with gameId " + gameId + " not found!");
 
-    // TO DO: Rotate Block
+        Player player = game.getPlayerByUsername(username);
+        if(player == null) throw new ResponseStatusException(HttpStatus.NOT_FOUND,
+                "Player with username " + username + " not found!\n" +
+                        "Players in game " + gameId + ": " + Arrays.stream(game.getPlayers()).map(Player::getPlayerName));
+
+        Inventory inventory = player.getInventory();
+        GameBoard gameBoard = game.getGameBoard();
+        Block block = inventory.getBlockByBlockName(blockFlipDTO.getBlockName());
+        if(block == null) throw new ResponseStatusException(HttpStatus.NOT_FOUND,
+                "Block with blockName " + blockFlipDTO.getBlockName() + " not found!\n" +
+                        "Possible blocks (from " + username + "'s inventory):\n"
+                        + inventory.getBlocks());
+
+
+        // Remove block from inventory and add it to gameBoard
+
+        if (blockFlipDTO.getVertical()) {
+            block.flipVertical();
+        } else {
+            block.flipHorizontal();
+        }
+    }
+
+    @PutMapping("/games/{gameId}/{username}/rotate")
+    @ResponseStatus(HttpStatus.OK)
+    @ResponseBody
+    public void rotateBlock(@PathVariable String gameId, @PathVariable String username, @RequestBody BlockRotateDTO blockRotateDTO) {
+        // Retrieve the game with the given ID from the GameService
+        Game game = gameService.getGameById(gameId);
+        if(game == null) throw new ResponseStatusException(HttpStatus.NOT_FOUND,
+                "Game with gameId " + gameId + " not found!");
+
+        Player player = game.getPlayerByUsername(username);
+        if(player == null) throw new ResponseStatusException(HttpStatus.NOT_FOUND,
+                "Player with username " + username + " not found!\n" +
+                        "Players in game " + gameId + ": " + Arrays.stream(game.getPlayers()).map(Player::getPlayerName));
+
+        Inventory inventory = player.getInventory();
+        GameBoard gameBoard = game.getGameBoard();
+        Block block = inventory.getBlockByBlockName(blockRotateDTO.getBlockName());
+        if(block == null) throw new ResponseStatusException(HttpStatus.NOT_FOUND,
+                "Block with blockName " + blockRotateDTO.getBlockName() + " not found!\n" +
+                        "Possible blocks (from " + username + "'s inventory):\n"
+                        + inventory.getBlocks());
+
+
+        // Rotate block
+        block.rotateClockwise();
+        }
 
 }

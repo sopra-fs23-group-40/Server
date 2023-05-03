@@ -88,23 +88,6 @@ public abstract class Block {
         length = height;
         height = temp;
     }
-    
-    public void rotateCounterclockwise() {
-        int numRows = shape.length;
-        int numCols = shape[0].length;
-        Cell[][] newShape = new Cell[numCols][numRows];
-    
-        for (int i = 0; i < numRows; i++) {
-            for (int j = 0; j < numCols; j++) {
-                newShape[numCols - j - 1][i] = shape[i][j];
-            }
-        }
-    
-        shape = newShape;
-        int temp = length;
-        length = height;
-        height = temp;
-    }
 
     @Override
     public String toString() {
