@@ -208,8 +208,13 @@ created test for the LobbyController https://github.com/sopra-fs23-group-40/Serv
 
 
 ### Thomas Joos
+The inventory loads freshly from the server when a block is placed or the page is refreshed: https://github.com/sopra-fs23-group-40/Client/issues/31
 
+The inventory's colors match the player's color: https://github.com/sopra-fs23-group-40/Client/issues/32
 
+Once a player makes his move, the next player can play - nobody else. Double moves are not possible anymore. https://github.com/sopra-fs23-group-40/Server/issues/81
+
+The client displays now what Player's turn it is: https://github.com/sopra-fs23-group-40/Server/issues/82
 
 ### Justin Verhoek
 
