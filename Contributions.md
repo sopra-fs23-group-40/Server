@@ -205,6 +205,10 @@ created test for the LobbyController https://github.com/sopra-fs23-group-40/Serv
 
 ### Paul Grünenwald
 
+Add endpoint for flipping a block [#87](https://github.com/sopra-fs23-group-40/Server/issues/87)
+
+Add endpoint for flipping a block [#88](https://github.com/sopra-fs23-group-40/Server/issues/88)
+
 
 
 ### Thomas Joos
