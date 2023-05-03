@@ -174,7 +174,10 @@ public class GameController {
         Player player = game.getPlayerByUsername(username);
         if(player == null) throw new ResponseStatusException(HttpStatus.NOT_FOUND,
                 "Player with username " + username + " not found!\n" +
-                "Players in game " + gameId + ": " + Arrays.stream(game.getPlayers()).map(Player::getPlayerName));
+                "Players in game " + gameId + ": " + game.getPlayers().stream().map(Player::getPlayerName));
+
+        if(!game.checkPlayersTurn(player)) throw new ResponseStatusException(HttpStatus.BAD_REQUEST,
+                "It is not your turn, please wait!");
 
         Inventory inventory = player.getInventory();
         GameBoard gameBoard = game.getGameBoard();
@@ -190,6 +193,7 @@ public class GameController {
         }
 
         // Remove block from inventory and add it to gameBoard
+        game.nextPlayersTurn();
         inventory.removeBlock(block);
         gameBoard.placeBlock(player, blockPlaceDTO.getRow(), blockPlaceDTO.getColumn(), block);
         gameSSE.send(new GameEvent("MOVE", gameId));
