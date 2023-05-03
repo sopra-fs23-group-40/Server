@@ -10,7 +10,7 @@ import ch.uzh.ifi.hase.soprafs23.rest.dto.LobbyPutDTO;
 import ch.uzh.ifi.hase.soprafs23.rest.dto.UserAuthDTO;
 import ch.uzh.ifi.hase.soprafs23.rest.mapper.DTOMapper;
 import ch.uzh.ifi.hase.soprafs23.service.LobbyService;
-import ch.uzh.ifi.hase.soprafs23.service.SSE;
+import ch.uzh.ifi.hase.soprafs23.service.LobbySSE;
 import ch.uzh.ifi.hase.soprafs23.service.UserService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -24,12 +24,12 @@ public class LobbyController {
 
     private final LobbyService lobbyService;
     private final UserService userService;
-    private final SSE sse;
+    private final LobbySSE lobbySse;
 
-    LobbyController(LobbyService lobbyService, UserService userService, SSE sse) {
+    LobbyController(LobbyService lobbyService, UserService userService, LobbySSE lobbySse) {
         this.lobbyService = lobbyService;
         this.userService = userService;
-        this.sse = sse;
+        this.lobbySse = lobbySse;
     }
 
 
@@ -58,7 +58,7 @@ public class LobbyController {
         UserAuthDTO userAuthDTO = DTOMapper.INSTANCE.convertVariablesToUserAuthDTO(username, token);
         userService.checkAuthentication(userAuthDTO.getUsername(), userAuthDTO.getToken());
         lobbyService.joinLobby(lobbyPutDTO.getId(), lobbyPutDTO.getPasscode(), userAuthDTO.getUsername());
-        sse.send(new LobbyEvent("JOINED", lobbyPutDTO.getId()));
+        lobbySse.send(new LobbyEvent("JOINED", lobbyPutDTO.getId()));
     }
 
     /***
@@ -89,7 +89,7 @@ public class LobbyController {
         UserAuthDTO userAuthDTO = DTOMapper.INSTANCE.convertVariablesToUserAuthDTO(username, token);
         userService.checkAuthentication(userAuthDTO.getUsername(), userAuthDTO.getToken());
         lobbyService.deleteLobby(userAuthDTO.getUsername(), id);
-        sse.send(new LobbyEvent("DELETED", id));
+        lobbySse.send(new LobbyEvent("DELETED", id));
     }
 
     @GetMapping("/lobby/{id}/checkhost")
@@ -126,6 +126,6 @@ public class LobbyController {
     public void leaveLobby(@PathVariable(value = "id") long id, @RequestBody UserAuthDTO userAuthDTO) {
         userService.checkAuthentication(userAuthDTO.getUsername(), userAuthDTO.getToken());
         lobbyService.leaveLobby(userAuthDTO.getUsername(), id);
-        sse.send(new LobbyEvent("LEFT", id));
+        lobbySse.send(new LobbyEvent("LEFT", id));
     }
 }

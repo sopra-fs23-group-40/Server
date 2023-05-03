@@ -1,6 +1,8 @@
 package ch.uzh.ifi.hase.soprafs23.controller;
 
+import ch.uzh.ifi.hase.soprafs23.entity.GameEvent;
 import ch.uzh.ifi.hase.soprafs23.entity.Lobby;
+import ch.uzh.ifi.hase.soprafs23.entity.LobbyEvent;
 import ch.uzh.ifi.hase.soprafs23.game.Game;
 import ch.uzh.ifi.hase.soprafs23.game.GameBoard;
 import ch.uzh.ifi.hase.soprafs23.game.Inventory;
@@ -9,7 +11,9 @@ import ch.uzh.ifi.hase.soprafs23.game.blocks.Block;
 import ch.uzh.ifi.hase.soprafs23.game.blocks.CellStatus;
 import ch.uzh.ifi.hase.soprafs23.rest.dto.*;
 import ch.uzh.ifi.hase.soprafs23.rest.mapper.DTOMapper;
+import ch.uzh.ifi.hase.soprafs23.service.GameSSE;
 import ch.uzh.ifi.hase.soprafs23.service.LobbyService;
+import ch.uzh.ifi.hase.soprafs23.service.LobbySSE;
 import ch.uzh.ifi.hase.soprafs23.service.UserService;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.http.HttpStatus;
@@ -28,10 +32,16 @@ public class GameController {
 
     private final UserService userService;
 
-    GameController(LobbyService lobbyService, UserService userService, GameService gameService) {
+    private final LobbySSE lobbySse;
+
+    private final GameSSE gameSSE;
+
+    GameController(LobbyService lobbyService, UserService userService, GameService gameService, GameSSE gameSSE, LobbySSE lobbySse) {
         this.lobbyService = lobbyService;
         this.userService = userService;
         this.gameService = gameService;
+        this.lobbySse = lobbySse;
+        this.gameSSE = gameSSE;
     }
     /*
     @GetMapping("/{gameId)}")
@@ -54,6 +64,9 @@ public class GameController {
         // gets the lobby from the lobbyService (check if lobby exists is already included)
         Lobby lobby = lobbyService.getLobby(lobbyId);
 
+        if(lobby == null) throw new ResponseStatusException(HttpStatus.NOT_FOUND,
+                "Lobby with gameId " + lobbyId + " not found!");
+
         // checks if the user is the host of the lobby
         if(!lobby.getHost().equals(username)) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST,
@@ -73,6 +86,7 @@ public class GameController {
             game.addPlayer(playerName);
         }
 
+        lobbySse.send(new LobbyEvent("START," + game.getId(), lobbyId));
         // Return the ID of the newly created game
         return game.getId();
     }
@@ -83,6 +97,8 @@ public class GameController {
     public List<PlayerGetDTO> getPlayers(@PathVariable String gameId) {
         // Retrieve the game with the given ID from the GameService
         Game game = gameService.getGameById(gameId);
+        if(game == null) throw new ResponseStatusException(HttpStatus.NOT_FOUND,
+                "Game with gameId " + gameId + " not found!");
         List<PlayerGetDTO> playerGetDTOS = new ArrayList<>();
         for(Player player: game.getPlayers()) {
             PlayerGetDTO playerGetDTO = new PlayerGetDTO(player.getPlayerName(), player.getPlayerId());
@@ -97,19 +113,25 @@ public class GameController {
     public String addPlayerToGame(@PathVariable String gameId, @RequestBody String playerName) {
         // Retrieve the game with the given ID from the GameService
         Game game = gameService.getGameById(gameId);
+        if(game == null) throw new ResponseStatusException(HttpStatus.NOT_FOUND,
+                "Game with gameId " + gameId + " not found!");
 
         // Add the player to the game using the addPlayer method
         return game.addPlayer(playerName);
     }
 
-    @GetMapping("/games/{gameId}/{playerId}/inventory")
+    @GetMapping("/games/{gameId}/{username}/inventory")
     @ResponseStatus(HttpStatus.OK)
     @ResponseBody
-    public List<BlockGetDTO> getPlayerInventory(@PathVariable String gameId, @PathVariable String playerId) {
+    public List<BlockGetDTO> getPlayerInventory(@PathVariable String gameId, @PathVariable String username) {
 
         // Retrieve the player object from the game by gameId and playerId
         Game game = gameService.getGameById(gameId);
-        Player player = game.getPlayerById(playerId);
+        if(game == null) throw new ResponseStatusException(HttpStatus.NOT_FOUND,
+                "Game with gameId " + gameId + " not found!");
+        Player player = game.getPlayerByUsername(username);
+        if(player == null) throw new ResponseStatusException(HttpStatus.NOT_FOUND,
+                "Player with username " + username + " not found!");
 
         // Create a new list of BlockGetDTO objects based on the player's blocks
         List<BlockGetDTO> blockGetDTOs = new ArrayList<>();
@@ -130,6 +152,8 @@ public class GameController {
 
         // Retrieve the player object from the game by gameId and playerId
         Game game = gameService.getGameById(gameId);
+        if(game == null) throw new ResponseStatusException(HttpStatus.NOT_FOUND,
+                "Game with gameId " + gameId + " not found!");
         GameBoard gameBoard = game.getGameBoard();
 
         // Create GameGetDTO
@@ -168,6 +192,7 @@ public class GameController {
         // Remove block from inventory and add it to gameBoard
         inventory.removeBlock(block);
         gameBoard.placeBlock(player, blockPlaceDTO.getRow(), blockPlaceDTO.getColumn(), block);
+        gameSSE.send(new GameEvent("MOVE", gameId));
     }
 
     // TO DO: Flip Block

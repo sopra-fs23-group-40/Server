@@ -41,7 +41,6 @@ public class GameBoard {
         int height = block.getHeight();
         //check if piece is outside the board
         if (x + length > board.length || y + height > board.length) {
-            System.out.println("Piece is outside the board");
             return false;
         }
         //check that the piece is not overlapping with other pieces
@@ -49,7 +48,6 @@ public class GameBoard {
             for (int j = 0; j < length; j++) {
                 if (piece[i][j].getStatus() != CellStatus.NEUTRAL &&
                         board[y + i][x + j].getStatus() != CellStatus.NEUTRAL) {
-                    System.out.println("Piece is overlapping with another piece");
                     return false;
                 }
             }
@@ -60,22 +58,18 @@ public class GameBoard {
                 if (piece[i][j].getStatus() == status) {
                     //check the left edge
                     if (x+j-1 >= 0 && board[y+i][x+j-1].getStatus() == status){
-                        System.out.println("Piece is touching a piece of same status along an edge (left edge)");
                         return false;
                     }
                     //check the right edge
                     if (x+j+1 < size && board[y+i][x+j+1].getStatus() == status){
-                        System.out.println("Piece is touching a piece of same status along an edge (right edge)");
                         return false;
                     }
                     //check the edge above
                     if (y+i-1 >= 0 && board[y+i-1][x+j].getStatus() == status){
-                        System.out.println("Piece is touching a piece of same status along an edge (edge above)");
                         return false;
                     }
                     //check the edge below
                     if (y+i+1 < size && board[y+i+1][x+j].getStatus() == status){
-                        System.out.println("Piece is touching a piece of same status along an edge (edge below)");
                         return false;
                     }
                 }
@@ -84,53 +78,45 @@ public class GameBoard {
         //check if the piece is a corner piece
         //upper-left corner of the board
         if (y == 0 && x == 0 && board[0][0].getStatus() == CellStatus.NEUTRAL){
-            System.out.println("Piece is a corner piece (upper-left)");
             return true;
         }
         //upper-right corner of the board
         else if (y == 0 && x+length == size && board[0][size-1].getStatus()== CellStatus.NEUTRAL) {
-            System.out.println("Piece is a corner piece (upper-right)");
             return true;
         }
         //lower-left corner of the board
         else if (y+height == size && x == 0 && board[size-1][0].getStatus()== CellStatus.NEUTRAL) {
-            System.out.println("Piece is a corner piece (lower-left)");
             return true;
         }
         //lower-right corner of the board
         else if (y+height == size && x+length == size && board[size-1][size-1].getStatus()== CellStatus.NEUTRAL) {
-            System.out.println("Piece is a corner piece (lower-right)");
             return true;
         }
 
+        // TODO: I got an error that I cannot place Block6 on board. Couldn't check yet if this works for that block
         //check that the piece touches a piece of the same status in a corner
         for (int i = 0; i < height; i++) {
             for (int j = 0; j < length; j++) {
                 if (piece[i][j].getStatus() == status) {
                     // Check upper-left corner
                     if (y-1 >= 0 && x-1 >= 0 && board[y+i-1][x+j-1].getStatus() == status) {
-                        System.out.println("Piece is touching a piece of same status in a corner (upper-left corner)");
                         return true;
                     }
                     // Check upper-right corner
                     if (y-1 >= 0 && x+j+1 < size && board[y+i-1][x+j+1].getStatus() == status) {
-                        System.out.println("Piece is touching a piece of same status in a corner (upper-right corner)");
                         return true;
                     }
                     // Check lower-left corner
                     if (y+i+1 < size && x-1 >= 0 && board[y+i+1][x+j-1].getStatus() == status) {
-                        System.out.println("Piece is touching a piece of same status in a corner (lower-left corner)");
                         return true;
                     }
                     // Check lower-right corner
                     if (y+i+1 < size && x+j+1 < size && board[y+i+1][x+j+1].getStatus() == status) {
-                        System.out.println("Piece is touching a piece of same status in a corner (lower-right corner)");
                         return true;
                     }
                 }
             }
         }
-        System.out.println("Piece is not touching a piece of same status in a corner");
         return false;
     }
 }

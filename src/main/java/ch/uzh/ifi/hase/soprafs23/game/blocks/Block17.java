@@ -18,7 +18,7 @@ public class Block17 extends Block {
 
         this.shape = new Cell[][] {
             {new Cell(cellStatus), new Cell(CellStatus.NEUTRAL), new Cell(cellStatus)},
-            {new Cell(cellStatus), new Cell(cellStatus), new Cell(cellStatus), new Cell(cellStatus)}
+            {new Cell(cellStatus), new Cell(cellStatus), new Cell(cellStatus)}
         };
 
         this.numberOfSquares = 5;
