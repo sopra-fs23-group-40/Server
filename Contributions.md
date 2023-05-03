@@ -196,7 +196,9 @@ created test for the LobbyController https://github.com/sopra-fs23-group-40/Serv
 ## Week 4
 
 ### Karoline Siarsky
-
+https://github.com/sopra-fs23-group-40/Server/issues/83
+https://github.com/sopra-fs23-group-40/Client/issues/35
+https://github.com/sopra-fs23-group-40/Client/commit/6f140f3b54a3dc1047cf83a627a78e703a456687
 
 
 ### Thomas Stoller 
