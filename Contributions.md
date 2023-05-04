@@ -246,5 +246,8 @@ The client displays now what Player's turn it is: https://github.com/sopra-fs23-
 
 ### Justin Verhoek
 
+created tests for all LobbyController endpoints https://github.com/sopra-fs23-group-40/Server/issues/78
+
+started working on GameService tests https://github.com/sopra-fs23-group-40/Server/issues/75
 
 
