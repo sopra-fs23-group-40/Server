@@ -8,6 +8,7 @@ public class LobbyGetDTO {
     private LobbyType lobbyType;
     private String lobbyToken;
     private String playerList;
+    private int currentPlayers;
 
     public String getName() {
         return name;
@@ -47,5 +48,13 @@ public class LobbyGetDTO {
 
     public void setPlayerList(String playerList) {
         this.playerList = playerList;
+    }
+
+    public int getCurrentPlayers() {
+        return currentPlayers;
+    }
+
+    public void setCurrentPlayers(int currentPlayers) {
+        this.currentPlayers = currentPlayers;
     }
 }
