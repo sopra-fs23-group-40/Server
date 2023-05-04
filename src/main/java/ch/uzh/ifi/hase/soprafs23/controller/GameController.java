@@ -185,10 +185,10 @@ public class GameController {
         gameSSE.send(new GameEvent("MOVE", gameId));
     }
 
-    @PutMapping("/games/{gameId}/{username}/flip")
+    @PutMapping("/games/{gameId}/{username}/vertical_flip")
     @ResponseStatus(HttpStatus.OK)
     @ResponseBody
-    public void flipBlock(@PathVariable String gameId, @PathVariable String username, @RequestBody BlockFlipDTO blockFlipDTO) {
+    public void flipVerticalBlock(@PathVariable String gameId, @PathVariable String username, @RequestBody BlockFlipDTO blockFlipDTO) {
         // Retrieve the game with the given ID from the GameService
         Game game = gameService.getGameById(gameId);
         if(game == null) throw new ResponseStatusException(HttpStatus.NOT_FOUND,
@@ -208,13 +208,35 @@ public class GameController {
                         + inventory.getBlocks());
 
 
-        // Remove block from inventory and add it to gameBoard
+        block.flipVertical();
 
-        if (blockFlipDTO.getVertical()) {
-            block.flipVertical();
-        } else {
-            block.flipHorizontal();
-        }
+    }
+
+    @PutMapping("/games/{gameId}/{username}/horizontal_flip")
+    @ResponseStatus(HttpStatus.OK)
+    @ResponseBody
+    public void flipHorizontalBlock(@PathVariable String gameId, @PathVariable String username, @RequestBody BlockFlipDTO blockFlipDTO) {
+        // Retrieve the game with the given ID from the GameService
+        Game game = gameService.getGameById(gameId);
+        if(game == null) throw new ResponseStatusException(HttpStatus.NOT_FOUND,
+                "Game with gameId " + gameId + " not found!");
+
+        Player player = game.getPlayerByUsername(username);
+        if(player == null) throw new ResponseStatusException(HttpStatus.NOT_FOUND,
+                "Player with username " + username + " not found!\n" +
+                        "Players in game " + gameId + ": " + Arrays.stream(game.getPlayers()).map(Player::getPlayerName));
+
+        Inventory inventory = player.getInventory();
+        GameBoard gameBoard = game.getGameBoard();
+        Block block = inventory.getBlockByBlockName(blockFlipDTO.getBlockName());
+        if(block == null) throw new ResponseStatusException(HttpStatus.NOT_FOUND,
+                "Block with blockName " + blockFlipDTO.getBlockName() + " not found!\n" +
+                        "Possible blocks (from " + username + "'s inventory):\n"
+                        + inventory.getBlocks());
+
+
+        block.flipHorizontal();
+
     }
 
     @PutMapping("/games/{gameId}/{username}/rotate")
