@@ -206,6 +206,24 @@ Added public/ private switch in lobby: https://github.com/sopra-fs23-group-40/Cl
 ### Thomas Stoller 
 
 
+Added currentPlayers to lobby entity/repository
+Updated LobbyGetDTO & DTOMapper
+Added necessary commands in create, join and leave lobby to maintain the amount of players.
+https://github.com/sopra-fs23-group-40/Server/issues/86
+https://github.com/sopra-fs23-group-40/Server/issues/89
+
+Display number of players in the lobby right now. (on overview screen)
+https://github.com/sopra-fs23-group-40/Client/issues/34
+
+Implemented a counter and display for the clock on the game screen. (not synchronized yet)
+https://github.com/sopra-fs23-group-40/Client/issues/36
+https://github.com/sopra-fs23-group-40/Client/issues/37
+
+Implemented Stopwatch class to track the time of a game
+Added creating a stopwatch in game & starting/stopping it.
+https://github.com/sopra-fs23-group-40/Server/issues/94
+
+
 
 ### Paul Grünenwald
 
