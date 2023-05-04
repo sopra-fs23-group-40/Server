@@ -10,13 +10,9 @@ import org.junit.jupiter.api.Test;
 
 import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.assertFalse;
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.*;
 
 public class GameServiceTest {
-
-
-
     @Test
     public void placeBlock_Successful(){
         GameService gameService = new GameService();
@@ -28,7 +24,33 @@ public class GameServiceTest {
 
         gameService.placeBlock(game,testPlayer,0,0,block1);
 
-        assertTrue(CellStatus.PLAYER1 == gameBoard.getGameBoard()[0][0].getStatus());
+        assertSame(CellStatus.PLAYER1, gameBoard.getGameBoard()[0][0].getStatus());
         assertFalse(unplacedBlocks.contains(block1));
+    }
+
+    @Test
+    public void testGetGameById_Successful(){
+        GameService gameService = new GameService();
+        Game testGame = gameService.createGame();
+        String gameId = testGame.getId();
+        Game game = gameService.getGameById(gameId);
+        assertSame(game, testGame);
+    }
+
+    @Test
+    public void testGetGameById_InvalidId() {
+        GameService gameService = new GameService();
+        Game testGame = gameService.createGame();
+        String invalidId = "non-existent-id";
+
+        RuntimeException exception = assertThrows(
+                RuntimeException.class,
+                () -> gameService.getGameById(invalidId)
+        );
+
+        String expectedMessage = "Game with ID " + invalidId + " not found.";
+        String actualMessage = exception.getMessage();
+
+        assertTrue(actualMessage.contains(expectedMessage));
     }
 }

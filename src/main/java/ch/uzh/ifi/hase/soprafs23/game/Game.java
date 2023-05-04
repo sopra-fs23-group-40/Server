@@ -1,5 +1,5 @@
 package ch.uzh.ifi.hase.soprafs23.game;
-import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.UUID;
 
 import ch.uzh.ifi.hase.soprafs23.game.blocks.Block;
@@ -7,23 +7,41 @@ import ch.uzh.ifi.hase.soprafs23.game.blocks.CellStatus;
 
 
 public class Game {
-    private String gameId;
-    private GameBoard gameboard;
-    private Player[] players;
+    private final String gameId;
+    private final GameBoard gameboard;
+    private final Stopwatch stopwatch;
+    private final ArrayList<Player> players = new ArrayList<>();
     private Player currentPlayer;
-    private Object creationDate;
 
     public Game() {
         this.gameId = UUID.randomUUID().toString();
         this.gameboard = new GameBoard();
-        this.players = new Player[4];
-        this.players[0] = new Player(CellStatus.PLAYER1, null);
-        this.players[1] = new Player(CellStatus.PLAYER2, null);
-        this.players[2] = new Player(CellStatus.PLAYER3, null);
-        this.players[3] = new Player(CellStatus.PLAYER4, null);
-        this.currentPlayer = this.players[0];
-        //this.gameStatus = GameStatus.WAITING_FOR_PLAYER;
-        this.creationDate = LocalDateTime.now();
+        this.stopwatch = new Stopwatch();
+        stopwatch.start();
+
+        players.add(new Player(CellStatus.PLAYER1, null));
+        players.add(new Player(CellStatus.PLAYER2, null));
+        players.add(new Player(CellStatus.PLAYER3, null));
+        players.add(new Player(CellStatus.PLAYER4, null));
+        this.currentPlayer = players.get(0);
+
+    }
+
+    public Player getCurrentPlayer() {
+        return currentPlayer;
+    }
+
+    public boolean checkPlayersTurn(Player player) {
+        return currentPlayer == player;
+    }
+
+    public void nextPlayersTurn() {
+        if (!isGameOver()) {
+            currentPlayer = players.get((players.indexOf(currentPlayer) + 1) % players.size());
+        }
+        else {
+            endGame();
+        }
     }
 
     public boolean isGameOver() {
@@ -45,7 +63,18 @@ public class Game {
                 }
             }
         }
+        stopwatch.stop();
         return true;
+    }
+
+    public void endGame(){
+        long minutesPlayed = stopwatch.getMinutes();
+        ArrayList<Player> playersToUpdate = getPlayers();
+        for (Player p : playersToUpdate){
+            // Todo: get users corresponding to players and update statistics.
+        }
+        // Todo: check who won the game and return this to the users somehow
+        // Todo: also update statistics about games won, blocks placed, games player etc.
     }
 
     public GameBoard getGameBoard() {
@@ -56,11 +85,11 @@ public class Game {
 
         // Find the next free slot in the players array
         int nextSlot = -1;
-        for (int i = 0; i < players.length; i++) {
-            if (players[i] == null) {
+        for (int i = 0; i < players.size(); i++) {
+            if (players.get(i) == null) {
                 nextSlot = i;
                 break;
-            } else if (players[i].getPlayerName() == null) {
+            } else if (players.get(i).getPlayerName() == null) {
                 nextSlot = i;
                 break;
             }
@@ -69,19 +98,17 @@ public class Game {
         // Throw an exception if there are no free slots
         if (nextSlot == -1) {
             throw new RuntimeException("No free slots in the players array");
+        } else {
+            players.get(nextSlot).setPlayerName(playerName);
         }
 
-        // Add the player to the next free slot
-        if (nextSlot != -1) {
-            players[nextSlot].setPlayerName(playerName);
-        }
-
-        return players[nextSlot].getPlayerId();
+        return players.get(nextSlot).getPlayerId();
     }
 
     public String getId() {
         return gameId;
     }
+
     public Player getPlayerById(String playerId) {
         if (playerId == null) throw new IllegalArgumentException("playerId cannot be null");
 
@@ -104,7 +131,7 @@ public class Game {
         return null; // return null if no player with the specified username is found
     }
 
-    public Player[] getPlayers() {
+    public ArrayList<Player> getPlayers() {
         return players;
     }
 

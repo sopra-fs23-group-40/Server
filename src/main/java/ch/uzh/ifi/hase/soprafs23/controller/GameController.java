@@ -1,5 +1,6 @@
 package ch.uzh.ifi.hase.soprafs23.controller;
 
+import ch.uzh.ifi.hase.soprafs23.constant.LobbyStatus;
 import ch.uzh.ifi.hase.soprafs23.entity.GameEvent;
 import ch.uzh.ifi.hase.soprafs23.entity.Lobby;
 import ch.uzh.ifi.hase.soprafs23.entity.LobbyEvent;
@@ -21,7 +22,6 @@ import ch.uzh.ifi.hase.soprafs23.service.GameService;
 import org.springframework.web.server.ResponseStatusException;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 @RestController
@@ -77,8 +77,22 @@ public class GameController {
         }
 
         lobbySse.send(new LobbyEvent("START," + game.getId(), lobbyId));
+        lobby.setStatus(LobbyStatus.IN_GAME);
         // Return the ID of the newly created game
         return game.getId();
+    }
+
+    @GetMapping("/games/{gameId}/currentPlayer")
+    @ResponseStatus(HttpStatus.OK)
+    @ResponseBody
+    public PlayerGetDTO getCurrentPlayer(@PathVariable String gameId) {
+        // Retrieve the game with the given ID from the GameService
+        Game game = gameService.getGameById(gameId);
+        if(game == null) throw new ResponseStatusException(HttpStatus.NOT_FOUND,
+                "Game with gameId " + gameId + " not found!");
+
+        Player currentPlayer = game.getCurrentPlayer();
+        return new PlayerGetDTO(currentPlayer.getPlayerName(), currentPlayer.getPlayerId());
     }
 
     @GetMapping("/games/{gameId}/players")
@@ -164,7 +178,10 @@ public class GameController {
         Player player = game.getPlayerByUsername(username);
         if(player == null) throw new ResponseStatusException(HttpStatus.NOT_FOUND,
                 "Player with username " + username + " not found!\n" +
-                "Players in game " + gameId + ": " + Arrays.stream(game.getPlayers()).map(Player::getPlayerName));
+                "Players in game " + gameId + ": " + game.getPlayers().stream().map(Player::getPlayerName));
+
+        if(!game.checkPlayersTurn(player)) throw new ResponseStatusException(HttpStatus.BAD_REQUEST,
+                "It is not your turn, please wait!");
 
         Inventory inventory = player.getInventory();
         GameBoard gameBoard = game.getGameBoard();
@@ -180,6 +197,7 @@ public class GameController {
         }
 
         // Remove block from inventory and add it to gameBoard
+        game.nextPlayersTurn();
         inventory.removeBlock(block);
         gameBoard.placeBlock(player, blockPlaceDTO.getRow(), blockPlaceDTO.getColumn(), block);
         gameSSE.send(new GameEvent("MOVE", gameId));

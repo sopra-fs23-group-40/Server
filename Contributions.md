@@ -196,22 +196,58 @@ created test for the LobbyController https://github.com/sopra-fs23-group-40/Serv
 ## Week 4
 
 ### Karoline Siarsky
+https://github.com/sopra-fs23-group-40/Server/issues/83
 
+https://github.com/sopra-fs23-group-40/Client/issues/35
+
+Added public/ private switch in lobby: https://github.com/sopra-fs23-group-40/Client/commit/6f140f3b54a3dc1047cf83a627a78e703a456687
 
 
 ### Thomas Stoller 
 
 
+Added currentPlayers to lobby entity/repository
+Updated LobbyGetDTO & DTOMapper
+Added necessary commands in create, join and leave lobby to maintain the amount of players.
+https://github.com/sopra-fs23-group-40/Server/issues/86
+https://github.com/sopra-fs23-group-40/Server/issues/89
+
+Display number of players in the lobby right now. (on overview screen)
+https://github.com/sopra-fs23-group-40/Client/issues/34
+
+Implemented a counter and display for the clock on the game screen. (not synchronized yet)
+https://github.com/sopra-fs23-group-40/Client/issues/36
+https://github.com/sopra-fs23-group-40/Client/issues/37
+
+Implemented Stopwatch class to track the time of a game
+Added creating a stopwatch in game & starting/stopping it.
+https://github.com/sopra-fs23-group-40/Server/issues/94
+
+
 
 ### Paul Grünenwald
+
+Add endpoint for rotating a block [#87](https://github.com/sopra-fs23-group-40/Server/issues/87)
+
+Add endpoint for flipping a block [#88](https://github.com/sopra-fs23-group-40/Server/issues/88)
+
+Added buttons to flip/rotate a block [#11](https://github.com/sopra-fs23-group-40/Server/issues/11)
 
 
 
 ### Thomas Joos
+The inventory loads freshly from the server when a block is placed or the page is refreshed: https://github.com/sopra-fs23-group-40/Client/issues/31
 
+The inventory's colors match the player's color: https://github.com/sopra-fs23-group-40/Client/issues/32
 
+Once a player makes his move, the next player can play - nobody else. Double moves are not possible anymore. https://github.com/sopra-fs23-group-40/Server/issues/81
+
+The client displays now what Player's turn it is: https://github.com/sopra-fs23-group-40/Server/issues/82
 
 ### Justin Verhoek
 
+created tests for all LobbyController endpoints https://github.com/sopra-fs23-group-40/Server/issues/78
+
+created all tests for GameService https://github.com/sopra-fs23-group-40/Server/issues/75
 
 
