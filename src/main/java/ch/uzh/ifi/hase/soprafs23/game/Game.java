@@ -9,12 +9,15 @@ import ch.uzh.ifi.hase.soprafs23.game.blocks.CellStatus;
 public class Game {
     private final String gameId;
     private final GameBoard gameboard;
+    private final Stopwatch stopwatch;
     private final ArrayList<Player> players = new ArrayList<>();
     private Player currentPlayer;
 
     public Game() {
         this.gameId = UUID.randomUUID().toString();
         this.gameboard = new GameBoard();
+        this.stopwatch = new Stopwatch();
+        stopwatch.start();
 
         players.add(new Player(CellStatus.PLAYER1, null));
         players.add(new Player(CellStatus.PLAYER2, null));
@@ -33,7 +36,12 @@ public class Game {
     }
 
     public void nextPlayersTurn() {
-        currentPlayer = players.get((players.indexOf(currentPlayer) + 1) % players.size());
+        if (!isGameOver()) {
+            currentPlayer = players.get((players.indexOf(currentPlayer) + 1) % players.size());
+        }
+        else {
+            endGame();
+        }
     }
 
     public boolean isGameOver() {
@@ -55,7 +63,18 @@ public class Game {
                 }
             }
         }
+        stopwatch.stop();
         return true;
+    }
+
+    public void endGame(){
+        long minutesPlayed = stopwatch.getMinutes();
+        ArrayList<Player> playersToUpdate = getPlayers();
+        for (Player p : playersToUpdate){
+            // Todo: get users corresponding to players and update statistics.
+        }
+        // Todo: check who won the game and return this to the users somehow
+        // Todo: also update statistics about games won, blocks placed, games player etc.
     }
 
     public GameBoard getGameBoard() {
