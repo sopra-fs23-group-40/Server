@@ -1,5 +1,6 @@
 package ch.uzh.ifi.hase.soprafs23.controller;
 
+import ch.uzh.ifi.hase.soprafs23.constant.LobbyStatus;
 import ch.uzh.ifi.hase.soprafs23.entity.GameEvent;
 import ch.uzh.ifi.hase.soprafs23.entity.Lobby;
 import ch.uzh.ifi.hase.soprafs23.entity.LobbyEvent;
@@ -86,6 +87,7 @@ public class GameController {
         }
 
         lobbySse.send(new LobbyEvent("START," + game.getId(), lobbyId));
+        lobby.setStatus(LobbyStatus.IN_GAME);
         // Return the ID of the newly created game
         return game.getId();
     }
