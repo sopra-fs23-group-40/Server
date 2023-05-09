@@ -214,8 +214,7 @@ public class GameController {
 
         Player player = game.getPlayerByUsername(username);
         if(player == null) throw new ResponseStatusException(HttpStatus.NOT_FOUND,
-                "Player with username " + username + " not found!\n" +
-                        "Players in game " + gameId + ": " + Arrays.stream(game.getPlayers()).map(Player::getPlayerName));
+                "Player with username " + username + " not found!\n");
 
         Inventory inventory = player.getInventory();
         GameBoard gameBoard = game.getGameBoard();
@@ -241,8 +240,7 @@ public class GameController {
 
         Player player = game.getPlayerByUsername(username);
         if(player == null) throw new ResponseStatusException(HttpStatus.NOT_FOUND,
-                "Player with username " + username + " not found!\n" +
-                        "Players in game " + gameId + ": " + Arrays.stream(game.getPlayers()).map(Player::getPlayerName));
+                "Player with username " + username + " not found!\n");
 
         Inventory inventory = player.getInventory();
         GameBoard gameBoard = game.getGameBoard();
@@ -268,8 +266,7 @@ public class GameController {
 
         Player player = game.getPlayerByUsername(username);
         if(player == null) throw new ResponseStatusException(HttpStatus.NOT_FOUND,
-                "Player with username " + username + " not found!\n" +
-                        "Players in game " + gameId + ": " + Arrays.stream(game.getPlayers()).map(Player::getPlayerName));
+                "Player with username " + username + " not found!\n");
 
         Inventory inventory = player.getInventory();
         GameBoard gameBoard = game.getGameBoard();
