@@ -250,4 +250,15 @@ created tests for all LobbyController endpoints https://github.com/sopra-fs23-gr
 
 created all tests for GameService https://github.com/sopra-fs23-group-40/Server/issues/75
 
+## Week 5
+
+### Karoline Siarsky
+
+### Thomas Stoller 
+
+### Paul Grünenwald
+
+### Thomas Joos
+
+### Justin Verhoek
 
