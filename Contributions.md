@@ -270,3 +270,5 @@ Created a README.md for the Server and the Client, respectively: https://github.
 ### Justin Verhoek
 Created all tests for the LobbyService https://github.com/sopra-fs23-group-40/Server/issues/79
 
+Started working on the tests for the GameController endpoints https://github.com/sopra-fs23-group-40/Server/issues/101
+
