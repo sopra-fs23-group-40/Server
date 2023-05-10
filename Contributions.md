@@ -265,4 +265,5 @@ When picking up a block, it is fixed to the cursor until the block is being plac
 Added a background music ingame, in the lobby and sound effects for successful or unsuccessful block placement: https://github.com/sopra-fs23-group-40/Client/issues/40
 
 ### Justin Verhoek
+Created all tests for the LobbyService https://github.com/sopra-fs23-group-40/Server/issues/79
 
