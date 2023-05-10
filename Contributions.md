@@ -252,6 +252,12 @@ created all tests for GameService https://github.com/sopra-fs23-group-40/Server/
 
 ### Karoline Siarsky
 
+https://github.com/sopra-fs23-group-40/Client/issues/42
+
+https://github.com/sopra-fs23-group-40/Client/issues/43
+
+https://github.com/sopra-fs23-group-40/Client/issues/44
+
 ### Thomas Stoller
 
 Implemented endpoint to synchronize time of game with client.
