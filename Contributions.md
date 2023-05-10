@@ -259,6 +259,7 @@ created all tests for GameService https://github.com/sopra-fs23-group-40/Server/
 ### Paul Grünenwald
 Create tests for the Inventory Class [#98](https://github.com/sopra-fs23-group-40/Server/issues/98)
 
+Create tests for the Block Class (rotating, flipping) [#100](https://github.com/sopra-fs23-group-40/Server/issues/100)
 ### Thomas Joos
 When picking up a block, it is fixed to the cursor until the block is being placed or the player cancells the move: https://github.com/sopra-fs23-group-40/Client/issues/12
 
