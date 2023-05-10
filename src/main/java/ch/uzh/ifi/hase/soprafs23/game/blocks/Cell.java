@@ -15,6 +15,17 @@ public class Cell {
             this.status = newStatus;
         }
 
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null || getClass() != obj.getClass()) {
+            return false;
+        }
+        Cell otherCell = (Cell) obj;
+        return this.status == otherCell.status;
+    }
 }
 
 
