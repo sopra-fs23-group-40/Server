@@ -259,6 +259,9 @@ created all tests for GameService https://github.com/sopra-fs23-group-40/Server/
 ### Paul Grünenwald
 
 ### Thomas Joos
+When picking up a block, it is fixed to the cursor until the block is being placed or the player cancells the move: https://github.com/sopra-fs23-group-40/Client/issues/12
+
+Added a background music ingame, in the lobby and sound effects for successful or unsuccessful block placement: https://github.com/sopra-fs23-group-40/Client/issues/40
 
 ### Justin Verhoek
 
