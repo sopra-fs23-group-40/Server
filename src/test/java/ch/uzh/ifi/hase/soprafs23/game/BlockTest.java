@@ -33,9 +33,9 @@ public class BlockTest {
         Block block = new Block18(player1, cellStatus);
 
         Cell[][] expected = {
+                {new Cell(cellStatus), new Cell(cellStatus), new Cell(cellStatus)},
                 {new Cell(cellStatus), new Cell(CellStatus.NEUTRAL), new Cell(CellStatus.NEUTRAL)},
-                {new Cell(cellStatus), new Cell(CellStatus.NEUTRAL), new Cell(CellStatus.NEUTRAL)},
-                {new Cell(cellStatus), new Cell(cellStatus), new Cell(cellStatus)}
+                {new Cell(cellStatus), new Cell(CellStatus.NEUTRAL), new Cell(CellStatus.NEUTRAL)}
         };
 
         block.flipVertical();
