@@ -257,11 +257,15 @@ created all tests for GameService https://github.com/sopra-fs23-group-40/Server/
 ### Thomas Stoller 
 
 ### Paul Grünenwald
+Create tests for the Inventory Class [#98](https://github.com/sopra-fs23-group-40/Server/issues/98)
 
 ### Thomas Joos
 When picking up a block, it is fixed to the cursor until the block is being placed or the player cancells the move: https://github.com/sopra-fs23-group-40/Client/issues/12
 
 Added a background music ingame, in the lobby and sound effects for successful or unsuccessful block placement: https://github.com/sopra-fs23-group-40/Client/issues/40
 
+Created a README.md for the Server and the Client, respectively: https://github.com/sopra-fs23-group-40/Server/issues/99
+
 ### Justin Verhoek
+Created all tests for the LobbyService https://github.com/sopra-fs23-group-40/Server/issues/79
 

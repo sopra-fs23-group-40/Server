@@ -1,88 +1,125 @@
-# SoPra RESTful Service Template FS23
+# SoPra FS23 Group 40 - TacBlock
 
-## Getting started with Spring Boot
--   Documentation: https://docs.spring.io/spring-boot/docs/current/reference/html/index.html
--   Guides: http://spring.io/guides
-    -   Building a RESTful Web Service: http://spring.io/guides/gs/rest-service/
-    -   Building REST services with Spring: https://spring.io/guides/tutorials/rest/
+## Introduction
+### Motivation
+Our idea was to create a game that would be fun to play, which keeps us motivated for the whole semester.
+We decided to create "TacBlock", which is similar as the original game ["Blokus" from Bernard Tavitian](https://de.wikipedia.org/wiki/Blokus), but as a nice online game version.
 
-## Setup this Template with your IDE of choice
-Download your IDE of choice (e.g., [IntelliJ](https://www.jetbrains.com/idea/download/), [Visual Studio Code](https://code.visualstudio.com/), or [Eclipse](http://www.eclipse.org/downloads/)). Make sure Java 17 is installed on your system (for Windows, please make sure your `JAVA_HOME` environment variable is set to the correct version of Java).
+### Game Mechanism
+The game is played by 4 players, who have to place their blocks on the board. The goal is to place as many blocks as possible. The game ends when no player can place any more blocks on the board. The winner is the player with the most blocks on the board.
+You can find a "Rules" section in the game, which explains the game in more detail.
 
-### IntelliJ
-1. File -> Open... -> SoPra server template
-2. Accept to import the project as a `gradle project`
-3. To build right click the `build.gradle` file and choose `Run Build`
+## Technologies
+- We use **Java** as the main programming Language for the Server.
+- With **REST** endpoints, the Clients can interact with the Server, which is programmed with **Spring**.
+- We use **JPA for persistance**.
+- The Server is built with **Gradle**.
+- Both Server and Client are deployed on **Google Cloud** and the code is stored **GitHub**. 
+- **SonarCloud** checks our code every time we push to GitHub and deploy it.
 
-### VS Code
-The following extensions can help you get started more easily:
--   `vmware.vscode-spring-boot`
--   `vscjava.vscode-spring-initializr`
--   `vscjava.vscode-spring-boot-dashboard`
--   `vscjava.vscode-java-pack`
+_For the Client's technologies, please refer to the Client's README.md._  
 
-**Note:** You'll need to build the project first with Gradle, just click on the `build` command in the _Gradle Tasks_ extension. Then check the _Spring Boot Dashboard_ extension if it already shows `soprafs23` and hit the play button to start the server. If it doesn't show up, restart VS Code and check again.
+## High-level components
+- [GameController](https://github.com/sopra-fs23-group-40/Server/blob/82c3c9270faf1c4d1248ab908bfd863c221cc905/src/main/java/ch/uzh/ifi/hase/soprafs23/controller/GameController.java), [LobbyController](https://github.com/sopra-fs23-group-40/Server/blob/82c3c9270faf1c4d1248ab908bfd863c221cc905/src/main/java/ch/uzh/ifi/hase/soprafs23/controller/LobbyHandler.java), [UserController](https://github.com/sopra-fs23-group-40/Server/blob/82c3c9270faf1c4d1248ab908bfd863c221cc905/src/main/java/ch/uzh/ifi/hase/soprafs23/controller/UserController.java) for REST Endpoints
+- [Game](https://github.com/sopra-fs23-group-40/Server/blob/82c3c9270faf1c4d1248ab908bfd863c221cc905/src/main/java/ch/uzh/ifi/hase/soprafs23/game/Game.java) for the game logic
+- [UserService](https://github.com/sopra-fs23-group-40/Server/blob/82c3c9270faf1c4d1248ab908bfd863c221cc905/src/main/java/ch/uzh/ifi/hase/soprafs23/service/UserService.java) for the user creation and handling
 
-## Building with Gradle
-You can use the local Gradle Wrapper to build the application.
--   macOS: `./gradlew`
--   Linux: `./gradlew`
--   Windows: `./gradlew.bat`
+## Launch & Deployment
+### How to run the application
+1. Clone the repository and navigate in the terminal to its location
+2. With the command `./gradlew build`, the project will be built<br>
+   _Alternatively, you can right-click the build.gradle in your IDE and select "Build Module 'Server'"._
+3. With the command `./gradlew bootRun`, the project will be run<br>
+   _Alternatively, you can right-click the build.gradle in your IDE and select "Run 'Server'"._
+4. The server is now running on localhost:8080
+- To run only the tests, use the command `./gradlew test`
+- To exclude tests when building, use the command `./gradlew build -xtest`
 
-More Information about [Gradle Wrapper](https://docs.gradle.org/current/userguide/gradle_wrapper.html) and [Gradle](https://gradle.org/docs/).
+### How to deploy the application
+1. To deploy the application, push it to the main branch of the GitHub repository.
+2. The application will be automatically deployed on Google Cloud and checked by SonarCloud.
+3. The server is now deployed on http://sopra-fs23-group-40-server.oa.r.appspot.com.<br>
+   _(the Client will be deployed on http://sopra-fs23-group-40-client.oa.r.appspot.com)_
 
-### Build
+_Please note that Google Cloud checks are very strict. 
+It is possible that the deployment fails for example because of unused import statements,
+so make sure to chat that beforehand._
 
-```bash
-./gradlew build
-```
+## Illustrations
+### 1. Login & Registration
 
-### Run
+#### Login
 
-```bash
-./gradlew bootRun
-```
+#### Registration
 
-You can verify that the server is running by visiting `localhost:8080` in your browser.
+### 2. Finding & Creating a Lobby
 
-### Test
+#### Additional Menu
 
-```bash
-./gradlew test
-```
+#### Joining a Lobby
 
-### Development Mode
-You can start the backend in development mode, this will automatically trigger a new build and reload the application
-once the content of a file has been changed.
+#### Creating a new Lobby
 
-Start two terminal windows and run:
+### 3. Waiting for Players & start the game
 
-`./gradlew build --continuous`
+#### Options in the Lobby
 
-and in the other one:
+#### Starting the game
 
-`./gradlew bootRun`
+### 4. Playing the game
 
-If you want to avoid running all tests with every change, use the following command instead:
+#### Game Board
 
-`./gradlew build --continuous -xtest`
+#### Placing blocks
 
-## API Endpoint Testing with Postman
-We recommend using [Postman](https://www.getpostman.com) to test your API Endpoints.
+#### Turns & Timer
 
-## Debugging
-If something is not working and/or you don't know what is going on. We recommend using a debugger and step-through the process step-by-step.
+### 5. Game finished
 
-To configure a debugger for SpringBoot's Tomcat servlet (i.e. the process you start with `./gradlew bootRun` command), do the following:
+#### Finish screen
 
-1. Open Tab: **Run**/Edit Configurations
-2. Add a new Remote Configuration and name it properly
-3. Start the Server in Debug mode: `./gradlew bootRun --debug-jvm`
-4. Press `Shift + F9` or the use **Run**/Debug "Name of your task"
-5. Set breakpoints in the application where you need it
-6. Step through the process one step at a time
+## Roadmap
+### Possible features for the future:
+- a game version with less than 4 Players (or more).
+- the players can see the other players' moves in real-time
+- a rating / ELO system
+- a chat in the lobby or game
+- a game history in the statistics
+- the possibility to play against a computer/AI
 
-## Testing
-Have a look here: https://www.baeldung.com/spring-boot-testing
+## Authors and Acknowledgment
 
-Test push
+### Authors
+- [thomi100](https://github.com/thomi100)
+- [Karo2222](https://github.com/Karo2222)
+- [turbodumba](https://github.com/turbodumba)
+- [PaulPerpetual](https://github.com/PaulPerpetual)
+- [jverho](https://github.com/jverho)
+- Group's Coach / Teaching Assistant [luis-tm](https://github.com/luis-tm)
+
+### Acknowledgment
+
+
+
+## License
+MIT License
+
+Copyright © (2023) (thomi100, Karo2222, turbodumba, PaulPerpetual, jverho)
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
