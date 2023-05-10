@@ -1,4 +1,5 @@
 package ch.uzh.ifi.hase.soprafs23.game.blocks;
+import ch.uzh.ifi.hase.soprafs23.constant.RotationDirection;
 import ch.uzh.ifi.hase.soprafs23.game.Player;
 
 public abstract class Block {
@@ -83,6 +84,28 @@ public abstract class Block {
             }
         }
     
+        shape = newShape;
+        int temp = length;
+        length = height;
+        height = temp;
+    }
+    public void rotate(RotationDirection rotationDirection) {
+        int numRows = shape.length;
+        int numCols = shape[0].length;
+        Cell[][] newShape = new Cell[numCols][numRows];
+
+        for (int i = 0; i < numRows; i++) {
+            for (int j = 0; j < numCols; j++) {
+                if(rotationDirection == RotationDirection.CLOCKWISE) {
+                    newShape[j][numRows - i - 1] = shape[i][j];
+                }
+                else if (rotationDirection == RotationDirection.COUNTER_CLOCKWISE) {
+                    newShape[numCols - j - 1][i] = shape[i][j];
+                }
+            }
+        }
+
+
         shape = newShape;
         int temp = length;
         length = height;

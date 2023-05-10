@@ -82,6 +82,12 @@ public class LobbyService {
         // TODO: Inform other players about this change (lobby type changed)
     }
 
+    public void changeLobbyStatus(Lobby lobby, LobbyStatus status) {
+        lobby.setStatus(status);
+        lobbyRepository.save(lobby);
+        lobbyRepository.flush();
+    }
+
     public void deleteLobby(String username, long id) {
         Lobby id_lobby = lobbyRepository.findByLobbyId(id);
         Lobby host_lobby = lobbyRepository.findByHost(username);

@@ -76,6 +76,7 @@ public class GameController {
         }
 
         lobbySse.send(new LobbyEvent("START," + game.getId(), lobbyId));
+        lobbyService.changeLobbyStatus(lobby, LobbyStatus.IN_GAME);
         lobby.setStatus(LobbyStatus.IN_GAME);
         // Return the ID of the newly created game
         return game.getId();
@@ -269,7 +270,8 @@ public class GameController {
     @PutMapping("/games/{gameId}/{username}/rotate")
     @ResponseStatus(HttpStatus.OK)
     @ResponseBody
-    public void rotateBlock(@PathVariable String gameId, @PathVariable String username, @RequestBody BlockRotateDTO blockRotateDTO) {
+    public BlockGetDTO rotateBlock(@PathVariable String gameId, @PathVariable String username, @RequestBody BlockRotateDTO blockRotateDTO) {
+
         // Retrieve the game with the given ID from the GameService
         Game game = gameService.getGameById(gameId);
         if(game == null) throw new ResponseStatusException(HttpStatus.NOT_FOUND,
@@ -290,6 +292,8 @@ public class GameController {
 
         // Rotate block
         block.rotateClockwise();
+        //block.rotate(blockRotateDTO.getRotationDirection()); // TODO: use that
+        return new BlockGetDTO(block.getBlockName(), block.getLength(), block.getHeight(), block.getShape());
         }
 
     @GetMapping("/games/{gameId}/time")
