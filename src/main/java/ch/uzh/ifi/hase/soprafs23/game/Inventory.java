@@ -47,4 +47,17 @@ public class Inventory {
         return null;
     }
 
+    public int getPlacedBlocks(){
+        return (21-blocks.size());
+    }
+
+    public int getUnplacedTiles(){
+        int tiles = 0;
+        List<Block> unplayedBlocks = getUnplayedBlocks();
+        for (Block b : unplayedBlocks){
+            tiles += b.getNumberOfSquares();
+        }
+        return tiles;
+    }
+
 }

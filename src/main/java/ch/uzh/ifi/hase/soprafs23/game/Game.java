@@ -1,7 +1,10 @@
 package ch.uzh.ifi.hase.soprafs23.game;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.UUID;
 
+import ch.uzh.ifi.hase.soprafs23.entity.GameStats;
 import ch.uzh.ifi.hase.soprafs23.game.blocks.Block;
 import ch.uzh.ifi.hase.soprafs23.game.blocks.CellStatus;
 
@@ -16,6 +19,7 @@ public class Game {
     public Game() {
         this.gameId = UUID.randomUUID().toString();
         this.gameboard = new GameBoard();
+
         this.stopwatch = new Stopwatch();
         stopwatch.start();
 
@@ -67,14 +71,36 @@ public class Game {
         return true;
     }
 
-    public void endGame(){
-        long minutesPlayed = stopwatch.getMinutes();
+    public Map<String, GameStats> endGame(){
+        int minutesPlayed = stopwatch.getMinutes();
+        String winner = findWinner();
         ArrayList<Player> playersToUpdate = getPlayers();
+        Map<String, GameStats> gameStatsMap = new HashMap<>();
         for (Player p : playersToUpdate){
-            // Todo: get users corresponding to players and update statistics.
+            GameStats gameStats = new GameStats();
+            if (p.getPlayerName().equals(winner)){
+                gameStats.setGamesWon(1);
+            }
+            else {
+                gameStats.setGamesWon(0);
+            }
+            gameStats.setMinutesPlayed(minutesPlayed);
+            gameStats.setBlocksPlaced(p.getPlacedBlocks());
+            gameStatsMap.put(p.getPlayerName(), gameStats);
         }
-        // Todo: check who won the game and return this to the users somehow
-        // Todo: also update statistics about games won, blocks placed, games player etc.
+        return gameStatsMap;
+    }
+
+    private String findWinner() {
+        ArrayList<Player> players = getPlayers();
+        String winner = "";
+        int minimumTiles = 90;
+        for(Player p : players){
+            if(p.getUnplacedTiles() <= minimumTiles){
+                winner = p.getPlayerName();
+            }
+        }
+        return winner;
     }
 
     public GameBoard getGameBoard() {
@@ -133,6 +159,10 @@ public class Game {
 
     public ArrayList<Player> getPlayers() {
         return players;
+    }
+
+    public long getRunningTime(){
+        return stopwatch.getRunningTime();
     }
 
 

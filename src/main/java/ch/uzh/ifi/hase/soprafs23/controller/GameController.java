@@ -1,9 +1,7 @@
 package ch.uzh.ifi.hase.soprafs23.controller;
 
 import ch.uzh.ifi.hase.soprafs23.constant.LobbyStatus;
-import ch.uzh.ifi.hase.soprafs23.entity.GameEvent;
-import ch.uzh.ifi.hase.soprafs23.entity.Lobby;
-import ch.uzh.ifi.hase.soprafs23.entity.LobbyEvent;
+import ch.uzh.ifi.hase.soprafs23.entity.*;
 import ch.uzh.ifi.hase.soprafs23.game.Game;
 import ch.uzh.ifi.hase.soprafs23.game.GameBoard;
 import ch.uzh.ifi.hase.soprafs23.game.Inventory;
@@ -23,6 +21,7 @@ import org.springframework.web.server.ResponseStatusException;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 @RestController
 public class GameController {
@@ -200,6 +199,18 @@ public class GameController {
         game.nextPlayersTurn();
         inventory.removeBlock(block);
         gameBoard.placeBlock(player, blockPlaceDTO.getRow(), blockPlaceDTO.getColumn(), block);
+        if(game.isGameOver()){
+            Map<String, GameStats> gameStatsMap = game.endGame();
+            for(String name: gameStatsMap.keySet()){
+                Statistics userStatistics = userService.getStatistics(name);
+                GameStats gameStats = gameStatsMap.get(name);
+                userStatistics.setGamesWon(userStatistics.getGamesWon() + gameStats.getGamesWon());
+                userStatistics.setBlocksPlaced(userStatistics.getBlocksPlaced() + gameStats.getBlocksPlaced());
+                userStatistics.setGamesPlayed(userStatistics.getGamesPlayed() + 1);
+                userStatistics.setMinutesPlayed(userStatistics.getMinutesPlayed() + gameStats.getMinutesPlayed());
+                userStatistics.setWinPercentage((float)userStatistics.getGamesWon() / (float) userStatistics.getGamesPlayed());
+            }
+        }
         gameSSE.send(new GameEvent("MOVE", gameId));
     }
 
@@ -281,4 +292,11 @@ public class GameController {
         block.rotateClockwise();
         }
 
+    @GetMapping("/games/{gameId}/time")
+    @ResponseStatus(HttpStatus.OK)
+    @ResponseBody
+    public long getRunningTime(@PathVariable String gameId){
+        Game game = gameService.getGameById(gameId);
+        return game.getRunningTime();
+    }
 }

@@ -137,9 +137,8 @@ public class UserController {
     @GetMapping("/statistics")
     @ResponseStatus(HttpStatus.OK)
     @ResponseBody
-    public StatsGetDTO getUserStatistics(@RequestHeader(value = "token") String token) {
-        checkToken(token);
-        Statistics userStatistics = userService.getStatistics(token);
+    public StatsGetDTO getUserStatistics(@RequestHeader(value = "username") String username) {
+        Statistics userStatistics = userService.getStatistics(username);
         return DTOMapper.INSTANCE.convertEntityToStatsGetDTO(userStatistics);
     }
 }

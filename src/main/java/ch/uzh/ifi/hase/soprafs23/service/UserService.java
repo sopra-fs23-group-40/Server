@@ -29,7 +29,7 @@ import java.util.UUID;
 @Transactional
 public class UserService {
 
-  private final Logger log = LoggerFactory.getLogger(UserService.class);
+    private final Logger log = LoggerFactory.getLogger(UserService.class);
 
   private final UserRepository userRepository;
   private final StatisticsRepository statisticsRepository;
@@ -137,9 +137,13 @@ public class UserService {
         }
     }
 
-    public Statistics getStatistics(String token) {
-      User userByToken = userRepository.findByToken(token);
-      return statisticsRepository.findByUserId(userByToken.getId());
+    public Statistics getStatistics(String username) {
+      User userByUsername = userRepository.findByUsername(username);
+      if (userByUsername == null){
+          throw new ResponseStatusException(HttpStatus.BAD_REQUEST,
+                  "These is no user with this username.");
+      }
+      return statisticsRepository.findByUserId(userByUsername.getId());
     }
 
     /**

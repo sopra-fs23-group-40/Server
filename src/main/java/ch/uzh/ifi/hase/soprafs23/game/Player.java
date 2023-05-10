@@ -71,4 +71,12 @@ public class Player {
     public String getPlayerId() {
         return playerId;
     }
+
+    public int getPlacedBlocks(){
+        return inventory.getPlacedBlocks();
+    }
+
+    public int getUnplacedTiles(){
+        return inventory.getUnplacedTiles();
+    }
 }

@@ -68,6 +68,7 @@ public class Statistics implements Serializable {
     public void setWinPercentage(float winPercentage) {
         this.winPercentage = winPercentage;
     }
+
     public int getBlocksPlaced() {
         return blocksPlaced;
     }
@@ -75,6 +76,7 @@ public class Statistics implements Serializable {
     public void setBlocksPlaced(int blocksPlaced) {
         this.blocksPlaced = blocksPlaced;
     }
+
     public Long getUserId() {
         return userId;
     }
