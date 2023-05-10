@@ -28,4 +28,22 @@ public class BlockTest {
 
     }
 
+    @Test
+    void flipVerticalReturnsFlippedBlock() {
+        Block block = new Block18(player1, cellStatus);
+
+        Cell[][] expected = {
+                {new Cell(cellStatus), new Cell(CellStatus.NEUTRAL), new Cell(CellStatus.NEUTRAL)},
+                {new Cell(cellStatus), new Cell(CellStatus.NEUTRAL), new Cell(CellStatus.NEUTRAL)},
+                {new Cell(cellStatus), new Cell(cellStatus), new Cell(cellStatus)}
+        };
+
+        block.flipVertical();
+
+        Cell[][] actual = block.getBlock();
+
+        assertArrayEquals(expected, actual);
+    }
+
+
 }
