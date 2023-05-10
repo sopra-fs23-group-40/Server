@@ -205,7 +205,6 @@ Added public/ private switch in lobby: https://github.com/sopra-fs23-group-40/Cl
 
 ### Thomas Stoller 
 
-
 Added currentPlayers to lobby entity/repository
 Updated LobbyGetDTO & DTOMapper
 Added necessary commands in create, join and leave lobby to maintain the amount of players.
@@ -222,7 +221,6 @@ https://github.com/sopra-fs23-group-40/Client/issues/37
 Implemented Stopwatch class to track the time of a game
 Added creating a stopwatch in game & starting/stopping it.
 https://github.com/sopra-fs23-group-40/Server/issues/94
-
 
 
 ### Paul Grünenwald
@@ -254,7 +252,16 @@ created all tests for GameService https://github.com/sopra-fs23-group-40/Server/
 
 ### Karoline Siarsky
 
-### Thomas Stoller 
+### Thomas Stoller
+
+Implemented endpoint to synchronize time of game with client.
+https://github.com/sopra-fs23-group-40/Server/issues/95
+Implemented the Game.endGame method to give back statistics about the game and updating them in GameController.
+https://github.com/sopra-fs23-group-40/Server/issues/96
+
+Synchronized counter for every client and getting it from the endpoint on the server.
+https://github.com/sopra-fs23-group-40/Client/issues/38
+
 
 ### Paul Grünenwald
 Create tests for the Inventory Class [#98](https://github.com/sopra-fs23-group-40/Server/issues/98)
