@@ -28,7 +28,10 @@ public class InventoryTest {
         CellStatus cellStatus = player1.getStatus();
 
         GameBoard gameBoard = game.getGameBoard();
-        gameBoard.placeBlock(player1,0,19,inventory.getBlockByBlockName("Block5"));
+        Block block = inventory.getBlockByBlockName("Block5");
+        gameBoard.placeBlock(player1,2,10, block);
+        inventory.removeBlock(block);
+
         List<Block> actualBlocks = inventory.getUnplayedBlocks();
         List<Block> expectedBlocks = Arrays.asList(
                 new Block1(player1, cellStatus),
