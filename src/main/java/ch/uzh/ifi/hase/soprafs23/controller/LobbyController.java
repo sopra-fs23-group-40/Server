@@ -4,13 +4,11 @@ package ch.uzh.ifi.hase.soprafs23.controller;
 import ch.uzh.ifi.hase.soprafs23.constant.LobbyStatus;
 import ch.uzh.ifi.hase.soprafs23.constant.LobbyType;
 import ch.uzh.ifi.hase.soprafs23.entity.Lobby;
-import ch.uzh.ifi.hase.soprafs23.entity.LobbyEvent;
 import ch.uzh.ifi.hase.soprafs23.rest.dto.LobbyGetDTO;
 import ch.uzh.ifi.hase.soprafs23.rest.dto.LobbyPutDTO;
 import ch.uzh.ifi.hase.soprafs23.rest.dto.UserAuthDTO;
 import ch.uzh.ifi.hase.soprafs23.rest.mapper.DTOMapper;
 import ch.uzh.ifi.hase.soprafs23.service.LobbyService;
-import ch.uzh.ifi.hase.soprafs23.service.LobbySSE;
 import ch.uzh.ifi.hase.soprafs23.service.UserService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -24,12 +22,10 @@ public class LobbyController {
 
     private final LobbyService lobbyService;
     private final UserService userService;
-    private final LobbySSE lobbySse;
 
-    LobbyController(LobbyService lobbyService, UserService userService, LobbySSE lobbySse) {
+    LobbyController(LobbyService lobbyService, UserService userService) {
         this.lobbyService = lobbyService;
         this.userService = userService;
-        this.lobbySse = lobbySse;
     }
 
 
@@ -58,7 +54,6 @@ public class LobbyController {
         UserAuthDTO userAuthDTO = DTOMapper.INSTANCE.convertVariablesToUserAuthDTO(username, token);
         userService.checkAuthentication(userAuthDTO.getUsername(), userAuthDTO.getToken());
         lobbyService.joinLobby(lobbyPutDTO.getId(), lobbyPutDTO.getPasscode(), userAuthDTO.getUsername());
-        lobbySse.send(new LobbyEvent("JOINED", lobbyPutDTO.getId()));
     }
 
     /***
@@ -89,7 +84,6 @@ public class LobbyController {
         UserAuthDTO userAuthDTO = DTOMapper.INSTANCE.convertVariablesToUserAuthDTO(username, token);
         userService.checkAuthentication(userAuthDTO.getUsername(), userAuthDTO.getToken());
         lobbyService.deleteLobby(userAuthDTO.getUsername(), id);
-        lobbySse.send(new LobbyEvent("DELETED", id));
     }
 
     @GetMapping("/lobby/{id}/checkhost")
@@ -113,6 +107,8 @@ public class LobbyController {
         ret_lobby.setPlayerList(lobby.getPlayerList());
         ret_lobby.setName(lobby.getName());
         ret_lobby.setLobbyType(lobby.getLobbyType());
+        ret_lobby.setStatus(lobby.getStatus());
+        ret_lobby.setGameId(lobby.getGameId());
         if (lobbyService.checkIfHost(userAuthDTO.getUsername(), id)) {
             ret_lobby.setLobbyToken(lobby.getLobbyToken());
         }
@@ -126,6 +122,5 @@ public class LobbyController {
     public void leaveLobby(@PathVariable(value = "id") long id, @RequestBody UserAuthDTO userAuthDTO) {
         userService.checkAuthentication(userAuthDTO.getUsername(), userAuthDTO.getToken());
         lobbyService.leaveLobby(userAuthDTO.getUsername(), id);
-        lobbySse.send(new LobbyEvent("LEFT", id));
     }
 }

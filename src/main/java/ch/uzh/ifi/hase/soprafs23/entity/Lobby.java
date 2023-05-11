@@ -48,6 +48,9 @@ public class Lobby implements Serializable {
     private int currentPlayers;
 
     @Column
+    private String gameId;
+
+    @Column
     private int maxPlayers = 4;
 
     public Long getLobbyId() {
@@ -122,4 +125,11 @@ public class Lobby implements Serializable {
         this.currentPlayers = currentPlayers;
     }
 
+    public String getGameId() {
+        return gameId;
+    }
+
+    public void setGameId(String gameId) {
+        this.gameId = gameId;
+    }
 }

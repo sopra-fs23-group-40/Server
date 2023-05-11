@@ -38,6 +38,8 @@ public interface DTOMapper {
     @Mapping(source = "lobbyToken", target = "lobbyToken")
     @Mapping(source = "playerList", target = "playerList")
     @Mapping(source = "currentPlayers", target = "currentPlayers")
+    @Mapping(source = "gameId", target = "gameId")
+    @Mapping(source = "status", target = "status")
     LobbyGetDTO convertEntityToLobbyGetDTO(Lobby lobby);
 
     StatsGetDTO convertEntityToStatsGetDTO(Statistics statistics);

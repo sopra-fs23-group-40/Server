@@ -10,9 +10,7 @@ import ch.uzh.ifi.hase.soprafs23.game.blocks.Block;
 import ch.uzh.ifi.hase.soprafs23.game.blocks.CellStatus;
 import ch.uzh.ifi.hase.soprafs23.rest.dto.*;
 import ch.uzh.ifi.hase.soprafs23.rest.mapper.DTOMapper;
-import ch.uzh.ifi.hase.soprafs23.service.GameSSE;
 import ch.uzh.ifi.hase.soprafs23.service.LobbyService;
-import ch.uzh.ifi.hase.soprafs23.service.LobbySSE;
 import ch.uzh.ifi.hase.soprafs23.service.UserService;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.http.HttpStatus;
@@ -31,16 +29,10 @@ public class GameController {
 
     private final UserService userService;
 
-    private final LobbySSE lobbySse;
-
-    private final GameSSE gameSSE;
-
-    GameController(LobbyService lobbyService, UserService userService, GameService gameService, GameSSE gameSSE, LobbySSE lobbySse) {
+    GameController(LobbyService lobbyService, UserService userService, GameService gameService) {
         this.lobbyService = lobbyService;
         this.userService = userService;
         this.gameService = gameService;
-        this.lobbySse = lobbySse;
-        this.gameSSE = gameSSE;
     }
 
 
@@ -75,9 +67,8 @@ public class GameController {
             game.addPlayer(playerName);
         }
 
-        lobbySse.send(new LobbyEvent("START," + game.getId(), lobbyId));
-        lobbyService.changeLobbyStatus(lobby, LobbyStatus.IN_GAME);
-        lobby.setStatus(LobbyStatus.IN_GAME);
+        lobbyService.setStatus(lobbyId, LobbyStatus.INGAME);
+        lobbyService.setGameId(lobbyId, game.getId());
         // Return the ID of the newly created game
         return game.getId();
     }
@@ -212,7 +203,6 @@ public class GameController {
                 userStatistics.setWinPercentage((float)userStatistics.getGamesWon() / (float) userStatistics.getGamesPlayed());
             }
         }
-        gameSSE.send(new GameEvent("MOVE", gameId));
     }
 
     @PutMapping("/games/{gameId}/{username}/vertical_flip")

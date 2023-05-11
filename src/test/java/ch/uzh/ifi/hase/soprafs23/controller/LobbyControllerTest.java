@@ -7,7 +7,6 @@ import ch.uzh.ifi.hase.soprafs23.entity.User;
 import ch.uzh.ifi.hase.soprafs23.rest.dto.LobbyPutDTO;
 import ch.uzh.ifi.hase.soprafs23.rest.dto.UserAuthDTO;
 import ch.uzh.ifi.hase.soprafs23.service.LobbyService;
-import ch.uzh.ifi.hase.soprafs23.service.LobbySSE;
 import ch.uzh.ifi.hase.soprafs23.service.TokenAuthenticationService;
 import ch.uzh.ifi.hase.soprafs23.service.UserService;
 import com.fasterxml.jackson.core.JsonProcessingException;
@@ -50,8 +49,6 @@ class LobbyControllerTest {
     @MockBean
     private LobbyService lobbyService;
 
-    @MockBean
-    private LobbySSE lobbySse;
 
     private User createTestUser(){
         User createdUser = new User();
@@ -186,7 +183,7 @@ class LobbyControllerTest {
         Lobby lobby2 = createTestLobby();
         lobby2.setLobbyId(2L);
         lobby2.setName("Test Lobby 2");
-        lobby2.setStatus(LobbyStatus.IN_GAME);
+        lobby2.setStatus(LobbyStatus.INGAME);
         lobbies.add(lobby2);
 
         given(lobbyService.getLobbies()).willReturn(lobbies);

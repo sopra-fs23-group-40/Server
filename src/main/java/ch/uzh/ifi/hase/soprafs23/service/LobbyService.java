@@ -195,4 +195,16 @@ public class LobbyService {
         lobbyRepository.save(this_lobby);
         lobbyRepository.flush();
     }
+
+    public void setStatus(long lobbyId, LobbyStatus newStatus){
+        Lobby lobbyToChange = getLobby(lobbyId);
+        lobbyToChange.setStatus(newStatus);
+        lobbyRepository.flush();
+    }
+
+    public void setGameId(long lobbyId, String gameId){
+        Lobby lobbyToChange = getLobby(lobbyId);
+        lobbyToChange.setGameId(gameId);
+        lobbyRepository.flush();
+    }
 }

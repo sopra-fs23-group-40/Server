@@ -43,12 +43,6 @@ class GameControllerTest {
     @MockBean
     private GameService gameService;
 
-    @MockBean
-    private LobbySSE lobbySSE;
-
-    @MockBean
-    private GameSSE gameSSE;
-
     @Disabled
     @Test
     public void testCreateGame() throws Exception {
