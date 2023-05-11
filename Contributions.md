@@ -264,6 +264,8 @@ Implemented endpoint to synchronize time of game with client.
 https://github.com/sopra-fs23-group-40/Server/issues/95
 Implemented the Game.endGame method to give back statistics about the game and updating them in GameController.
 https://github.com/sopra-fs23-group-40/Server/issues/96
+Implemented a Entity to give back statistics to the Gamecontroller.
+https://github.com/sopra-fs23-group-40/Server/issues/102
 
 Synchronized counter for every client and getting it from the endpoint on the server.
 https://github.com/sopra-fs23-group-40/Client/issues/38
