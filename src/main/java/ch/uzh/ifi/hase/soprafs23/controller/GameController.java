@@ -20,6 +20,7 @@ import org.springframework.web.server.ResponseStatusException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 
 @RestController
 public class GameController {
@@ -139,6 +140,22 @@ public class GameController {
         return blockGetDTOs;
     }
 
+    @GetMapping("/games/{gameId}/isGameOver")
+    @ResponseStatus(HttpStatus.OK)
+    @ResponseBody
+    public GameOverDTO getGameOver(@PathVariable String gameId) {
+
+        // Retrieve the player object from the game by gameId and playerId
+        Game game = gameService.getGameById(gameId);
+        if(game == null) throw new ResponseStatusException(HttpStatus.NOT_FOUND,
+                "Game with gameId " + gameId + " not found!");
+
+        if(game.isGameOver()) {
+            return new GameOverDTO(true, game.getWinner(), game.getDuration());
+        } else {
+            return new GameOverDTO(false, Optional.empty(), game.getDuration());
+        }
+    }
 
     @GetMapping("/games/{gameId}/status")
     @ResponseStatus(HttpStatus.OK)

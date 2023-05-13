@@ -1,8 +1,5 @@
 package ch.uzh.ifi.hase.soprafs23.game;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.UUID;
+import java.util.*;
 
 import ch.uzh.ifi.hase.soprafs23.entity.GameStats;
 import ch.uzh.ifi.hase.soprafs23.game.blocks.Block;
@@ -80,33 +77,46 @@ public class Game {
         return true;
     }
 
+    private boolean gameOver = false;
+    public boolean isGameOver() {
+        return gameOver;
+    }
+
+    private Optional<Player> winner = Optional.empty();
+    public Optional<Player> getWinner() {
+        return winner;
+    }
+
+    private int duration = 0;
+    public int getDuration() {
+        return duration;
+    }
+
     public Map<String, GameStats> endGame(){
-        int minutesPlayed = stopwatch.getMinutes();
-        String winner = findWinner();
+        gameOver = true;
+        duration = stopwatch.getMinutes();
+        winner = Optional.of(findWinner());
         ArrayList<Player> playersToUpdate = getPlayers();
         Map<String, GameStats> gameStatsMap = new HashMap<>();
         for (Player p : playersToUpdate){
             GameStats gameStats = new GameStats();
-            if (p.getPlayerName().equals(winner)){
-                gameStats.setGamesWon(1);
-            }
-            else {
-                gameStats.setGamesWon(0);
-            }
-            gameStats.setMinutesPlayed(minutesPlayed);
+            gameStats.setGamesWon(p.getPlayerName().equals(winner.get().getPlayerName()) ? 1 : 0);
+            gameStats.setMinutesPlayed(duration);
             gameStats.setBlocksPlaced(p.getPlacedBlocks());
             gameStatsMap.put(p.getPlayerName(), gameStats);
         }
         return gameStatsMap;
     }
 
-    private String findWinner() {
+
+
+    private Player findWinner() {
         ArrayList<Player> players = getPlayers();
-        String winner = "";
+        Player winner = null;
         int minimumTiles = 90;
         for(Player p : players){
             if(p.getUnplacedTiles() <= minimumTiles){
-                winner = p.getPlayerName();
+                winner = p;
             }
         }
         return winner;
