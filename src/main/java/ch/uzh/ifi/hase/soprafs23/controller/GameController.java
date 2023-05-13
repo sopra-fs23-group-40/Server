@@ -191,7 +191,7 @@ public class GameController {
         game.nextPlayersTurn();
         inventory.removeBlock(block);
         gameBoard.placeBlock(player, blockPlaceDTO.getRow(), blockPlaceDTO.getColumn(), block);
-        if(game.isGameOver()){
+        if(game.checkGameOver()){
             Map<String, GameStats> gameStatsMap = game.endGame();
             for(String name: gameStatsMap.keySet()){
                 Statistics userStatistics = userService.getStatistics(name);

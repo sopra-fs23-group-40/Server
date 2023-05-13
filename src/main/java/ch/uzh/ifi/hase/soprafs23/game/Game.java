@@ -40,31 +40,38 @@ public class Game {
     }
 
     public void nextPlayersTurn() {
-        if (!isGameOver()) {
+        if (!checkGameOver()) {
             currentPlayer = players.get((players.indexOf(currentPlayer) + 1) % players.size());
         }
         else {
-            endGame();
+            endGame(); // TODO: is the if/else statement really needed or already checked?
         }
     }
 
-    public boolean isGameOver() {
-        for (Player player : players) {
-            for (int i = 0; i < 20; i++) {
-                for (int j = 0; j < 20; j++) {
-                    for (Block block : player.getInventory().getBlocks()) {
-                        for (int flip = 0; flip < 1; flip++) {
-                            for (int rot = 0; rot < 4; rot++) {
-                                if (gameboard.canPlacePiece(i, j, block)) {
-                                    return false;
-                                }
-                                block.rotateClockwise();
+    public boolean canPlaceBrick(Player p) {
+        for (int i = 0; i < 20; i++) {
+            for (int j = 0; j < 20; j++) {
+                for (Block block : p.getInventory().getBlocks()) {
+                    for (int flip = 0; flip < 1; flip++) {
+                        for (int rot = 0; rot < 4; rot++) {
+                            if (gameboard.canPlacePiece(i, j, block)) {
+                                return true;
                             }
                             block.rotateClockwise();
-                            block.flipVertical();
                         }
+                        block.rotateClockwise();
+                        block.flipVertical();
                     }
                 }
+            }
+        }
+        return false;
+    }
+
+    public boolean checkGameOver() {
+        for(Player p : players) {
+            if (canPlaceBrick(p)) {
+                return false;
             }
         }
         stopwatch.stop();

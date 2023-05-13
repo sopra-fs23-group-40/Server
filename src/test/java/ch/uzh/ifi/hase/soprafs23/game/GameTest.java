@@ -23,13 +23,13 @@ class GameTest {
         }
         gameBoard.placeBlock(player1,0,19,player1.getBlocks()[0]);
         gameBoard.placeBlock(player1,19,0,player1.getBlocks()[0]);
-        assertTrue(game.isGameOver());
+        assertTrue(game.checkGameOver());
     }
     @Test
     void isGameOverCanPlaceReturnFalse(){
         GameBoard gameBoard = game.getGameBoard();
         gameBoard.placeBlock(player1,0,0,player1.getBlocks()[5]);
-        assertFalse(game.isGameOver());
+        assertFalse(game.checkGameOver());
     }
 
 }
