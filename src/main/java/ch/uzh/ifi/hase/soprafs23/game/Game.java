@@ -41,10 +41,12 @@ public class Game {
 
     public void nextPlayersTurn() {
         if (!checkGameOver()) {
-            currentPlayer = players.get((players.indexOf(currentPlayer) + 1) % players.size());
+            do {
+                currentPlayer = players.get((players.indexOf(currentPlayer) + 1) % players.size());
+            } while(!canPlaceBrick(currentPlayer));
         }
         else {
-            endGame(); // TODO: is the if/else statement really needed or already checked?
+            endGame();
         }
     }
 
