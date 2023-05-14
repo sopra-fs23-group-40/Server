@@ -54,6 +54,7 @@ public class Game {
                     for (int flip = 0; flip < 1; flip++) {
                         for (int rot = 0; rot < 4; rot++) {
                             if (gameboard.canPlacePiece(i, j, block)) {
+                                System.out.println("Player " + p.getPlayerName() + " can place piece " + block.getBlockName() + " at " + i + ", " + j + " (flip=" + flip + ", rot=" + rot + ")");
                                 return true;
                             }
                             block.rotateClockwise();

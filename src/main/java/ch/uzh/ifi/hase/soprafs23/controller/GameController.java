@@ -1,6 +1,7 @@
 package ch.uzh.ifi.hase.soprafs23.controller;
 
 import ch.uzh.ifi.hase.soprafs23.constant.LobbyStatus;
+import ch.uzh.ifi.hase.soprafs23.constant.RotationDirection;
 import ch.uzh.ifi.hase.soprafs23.entity.*;
 import ch.uzh.ifi.hase.soprafs23.game.Game;
 import ch.uzh.ifi.hase.soprafs23.game.GameBoard;
@@ -198,6 +199,27 @@ public class GameController {
                 "Block with blockName " + blockPlaceDTO.getBlockName() + " not found!\n" +
                         "Possible blocks (from " + username + "'s inventory):\n"
                         + inventory.getBlocks());
+
+        switch(blockPlaceDTO.getRotation()){
+            case 0:
+                break;
+            case 90:
+                block.rotate(RotationDirection.CLOCKWISE);
+                break;
+            case 180:
+                block.rotate(RotationDirection.CLOCKWISE);
+                block.rotate(RotationDirection.CLOCKWISE);
+                break;
+            case 270:
+                block.rotate(RotationDirection.COUNTER_CLOCKWISE);
+                break;
+            default:
+                throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Invalid rotation");
+        }
+
+        if(blockPlaceDTO.isFlipped()){
+            block.flipHorizontal();
+        }
 
         // Check whether move is valid
         if (!gameBoard.canPlacePiece(blockPlaceDTO.getRow(), blockPlaceDTO.getColumn(), block)) {
