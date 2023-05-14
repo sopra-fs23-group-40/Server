@@ -1,20 +1,19 @@
 package ch.uzh.ifi.hase.soprafs23.rest.dto;
 
-import ch.uzh.ifi.hase.soprafs23.game.Player;
-
 import java.util.HashMap;
-import java.util.Optional;
 
 public class GameOverDTO {
 
     private final boolean gameOver;
     private final String winnerName;
     private final int gameDuration;
+    private final HashMap<String, Integer> placedBlocks;
 
     public GameOverDTO(boolean gameOver, String winnerName, int gameDuration, HashMap<String, Integer> placedBlocks) {
         this.gameOver = gameOver;
         this.winnerName = winnerName;
         this.gameDuration = gameDuration;
+        this.placedBlocks = placedBlocks;
     }
 
     public boolean getGameOver() {
@@ -26,5 +25,8 @@ public class GameOverDTO {
     }
     public int getGameDuration() {
         return gameDuration;
+    }
+    public HashMap<String, Integer> getPlacedBlocks() {
+        return placedBlocks;
     }
 }
