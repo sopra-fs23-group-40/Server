@@ -152,9 +152,14 @@ public class GameController {
                 "Game with gameId " + gameId + " not found!");
 
         if(game.isGameOver()) {
-            return new GameOverDTO(true, game.getWinner(), game.getDuration());
+            if(game.getWinner().isPresent()) {
+                return new GameOverDTO(true, game.getWinner().get().getPlayerName(), game.getDuration(), game.getPlacedBlocks());
+            } else {
+                throw new ResponseStatusException(HttpStatus.NOT_FOUND,
+                        "Game is over, but no winner was found!");
+            }
         } else {
-            return new GameOverDTO(false, Optional.empty(), game.getDuration());
+            return new GameOverDTO(false, null, game.getDuration(), game.getPlacedBlocks());
         }
     }
 

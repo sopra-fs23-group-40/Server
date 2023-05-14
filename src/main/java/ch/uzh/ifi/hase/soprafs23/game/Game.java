@@ -93,6 +93,14 @@ public class Game {
         return duration;
     }
 
+    public HashMap<String, Integer> getPlacedBlocks() {
+        HashMap<String, Integer> placedBlocks = new HashMap<>();
+        for (Player p : players) {
+            placedBlocks.put(p.getPlayerName(), p.getPlacedBlocks());
+        }
+        return placedBlocks;
+    }
+
     public Map<String, GameStats> endGame(){
         gameOver = true;
         duration = stopwatch.getMinutes();
