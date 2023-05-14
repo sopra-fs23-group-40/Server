@@ -1,15 +1,19 @@
 package ch.uzh.ifi.hase.soprafs23.game;
 
+import java.util.Date;
+
 public class Stopwatch {
     private final long nanoSecondsPerSecond = 1000000000L;
     private final long nanoSecondsPerMinute = 60000000000L;
 
     private long startTime = 0;
     private long stopTime = 0;
+    private Date startDate;
     private final String notRunningError = "The clock hasn't been stopped yet!";
 
     public void start() {
         this.startTime = System.nanoTime();
+        this.startDate = new Date();
     }
 
     public void stop() {
@@ -24,9 +28,7 @@ public class Stopwatch {
         return (int) Math.floor(elapsedTime / nanoSecondsPerMinute);
     }
 
-    public long getRunningTime() {
-        long time = System.nanoTime();
-        long runTime = time - startTime;
-        return runTime / nanoSecondsPerSecond;
+    public Date getStartDate() {
+        return startDate;
     }
 }

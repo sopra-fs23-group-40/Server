@@ -189,9 +189,8 @@ public class Game {
         return players;
     }
 
-    public long getRunningTime(){
-        return stopwatch.getRunningTime();
+    public Date getStartDate(){
+        return stopwatch.getStartDate();
     }
-
 
 }

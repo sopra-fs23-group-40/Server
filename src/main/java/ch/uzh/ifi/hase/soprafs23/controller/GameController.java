@@ -18,10 +18,7 @@ import org.springframework.http.HttpStatus;
 import ch.uzh.ifi.hase.soprafs23.service.GameService;
 import org.springframework.web.server.ResponseStatusException;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
-import java.util.Optional;
+import java.util.*;
 
 @RestController
 public class GameController {
@@ -333,8 +330,8 @@ public class GameController {
     @GetMapping("/games/{gameId}/time")
     @ResponseStatus(HttpStatus.OK)
     @ResponseBody
-    public long getRunningTime(@PathVariable String gameId){
+    public Date getStartDate(@PathVariable String gameId){
         Game game = gameService.getGameById(gameId);
-        return game.getRunningTime();
+        return game.getStartDate();
     }
 }
