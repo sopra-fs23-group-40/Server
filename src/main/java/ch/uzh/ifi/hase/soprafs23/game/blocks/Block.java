@@ -50,12 +50,10 @@ public abstract class Block {
     public abstract String getBlockName();
 
     public void flipHorizontal() {
-        Cell[][] newShape = new Cell[height][length];
-    
-        for (int i = 0; i < height; i++) {
-            for (int j = 0; j < length; j++) {
-                newShape[i][j] = shape[i][length - j - 1];
-            }
+        Cell[][] newShape = new Cell[shape.length][shape[0].length];
+
+        for(int i = 0; i < shape.length; i++) {
+            newShape[i] = shape[shape.length - i - 1];
         }
 
         shape = newShape;
