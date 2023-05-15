@@ -8,6 +8,7 @@ import ch.uzh.ifi.hase.soprafs23.game.GameBoard;
 import ch.uzh.ifi.hase.soprafs23.game.Inventory;
 import ch.uzh.ifi.hase.soprafs23.game.Player;
 import ch.uzh.ifi.hase.soprafs23.game.blocks.Block;
+import ch.uzh.ifi.hase.soprafs23.game.blocks.Cell;
 import ch.uzh.ifi.hase.soprafs23.game.blocks.CellStatus;
 import ch.uzh.ifi.hase.soprafs23.rest.dto.*;
 import ch.uzh.ifi.hase.soprafs23.rest.mapper.DTOMapper;
@@ -202,6 +203,8 @@ public class GameController {
                         "Possible blocks (from " + username + "'s inventory):\n"
                         + inventory.getBlocks());
 
+        Cell[][] oldShape = block.getShape();
+
         switch(blockPlaceDTO.getRotation()){
             case 0:
                 break;
@@ -223,10 +226,13 @@ public class GameController {
             block.flipHorizontal();
         }
 
+
         // Check whether move is valid
         if (!gameBoard.canPlacePiece(blockPlaceDTO.getRow(), blockPlaceDTO.getColumn(), block)) {
+            block.resetRotation(oldShape);
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Invalid move");
         }
+
 
         // Remove block from inventory and add it to gameBoard
         game.nextPlayersTurn();
