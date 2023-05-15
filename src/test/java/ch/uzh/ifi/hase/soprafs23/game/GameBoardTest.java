@@ -37,6 +37,15 @@ class GameBoardTest {
                 () -> assertTrue(gameBoard.canPlacePiece(19, 0, player3.getBlocks()[1])),
                 () -> assertTrue(gameBoard.canPlacePiece(19, 18, player4.getBlocks()[1])));
     }
+
+    @Test
+    void canPlacePieceNeutralCorners_LShape_ReturnFalse() {
+        assertAll(() -> assertFalse(gameBoard.canPlacePiece(0, 0, player1.getBlocks()[5])),
+                () -> assertFalse(gameBoard.canPlacePiece(0, 18, player1.getBlocks()[3])),
+                () -> assertFalse(gameBoard.canPlacePiece(17, 0, player1.getBlocks()[11])),
+                () -> assertFalse(gameBoard.canPlacePiece(17, 18, player1.getBlocks()[6])));
+    }
+
     @Test
     void canPlacePiecePlayerStatusReturnFalse() {
         gameBoard.placeBlock(player1, 0, 0, player1.getBlocks()[1]);
