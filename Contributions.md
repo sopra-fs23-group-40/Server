@@ -287,3 +287,18 @@ Created all tests for the LobbyService https://github.com/sopra-fs23-group-40/Se
 
 Started working on the tests for the GameController endpoints https://github.com/sopra-fs23-group-40/Server/issues/101
 
+## Week 6
+
+### Karoline Siarsky
+
+### Thomas Stoller 
+
+### Paul Grünenwald
+
+### Thomas Joos
+
+### Justin Verhoek
+small bug fix and creation of test for canPlacePiece method https://github.com/sopra-fs23-group-40/Server/issues/41
+
+Created the tests for the GameController endpoints https://github.com/sopra-fs23-group-40/Server/issues/101
+
