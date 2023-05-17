@@ -305,5 +305,7 @@ Worked together with Karo on https://github.com/sopra-fs23-group-40/Client/issue
 ### Justin Verhoek
 small bug fix and creation of test for canPlacePiece method https://github.com/sopra-fs23-group-40/Server/issues/41
 
+Created an effect to change the button-colors to one of the 4 colors when hovering them https://github.com/sopra-fs23-group-40/Client/issues/47
+
 Created the tests for the GameController endpoints https://github.com/sopra-fs23-group-40/Server/issues/101
 
