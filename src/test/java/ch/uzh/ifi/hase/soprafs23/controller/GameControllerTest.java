@@ -15,7 +15,6 @@ import ch.uzh.ifi.hase.soprafs23.rest.dto.PlayerGetDTO;
 import ch.uzh.ifi.hase.soprafs23.service.*;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -33,6 +32,7 @@ import java.util.List;
 
 import static org.hamcrest.collection.IsCollectionWithSize.hasSize;
 import static org.mockito.BDDMockito.given;
+import static org.mockito.Mockito.mock;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
@@ -55,7 +55,7 @@ class GameControllerTest {
     private GameService gameService;
 
     @Test
-    public void testCreateGame() throws Exception {
+     void testCreateGame() throws Exception {
         // Create a user
         User user = new User();
         user.setUsername("host");
@@ -89,7 +89,7 @@ class GameControllerTest {
     }
 
     @Test
-    public void getCurrentPlayer_Successful_ReturnOk() throws Exception {
+     void getCurrentPlayer_Successful_ReturnOk() throws Exception {
         // given
         Game testGame = new Game();
         Player currentPlayer = new Player(CellStatus.PLAYER1, "player1");
@@ -110,7 +110,7 @@ class GameControllerTest {
     }
 
     @Test
-    public void getPlayers_Successful_ReturnOk() throws Exception {
+     void getPlayers_Successful_ReturnOk() throws Exception {
         // given
         Game testGame = new Game();
         Player player1 = new Player(CellStatus.PLAYER1, "player1");
@@ -137,7 +137,7 @@ class GameControllerTest {
     }
 
     @Test
-    public void addPlayerToGame_Successful_ReturnCreated() throws Exception {
+     void addPlayerToGame_Successful_ReturnCreated() throws Exception {
         // given
         Game testGame = new Game();
         Player player1 = new Player(CellStatus.PLAYER1, "player1");
@@ -156,7 +156,7 @@ class GameControllerTest {
     }
 
     @Test
-    public void getPlayerInventory_Successful_ReturnInventory() throws Exception {
+     void getPlayerInventory_Successful_ReturnInventory() throws Exception {
         // Mock game, player, and inventory
         Game testGame = new Game();
         Player testPlayer = new Player(CellStatus.PLAYER1, "player1");
@@ -182,16 +182,15 @@ class GameControllerTest {
                 .andExpect(jsonPath("$[1].height").value(testBlock2.getHeight()));
     }
 
-    @Disabled //TODO: currently returns 500 error, fix it
     @Test
-    public void getGameOver_GameNotOver_ReturnGameOverDTOWithoutWinner() throws Exception {
+     void getGameOver_GameNotOver_ReturnGameOverDTOWithoutWinner() throws Exception {
         // Mock game
         Game testGame = new Game();
-        Player testPlayer = new Player(CellStatus.PLAYER1, "player1");
-        testGame.addPlayer(testPlayer.getPlayerName());
+        Game mockGame = mock(Game.class);
 
         // Mock gameService to return the test game
-        given(gameService.getGameById(testGame.getId())).willReturn(testGame);
+        given(gameService.getGameById(testGame.getId())).willReturn(mockGame);
+        given(mockGame.isGameOver()).willReturn(false);
 
         // Perform GET request to retrieve game over status
         mockMvc.perform(get("/games/" + testGame.getId() + "/isGameOver"))
@@ -202,7 +201,7 @@ class GameControllerTest {
     }
 
     @Test
-    public void getGameBoard_Successful_ReturnGameBoard() throws Exception {
+     void getGameBoard_Successful_ReturnGameBoard() throws Exception {
         // Mock game
         Game testGame = new Game();
         Player testPlayer = new Player(CellStatus.PLAYER1, "player1");
@@ -223,7 +222,7 @@ class GameControllerTest {
     }
 
     @Test
-    public void placeBlock_SuccessfulMove_ReturnOk() throws Exception {
+     void placeBlock_SuccessfulMove_ReturnOk() throws Exception {
         // Mock game
         Game testGame = new Game();
         Player testPlayer = new Player(CellStatus.PLAYER1, "player1");
@@ -244,7 +243,7 @@ class GameControllerTest {
     }
 
     @Test
-    public void flipVerticalBlock_SuccessfulFlip_ReturnOk() throws Exception {
+     void flipVerticalBlock_SuccessfulFlip_ReturnOk() throws Exception {
         // Mock game
         Game testGame = new Game();
         Player testPlayer = new Player(CellStatus.PLAYER1, "player1");
@@ -261,7 +260,7 @@ class GameControllerTest {
     }
 
     @Test
-    public void flipHorizontalBlock_SuccessfulFlip_ReturnOk() throws Exception {
+     void flipHorizontalBlock_SuccessfulFlip_ReturnOk() throws Exception {
         // Mock game
         Game testGame = new Game();
         Player testPlayer = new Player(CellStatus.PLAYER1, "player1");
@@ -277,7 +276,7 @@ class GameControllerTest {
     }
 
     @Test
-    public void rotateBlock_SuccessfulRotation_ReturnOk() throws Exception {
+     void rotateBlock_SuccessfulRotation_ReturnOk() throws Exception {
         // Mock game
         Game testGame = new Game();
         Player testPlayer = new Player(CellStatus.PLAYER1, "player1");
@@ -304,7 +303,7 @@ class GameControllerTest {
     }
 
     @Test
-    public void getStartDate_Successful_ReturnOk() throws Exception {
+     void getStartDate_Successful_ReturnOk() throws Exception {
         // Mock game
         Game testGame = new Game();
 
