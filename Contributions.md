@@ -293,6 +293,11 @@ Started working on the tests for the GameController endpoints https://github.com
 
 ### Karoline Siarsky
 
+Sadly, spent way too much time trying to fix bugs: 
+https://github.com/sopra-fs23-group-40/Client/commit/50fdefe6724693e10eb24556c2f51d52e3abb164
+
+https://github.com/sopra-fs23-group-40/Client/commit/1edb4c845b4cbd4c916aa21b851e0b41f500e864
+
 ### Thomas Stoller 
 
 ### Paul Grünenwald
