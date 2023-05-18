@@ -297,6 +297,8 @@ Started working on the tests for the GameController endpoints https://github.com
 
 Display a pop-up upon entering the game where it is explained how to place/flip/rotate a block [#49](https://github.com/sopra-fs23-group-40/Client/issues/49)
 
+Show spinner when game is loading [#50](https://github.com/sopra-fs23-group-40/Client/issues/50)
+
 
 
 ### Thomas Joos
