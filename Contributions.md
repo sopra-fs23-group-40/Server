@@ -300,6 +300,21 @@ https://github.com/sopra-fs23-group-40/Client/commit/1edb4c845b4cbd4c916aa21b851
 
 ### Thomas Stoller 
 
+Got rid of everything SSE related => eventsource, setting up eventsource and using it. => Introduced polling in Overview, Lobby & Game.
+https://github.com/sopra-fs23-group-40/Client/issues/51
+https://github.com/sopra-fs23-group-40/Client/issues/52
+https://github.com/sopra-fs23-group-40/Client/issues/53
+
+Redirect players to overview screen if lobby is deleted.
+https://github.com/sopra-fs23-group-40/Client/issues/54
+
+Redirect players to game screen if the lobby/game is started.
+https://github.com/sopra-fs23-group-40/Client/issues/55
+
+Updated Gameguard & Lobbyguard to check if the player is in the lobby or not. If not redirected to overview screen.
+https://github.com/sopra-fs23-group-40/Client/issues/56
+https://github.com/sopra-fs23-group-40/Client/issues/57
+
 ### Paul Grünenwald
 
 Display a pop-up upon entering the game where it is explained how to place/flip/rotate a block [#49](https://github.com/sopra-fs23-group-40/Client/issues/49)
