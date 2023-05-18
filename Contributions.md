@@ -67,6 +67,8 @@ Implement Player Class [#42](https://github.com/sopra-fs23-group-40/Server/issue
 
 When placing a block remove the block from the inventory [#46](https://github.com/sopra-fs23-group-40/Server/issues/46)
 
+
+
 ### Thomas Joos
 
 Added logout button in the overview menu:
@@ -299,6 +301,7 @@ Display a pop-up upon entering the game where it is explained how to place/flip/
 
 Show spinner when game is loading [#50](https://github.com/sopra-fs23-group-40/Client/issues/50)
 
+Implement a countdown that switches to the next player after 30 secs of not placing any block [#104](https://github.com/sopra-fs23-group-40/Server/issues/104)
 
 
 ### Thomas Joos
