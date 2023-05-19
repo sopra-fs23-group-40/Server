@@ -73,6 +73,15 @@ public class GameController {
         return game.getId();
     }
 
+    @PostMapping("/games/{gameId}/leaveGame")
+    @ResponseStatus(HttpStatus.ACCEPTED)
+    @ResponseBody
+    public void leaveGame(@PathVariable String gameId, @RequestHeader(value = "token") String token, @RequestHeader(value = "username") String username) {
+        UserAuthDTO userAuthDTO = DTOMapper.INSTANCE.convertVariablesToUserAuthDTO(username, token);
+        userService.checkAuthentication(userAuthDTO.getUsername(), userAuthDTO.getToken());
+        gameService.leaveGame(gameId, username);
+    }
+
     @GetMapping("/games/{gameId}/currentPlayer")
     @ResponseStatus(HttpStatus.OK)
     @ResponseBody

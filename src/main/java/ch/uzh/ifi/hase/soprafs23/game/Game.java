@@ -48,6 +48,9 @@ public class Game {
     }
 
     public boolean canPlaceBrick(Player p) {
+        if(!p.isInGame()) {
+            return false;
+        }
         for (int i = 0; i < 20; i++) {
             for (int j = 0; j < 20; j++) {
                 for (Block block : p.getInventory().getBlocks()) {

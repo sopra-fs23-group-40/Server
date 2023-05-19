@@ -4,7 +4,9 @@ import ch.uzh.ifi.hase.soprafs23.game.blocks.Block;
 import ch.uzh.ifi.hase.soprafs23.game.Game;
 import ch.uzh.ifi.hase.soprafs23.game.GameBoard;
 import ch.uzh.ifi.hase.soprafs23.game.Player;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -37,6 +39,19 @@ public class GameService {
             return games.get(gameId);
         } else {
             throw new RuntimeException("Game with ID " + gameId + " not found.");
+        }
+    }
+
+    public void leaveGame(String gameId, String username) {
+        Game game = getGameById(gameId);
+        Player player = game.getPlayerByUsername(username);
+        if(player != null) {
+            player.setInGame(false);
+            // TODO: update statistics of player that left the game
+        }
+        else {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND,
+                    "No player with username: "+ username + " was found in given game.");
         }
     }
 }

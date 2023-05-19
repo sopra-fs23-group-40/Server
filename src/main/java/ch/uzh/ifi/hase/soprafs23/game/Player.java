@@ -11,6 +11,7 @@ public class Player {
     private final CellStatus status;
     private String playerId;
     private String playerName;
+    private boolean isInGame;
 
 
     public Player(CellStatus cellStatus, String playerName) {
@@ -41,6 +42,7 @@ public class Player {
                 new Block20(this, cellStatus),
                 new Block21(this, cellStatus)
         };
+        this.isInGame = true;
 
         // Add all the blocks of the player to the inventory
         for (Block block : blocks) {
@@ -79,4 +81,12 @@ public class Player {
     public int getUnplacedTiles(){
         return inventory.getUnplacedTiles();
     }
+    public boolean isInGame() {
+        return isInGame;
+    }
+
+    public void setInGame(boolean inGame) {
+        isInGame = inGame;
+    }
+
 }
