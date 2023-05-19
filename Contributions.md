@@ -298,6 +298,8 @@ https://github.com/sopra-fs23-group-40/Client/commit/50fdefe6724693e10eb24556c2f
 
 https://github.com/sopra-fs23-group-40/Client/commit/1edb4c845b4cbd4c916aa21b851e0b41f500e864
 
+Made it possible to leave a game: https://github.com/orgs/sopra-fs23-group-40/projects/1/views/1?pane=issue&itemId=28594495
+
 ### Thomas Stoller 
 
 Got rid of everything SSE related => eventsource, setting up eventsource and using it. => Introduced polling in Overview, Lobby & Game.
