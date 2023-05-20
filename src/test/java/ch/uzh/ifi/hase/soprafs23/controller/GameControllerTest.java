@@ -89,6 +89,25 @@ class GameControllerTest {
     }
 
     @Test
+    void leaveGame_Successful_ReturnAccpeted() throws Exception {
+        User user = new User();
+        user.setUsername("host");
+        user.setToken("testToken");
+        userService.createUser(user);
+
+        Game testGame = new Game();
+        testGame.addPlayer("host");
+
+        MockHttpServletRequestBuilder postRequest = (post("/games/{gameId}/leaveGame", testGame.getId())
+                .header("token", user.getToken())
+                .header("username", user.getUsername())
+                .contentType(MediaType.APPLICATION_JSON));
+
+        mockMvc.perform(postRequest)
+                .andExpect(status().isAccepted());
+    }
+
+    @Test
      void getCurrentPlayer_Successful_ReturnOk() throws Exception {
         // given
         Game testGame = new Game();
