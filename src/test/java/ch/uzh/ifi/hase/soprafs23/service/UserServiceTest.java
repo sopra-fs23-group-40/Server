@@ -1,6 +1,7 @@
 package ch.uzh.ifi.hase.soprafs23.service;
 
 import ch.uzh.ifi.hase.soprafs23.constant.UserStatus;
+import ch.uzh.ifi.hase.soprafs23.entity.Statistics;
 import ch.uzh.ifi.hase.soprafs23.entity.User;
 import ch.uzh.ifi.hase.soprafs23.repository.StatisticsRepository;
 import ch.uzh.ifi.hase.soprafs23.repository.UserRepository;
@@ -43,7 +44,7 @@ public class UserServiceTest {
   }
 
   @Test
-  public void createUser_validInputs_success() {
+   void createUser_validInputs_success() {
     // when -> any object is being save in the userRepository -> return the dummy
     // testUser
     User createdUser = userService.createUser(testUser);
@@ -59,7 +60,7 @@ public class UserServiceTest {
   }
 
   @Test
-  public void createUser_duplicateName_throwsException() {
+   void createUser_duplicateName_throwsException() {
     // given -> a first user has already been created
     userService.createUser(testUser);
 
@@ -72,7 +73,7 @@ public class UserServiceTest {
   }
 
   @Test
-  public void createUser_duplicateInputs_throwsException() {
+   void createUser_duplicateInputs_throwsException() {
     // given -> a first user has already been created
     userService.createUser(testUser);
 
@@ -85,4 +86,146 @@ public class UserServiceTest {
     assertThrows(ResponseStatusException.class, () -> userService.createUser(testUser));
   }
 
+    @Test
+    void loginUser_validCredentials_success() {
+        // given
+        User user = new User();
+        user.setUsername("testUsername");
+        user.setPassword("testPassword");
+
+        User userByUsername = new User();
+        userByUsername.setId(1L);
+        userByUsername.setUsername("testUsername");
+        userByUsername.setPassword("testPassword");
+        userByUsername.setStatus(UserStatus.OFFLINE);
+        userByUsername.setToken("token123");
+
+        Mockito.when(userRepository.findByUsername(Mockito.any())).thenReturn(userByUsername);
+        Mockito.when(userRepository.save(Mockito.any())).thenReturn(userByUsername);
+
+        // when
+        User loggedInUser = userService.loginUser(user);
+
+        // then
+        Mockito.verify(userRepository, Mockito.times(1)).save(Mockito.any());
+        assertEquals(userByUsername.getId(), loggedInUser.getId());
+        assertEquals(userByUsername.getUsername(), loggedInUser.getUsername());
+        assertEquals(UserStatus.ONLINE, loggedInUser.getStatus());
+        assertEquals(userByUsername.getToken(), loggedInUser.getToken());
+    }
+
+    @Test
+    void logoutUser_validToken_success() {
+        // given
+        String token = "token123";
+
+        User userByToken = new User();
+        userByToken.setId(1L);
+        userByToken.setUsername("testUsername");
+        userByToken.setStatus(UserStatus.ONLINE);
+        userByToken.setToken(token);
+
+        Mockito.when(userRepository.findByToken(Mockito.any())).thenReturn(userByToken);
+        Mockito.when(userRepository.save(Mockito.any())).thenReturn(userByToken);
+
+        // when
+        userService.logoutUser(token);
+
+        // then
+        Mockito.verify(userRepository, Mockito.times(1)).save(Mockito.any());
+        assertEquals(UserStatus.OFFLINE, userByToken.getStatus());
+    }
+
+    @Test
+    void getLoggedInUsername_validToken_success() {
+        // given
+        String token = "token123";
+
+        User userByToken = new User();
+        userByToken.setId(1L);
+        userByToken.setUsername("testUsername");
+
+        Mockito.when(userRepository.findByToken(Mockito.any())).thenReturn(userByToken);
+
+        // when
+        String loggedInUsername = userService.getLoggedInUsername(token);
+
+        // then
+        Mockito.verify(userRepository, Mockito.times(1)).findByToken(Mockito.any());
+        assertEquals(userByToken.getUsername(), loggedInUsername);
+    }
+
+    @Test
+    void checkAuthentication_validCredentials_success() {
+        // given
+        String username = "testUsername";
+        String token = "token123";
+
+        User userByUsername = new User();
+        userByUsername.setId(1L);
+        userByUsername.setUsername("testUsername");
+        userByUsername.setToken("token123");
+
+        Mockito.when(userRepository.findByUsername(Mockito.any())).thenReturn(userByUsername);
+
+        // when/then
+        assertDoesNotThrow(() -> userService.checkAuthentication(username, token));
+    }
+
+    @Test
+    void checkAuthentication_invalidCredentials_throwsException() {
+        // given
+        String username = "testUsername";
+        String token = "invalidToken";
+
+        User userByUsername = new User();
+        userByUsername.setId(1L);
+        userByUsername.setUsername("testUsername");
+        userByUsername.setToken("token123");
+
+        Mockito.when(userRepository.findByUsername(Mockito.any())).thenReturn(userByUsername);
+
+        // when/then
+        assertThrows(ResponseStatusException.class, () -> userService.checkAuthentication(username, token));
+    }
+
+    @Test
+    void getStatistics_existingUsername_success() {
+        // given
+        String username = "testUsername";
+        Long userId = 1L;
+
+        User userByUsername = new User();
+        userByUsername.setId(userId);
+        userByUsername.setUsername(username);
+
+        Statistics userStatistics = new Statistics();
+        userStatistics.setId(1L);
+        userStatistics.setUserId(userId);
+
+        Mockito.when(userRepository.findByUsername(Mockito.any())).thenReturn(userByUsername);
+        Mockito.when(statisticsRepository.findByUserId(Mockito.anyLong())).thenReturn(userStatistics);
+
+        // when
+        Statistics result = userService.getStatistics(username);
+
+        // then
+        assertNotNull(result);
+        assertEquals(userStatistics.getId(), result.getId());
+        assertEquals(userStatistics.getUserId(), result.getUserId());
+
+        Mockito.verify(userRepository, Mockito.times(1)).findByUsername(Mockito.any());
+        Mockito.verify(statisticsRepository, Mockito.times(1)).findByUserId(Mockito.anyLong());
+    }
+
+    @Test
+    void getStatistics_nonExistingUsername_throwsException() {
+        // given
+        String username = "nonExistingUsername";
+
+        Mockito.when(userRepository.findByUsername(Mockito.any())).thenReturn(null);
+
+        // when/then
+        assertThrows(ResponseStatusException.class, () -> userService.getStatistics(username));
+    }
 }
