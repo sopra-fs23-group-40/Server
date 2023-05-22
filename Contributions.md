@@ -340,3 +340,18 @@ Created an effect to change the button-colors to one of the 4 colors when hoveri
 
 Created the tests for the GameController endpoints https://github.com/sopra-fs23-group-40/Server/issues/101
 
+
+## Week 7
+
+### Karoline Siarsky
+
+### Thomas Stoller 
+
+### Paul Grünenwald
+
+Design update [#46](https://github.com/sopra-fs23-group-40/Client/issues/46)
+
+### Thomas Joos
+
+### Justin Verhoek
+
