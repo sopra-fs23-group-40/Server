@@ -351,6 +351,8 @@ Created the tests for the GameController endpoints https://github.com/sopra-fs23
 
 Design update [#46](https://github.com/sopra-fs23-group-40/Client/issues/46)
 
+Debugging (way too much time for little) [#46](https://github.com/sopra-fs23-group-40/Client/issues/46)
+
 ### Thomas Joos
 
 ### Justin Verhoek
