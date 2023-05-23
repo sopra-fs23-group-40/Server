@@ -357,3 +357,9 @@ Debugging (way too much time for little) [#46](https://github.com/sopra-fs23-gro
 
 ### Justin Verhoek
 
+Fixed an issue where a long username created a mess in the lobby overview https://github.com/sopra-fs23-group-40/Client/issues/59
+
+Created tests for the UserService https://github.com/sopra-fs23-group-40/Server/issues/114
+
+Created tests for the UserController enpoints https://github.com/sopra-fs23-group-40/Server/issues/113
+
