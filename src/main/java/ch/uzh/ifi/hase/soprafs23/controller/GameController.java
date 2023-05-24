@@ -246,21 +246,14 @@ public class GameController {
 
 
         // Remove block from inventory and add it to gameBoard
-        game.nextPlayersTurn();
         inventory.removeBlock(block);
         gameBoard.placeBlock(player, blockPlaceDTO.getRow(), blockPlaceDTO.getColumn(), block);
         if(game.checkGameOver()){
             Map<String, GameStats> gameStatsMap = game.endGame();
-            for(String name: gameStatsMap.keySet()){
-                Statistics userStatistics = userService.getStatistics(name);
-                GameStats gameStats = gameStatsMap.get(name);
-                userStatistics.setGamesWon(userStatistics.getGamesWon() + gameStats.getGamesWon());
-                userStatistics.setBlocksPlaced(userStatistics.getBlocksPlaced() + gameStats.getBlocksPlaced());
-                userStatistics.setGamesPlayed(userStatistics.getGamesPlayed() + 1);
-                userStatistics.setMinutesPlayed(userStatistics.getMinutesPlayed() + gameStats.getMinutesPlayed());
-                userStatistics.setWinPercentage((float)userStatistics.getGamesWon() / (float) userStatistics.getGamesPlayed());
-            }
+            userService.updateStatistics(gameStatsMap);
         }
+
+        game.nextPlayersTurn();
     }
 
     @PutMapping("/games/{gameId}/{username}/vertical_flip")

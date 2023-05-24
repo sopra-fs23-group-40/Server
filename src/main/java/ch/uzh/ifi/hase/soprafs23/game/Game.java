@@ -121,7 +121,6 @@ public class Game {
         countdown.stop();
         duration = stopwatch.getMinutes();
         winner = Optional.of(findWinner());
-        System.out.println("The winner is: " + winner.get().getPlayerName());
         ArrayList<Player> playersToUpdate = getPlayers();
         Map<String, GameStats> gameStatsMap = new HashMap<>();
         for (Player p : playersToUpdate){
@@ -144,6 +143,7 @@ public class Game {
         for(Player p : players){
             if(p.getUnplacedTiles() <= minimumTiles){
                 winner = p;
+                minimumTiles = p.getUnplacedTiles();
             }
         }
         return winner;
