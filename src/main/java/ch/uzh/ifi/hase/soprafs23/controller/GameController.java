@@ -212,7 +212,14 @@ public class GameController {
                         "Possible blocks (from " + username + "'s inventory):\n"
                         + inventory.getBlocks());
 
+        System.out.println("Placing block " + block.getBlockName() + " at row " + blockPlaceDTO.getRow() + " and column " + blockPlaceDTO.getColumn());
+        System.out.println("Rotation: " + blockPlaceDTO.getRotation() + ", flipped: " + blockPlaceDTO.isFlipped());
+
         Cell[][] oldShape = block.getShape();
+
+        if(blockPlaceDTO.isFlipped()){
+            block.flipHorizontal();
+        }
 
         switch(blockPlaceDTO.getRotation()){
             case 0:
@@ -230,11 +237,6 @@ public class GameController {
             default:
                 throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Invalid rotation");
         }
-
-        if(blockPlaceDTO.isFlipped()){
-            block.flipHorizontal();
-        }
-
 
         // Check whether move is valid
         if (!gameBoard.canPlacePiece(blockPlaceDTO.getRow(), blockPlaceDTO.getColumn(), block)) {
