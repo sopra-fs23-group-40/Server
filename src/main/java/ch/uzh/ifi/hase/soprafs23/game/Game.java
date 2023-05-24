@@ -51,7 +51,6 @@ public class Game {
         if (!checkGameOver()) {
             do {
                 currentPlayer = players.get((players.indexOf(currentPlayer) + 1) % players.size());
-                countdown.start();
             } while(!canPlaceBrick(currentPlayer));
 
         }

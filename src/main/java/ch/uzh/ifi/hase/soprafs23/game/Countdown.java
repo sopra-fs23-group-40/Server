@@ -11,34 +11,34 @@ public class Countdown {
     public Countdown(CountdownListener listener) {
         this.secondsRemaining = 30;
         this.listener = listener;
+        this.timer = new Timer();
+        start();
     }
 
     public void start() {
         secondsRemaining = 30;  // Initialize countdown to 30 seconds
-        timer = new Timer();
         timer.scheduleAtFixedRate(new TimerTask() {
             public void run() {
                 if (secondsRemaining > 0) {
                     secondsRemaining--;
-                } else {
-                    stop();
+                }
+                else {
                     if (listener != null) {
                         listener.onCountdownComplete();
                     }
+                    secondsRemaining = 30;
                 }
             }
         }, 0, 1000);
     }
 
-    public void stop() {
-        if (timer != null) {
+
+        public void stop () {
             timer.cancel();
-            timer = null;
+        }
+
+
+        public interface CountdownListener {
+            void onCountdownComplete();
         }
     }
-
-    public interface CountdownListener {
-        void onCountdownComplete();
-    }
-}
-
