@@ -33,8 +33,8 @@ class GameBoardTest {
     @Test
     void canPlacePieceNeutralCornersReturnTrue() {
         assertAll(() -> assertTrue(gameBoard.canPlacePiece(0, 0, player1.getBlocks()[1])),
-                () -> assertTrue(gameBoard.canPlacePiece(0, 18, player2.getBlocks()[1])),
-                () -> assertTrue(gameBoard.canPlacePiece(19, 0, player3.getBlocks()[1])),
+                () -> assertTrue(gameBoard.canPlacePiece(0, 18, player3.getBlocks()[1])),
+                () -> assertTrue(gameBoard.canPlacePiece(19, 0, player2.getBlocks()[1])),
                 () -> assertTrue(gameBoard.canPlacePiece(19, 18, player4.getBlocks()[1])));
     }
 
