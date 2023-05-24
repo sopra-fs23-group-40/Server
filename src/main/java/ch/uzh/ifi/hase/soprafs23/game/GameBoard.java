@@ -34,6 +34,7 @@ public class GameBoard {
                 }
             }
         }
+        block.setPlayed(true);
     }
 
     public boolean canPlacePiece(int y, int x, Block block) {
@@ -80,19 +81,27 @@ public class GameBoard {
         //check if the piece is a corner piece
         //upper-left corner of the board
         if (y == 0 && x == 0 && piece[0][0].getStatus() != CellStatus.NEUTRAL && board[0][0].getStatus() == CellStatus.NEUTRAL){
-            return true;
+            if(block.getPlayer().getStatus() == CellStatus.PLAYER1){
+                return true;
+            }
         }
         //upper-right corner of the board
         else if (y == 0 && x+length == size && piece[0][length-1].getStatus() != CellStatus.NEUTRAL && board[0][size-1].getStatus()== CellStatus.NEUTRAL) {
-            return true;
+            if(block.getPlayer().getStatus() == CellStatus.PLAYER3){
+                return true;
+            }
         }
         //lower-left corner of the board
         else if (y+height == size && x == 0 && piece[height-1][0].getStatus() != CellStatus.NEUTRAL && board[size-1][0].getStatus()== CellStatus.NEUTRAL) {
-            return true;
+            if(block.getPlayer().getStatus() == CellStatus.PLAYER2){
+                return true;
+            }
         }
         //lower-right corner of the board
         else if (y+height == size && x+length == size && piece[height-1][length-1].getStatus() != CellStatus.NEUTRAL && board[size-1][size-1].getStatus()== CellStatus.NEUTRAL) {
-            return true;
+            if(block.getPlayer().getStatus() == CellStatus.PLAYER4){
+                return true;
+            }
         }
 
         //check that the piece touches a piece of the same status in a corner

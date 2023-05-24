@@ -15,6 +15,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.server.ResponseStatusException;
 
+import java.text.DecimalFormat;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
@@ -169,6 +170,7 @@ public class UserService {
   }
 
   public void updateStatistics(Map<String, GameStats> gameStatsMap){
+      DecimalFormat df = new DecimalFormat("#.###");
       for(String name: gameStatsMap.keySet()){
           Statistics userStatistics = getStatistics(name);
           GameStats gameStats = gameStatsMap.get(name);
@@ -176,7 +178,7 @@ public class UserService {
           userStatistics.setBlocksPlaced(userStatistics.getBlocksPlaced() + gameStats.getBlocksPlaced());
           userStatistics.setGamesPlayed(userStatistics.getGamesPlayed() + 1);
           userStatistics.setMinutesPlayed(userStatistics.getMinutesPlayed() + gameStats.getMinutesPlayed());
-          userStatistics.setWinPercentage((float)userStatistics.getGamesWon() / (float) userStatistics.getGamesPlayed() * 100);
+          userStatistics.setWinPercentage(Float.parseFloat(df.format((float)userStatistics.getGamesWon() / (float) userStatistics.getGamesPlayed() * 100)));
       }
       statisticsRepository.flush();
   }

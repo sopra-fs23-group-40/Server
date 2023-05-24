@@ -15,6 +15,7 @@ public class Game {
 
     private final ArrayList<Player> players = new ArrayList<>();
     private Player currentPlayer;
+    private int[] playerDuration = new int[4];
 
     private class CountdownCompleteListener implements Countdown.CountdownListener {
         @Override
@@ -124,9 +125,12 @@ public class Game {
         ArrayList<Player> playersToUpdate = getPlayers();
         Map<String, GameStats> gameStatsMap = new HashMap<>();
         for (Player p : playersToUpdate){
+            if(p.isInGame()){
+                playerDuration[playersToUpdate.indexOf(p)] = duration;
+            }
             GameStats gameStats = new GameStats();
             gameStats.setGamesWon(p.getPlayerName().equals(winner.get().getPlayerName()) ? 1 : 0);
-            gameStats.setMinutesPlayed(duration);
+            gameStats.setMinutesPlayed(playerDuration[playersToUpdate.indexOf(p)]);
             gameStats.setBlocksPlaced(p.getPlacedBlocks());
             gameStatsMap.put(p.getPlayerName(), gameStats);
         }
@@ -209,6 +213,11 @@ public class Game {
 
     public Date getStartDate(){
         return stopwatch.getStartDate();
+    }
+
+    public void setDuration(Player player){
+        int index = getPlayers().indexOf(player);
+        playerDuration[index] = stopwatch.getCurrentMinutes();
     }
 
 }

@@ -47,7 +47,7 @@ public class GameService {
         Player player = game.getPlayerByUsername(username);
         if(player != null) {
             player.setInGame(false);
-            // TODO: update statistics of player that left the game
+            game.setDuration(player);
         }
         else {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND,

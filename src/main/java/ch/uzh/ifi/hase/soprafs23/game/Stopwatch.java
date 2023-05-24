@@ -28,6 +28,11 @@ public class Stopwatch {
         return (int) Math.floor(elapsedTime / nanoSecondsPerMinute);
     }
 
+    protected int getCurrentMinutes(){
+        long elapsedTime = System.nanoTime() - startTime;
+        return (int) Math.floor(elapsedTime / nanoSecondsPerMinute);
+    }
+
     public Date getStartDate() {
         return startDate;
     }
