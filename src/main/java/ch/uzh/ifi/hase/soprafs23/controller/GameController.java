@@ -213,30 +213,21 @@ public class GameController {
                         + inventory.getBlocks());
 
         System.out.println("Placing block " + block.getBlockName() + " at row " + blockPlaceDTO.getRow() + " and column " + blockPlaceDTO.getColumn());
-        System.out.println("Rotation: " + blockPlaceDTO.getRotation() + ", flipped: " + blockPlaceDTO.isFlipped());
 
         Cell[][] oldShape = block.getShape();
-
-        if(blockPlaceDTO.isFlipped()){
-            block.flipHorizontal();
+        CellStatus cellStatus = player.getStatus();
+        Cell[][] newShape = new Cell[blockPlaceDTO.getShape().length][blockPlaceDTO.getShape()[0].length];
+        for(int i = 0; i < blockPlaceDTO.getShape()[0].length; i++) {
+            for(int j = 0; j < blockPlaceDTO.getShape().length; j++) {
+                if(blockPlaceDTO.getShape()[j][i]) {
+                    newShape[j][i] = new Cell(cellStatus);
+                }
+                else {
+                    newShape[j][i] = new Cell(CellStatus.NEUTRAL);
+                }
+            }
         }
-
-        switch(blockPlaceDTO.getRotation()){
-            case 0:
-                break;
-            case 90:
-                block.rotate(RotationDirection.CLOCKWISE);
-                break;
-            case 180:
-                block.rotate(RotationDirection.CLOCKWISE);
-                block.rotate(RotationDirection.CLOCKWISE);
-                break;
-            case 270:
-                block.rotate(RotationDirection.COUNTER_CLOCKWISE);
-                break;
-            default:
-                throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Invalid rotation");
-        }
+        block.setShape(newShape);
 
         // Check whether move is valid
         if (!gameBoard.canPlacePiece(blockPlaceDTO.getRow(), blockPlaceDTO.getColumn(), block)) {

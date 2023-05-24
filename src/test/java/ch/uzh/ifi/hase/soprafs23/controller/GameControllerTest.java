@@ -247,7 +247,8 @@ class GameControllerTest {
         Player testPlayer = new Player(CellStatus.PLAYER1, "player1");
         testGame.addPlayer(testPlayer.getPlayerName());
         given(gameService.getGameById(testGame.getId())).willReturn(testGame);
-        BlockPlaceDTO blockPlaceDTO = new BlockPlaceDTO("Block3", 0, 0, 180, false);
+        //TODO: adjust "shape" in BlockPlaceDTO bc I had to change the class attributes
+        BlockPlaceDTO blockPlaceDTO = new BlockPlaceDTO("Block3", 0, 0, null);
 
         // Perform PUT request to place the block
         mockMvc.perform(put("/games/" + testGame.getId() + "/" + testPlayer.getPlayerName() + "/move")

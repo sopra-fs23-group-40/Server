@@ -29,6 +29,13 @@ public abstract class Block {
         return shape;
     }
 
+    public void setShape(Cell[][] shape) {
+        this.shape = shape;
+        this.length = shape[0].length;
+        this.height = shape.length;
+    }
+
+
     public void resetRotation(Cell[][] shape){
         this.shape = shape;
         this.length = shape[0].length;
