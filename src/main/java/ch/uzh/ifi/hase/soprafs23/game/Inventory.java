@@ -53,7 +53,7 @@ public class Inventory {
 
     public int getUnplacedTiles(){
         int tiles = 0;
-        List<Block> unplayedBlocks = getUnplayedBlocks();
+        List<Block> unplayedBlocks = getBlocks();
         for (Block b : unplayedBlocks){
             tiles += b.getNumberOfSquares();
         }

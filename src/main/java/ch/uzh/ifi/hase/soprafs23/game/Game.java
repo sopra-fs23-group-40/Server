@@ -51,6 +51,7 @@ public class Game {
         if (!checkGameOver()) {
             do {
                 currentPlayer = players.get((players.indexOf(currentPlayer) + 1) % players.size());
+                countdown.resetTime();
             } while(!canPlaceBrick(currentPlayer));
 
         }
@@ -89,7 +90,6 @@ public class Game {
                 return false;
             }
         }
-        stopwatch.stop();
         return true;
     }
 
@@ -117,10 +117,11 @@ public class Game {
     }
 
     public Map<String, GameStats> endGame(){
+        stopwatch.stop();
         countdown.stop();
-        gameOver = true;
         duration = stopwatch.getMinutes();
         winner = Optional.of(findWinner());
+        System.out.println("The winner is: " + winner.get().getPlayerName());
         ArrayList<Player> playersToUpdate = getPlayers();
         Map<String, GameStats> gameStatsMap = new HashMap<>();
         for (Player p : playersToUpdate){
@@ -130,6 +131,7 @@ public class Game {
             gameStats.setBlocksPlaced(p.getPlacedBlocks());
             gameStatsMap.put(p.getPlayerName(), gameStats);
         }
+        gameOver = true;
         return gameStatsMap;
     }
 

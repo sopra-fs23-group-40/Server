@@ -37,6 +37,10 @@ public class Countdown {
             timer.cancel();
         }
 
+        public void resetTime(){
+            this.secondsRemaining = 30;
+        }
+
 
         public interface CountdownListener {
             void onCountdownComplete();
