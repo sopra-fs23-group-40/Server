@@ -357,6 +357,8 @@ Debugging (way too much time for little) [#46](https://github.com/sopra-fs23-gro
 
 Fixed a bug in the inventory (client): https://github.com/sopra-fs23-group-40/Client/issues/62
 
+Fixed a bug in the lobby overview: https://github.com/sopra-fs23-group-40/Client/issues/61
+
 ### Justin Verhoek
 
 Fixed an issue where a long username created a mess in the lobby overview https://github.com/sopra-fs23-group-40/Client/issues/59
