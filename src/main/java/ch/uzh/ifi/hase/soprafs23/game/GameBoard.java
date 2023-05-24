@@ -29,7 +29,9 @@ public class GameBoard {
         Cell[][] piece = block.getBlock();
         for (int i = 0; i < block.getHeight(); i++){
             for (int j = 0; j < block.getLength(); j++) {
-                board[row+i][col+j].setStatus(piece[i][j].getStatus());
+                if(piece[i][j].getStatus() != CellStatus.NEUTRAL) {
+                    board[row+i][col+j].setStatus(piece[i][j].getStatus());
+                }
             }
         }
     }
@@ -93,7 +95,6 @@ public class GameBoard {
             return true;
         }
 
-        // TODO: I got an error that I cannot place Block6 on board. Couldn't check yet if this works for that block
         //check that the piece touches a piece of the same status in a corner
         for (int i = 0; i < height; i++) {
             for (int j = 0; j < length; j++) {

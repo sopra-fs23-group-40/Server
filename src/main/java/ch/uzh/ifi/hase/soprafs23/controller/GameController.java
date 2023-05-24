@@ -80,6 +80,8 @@ public class GameController {
         UserAuthDTO userAuthDTO = DTOMapper.INSTANCE.convertVariablesToUserAuthDTO(username, token);
         userService.checkAuthentication(userAuthDTO.getUsername(), userAuthDTO.getToken());
         gameService.leaveGame(gameId, username);
+        Game game = gameService.getGameById(gameId);
+        game.nextPlayersTurn();
     }
 
     @GetMapping("/games/{gameId}/currentPlayer")
