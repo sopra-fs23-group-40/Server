@@ -51,7 +51,6 @@ public class Game {
         if (!checkGameOver()) {
             do {
                 currentPlayer = players.get((players.indexOf(currentPlayer) + 1) % players.size());
-                countdown.start();
             } while(!canPlaceBrick(currentPlayer));
 
         }
@@ -118,6 +117,7 @@ public class Game {
     }
 
     public Map<String, GameStats> endGame(){
+        countdown.stop();
         gameOver = true;
         duration = stopwatch.getMinutes();
         winner = Optional.of(findWinner());
