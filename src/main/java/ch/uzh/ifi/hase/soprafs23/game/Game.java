@@ -10,13 +10,24 @@ public class Game {
     private final String gameId;
     private final GameBoard gameboard;
     private final Stopwatch stopwatch;
+
+    private final Countdown countdown;
+
     private final ArrayList<Player> players = new ArrayList<>();
     private Player currentPlayer;
+
+    private class CountdownCompleteListener implements Countdown.CountdownListener {
+        @Override
+        public void onCountdownComplete() {
+           nextPlayersTurn();
+        }
+    }
 
     public Game() {
         this.gameId = UUID.randomUUID().toString();
         this.gameboard = new GameBoard();
-
+        Countdown.CountdownListener listener = new CountdownCompleteListener();
+        this.countdown = new Countdown(listener);
         this.stopwatch = new Stopwatch();
         stopwatch.start();
 
@@ -40,7 +51,9 @@ public class Game {
         if (!checkGameOver()) {
             do {
                 currentPlayer = players.get((players.indexOf(currentPlayer) + 1) % players.size());
+                countdown.start();
             } while(!canPlaceBrick(currentPlayer));
+
         }
         else {
             endGame();
