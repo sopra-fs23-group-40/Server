@@ -172,10 +172,6 @@ public class UserService {
       for(String name: gameStatsMap.keySet()){
           Statistics userStatistics = getStatistics(name);
           GameStats gameStats = gameStatsMap.get(name);
-          System.out.println(gameStatsMap.keySet() + "and the name is: " + name);
-          System.out.println("PlacedBlocks are :" + gameStats.getBlocksPlaced());
-          System.out.println("Gameswon are: " + gameStats.getGamesWon());
-          System.out.println("Minutesplayed are: " + gameStats.getMinutesPlayed());
           userStatistics.setGamesWon(userStatistics.getGamesWon() + gameStats.getGamesWon());
           userStatistics.setBlocksPlaced(userStatistics.getBlocksPlaced() + gameStats.getBlocksPlaced());
           userStatistics.setGamesPlayed(userStatistics.getGamesPlayed() + 1);
