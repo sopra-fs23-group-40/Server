@@ -1,6 +1,7 @@
 package ch.uzh.ifi.hase.soprafs23.service;
 
 import ch.uzh.ifi.hase.soprafs23.constant.UserStatus;
+import ch.uzh.ifi.hase.soprafs23.entity.GameStats;
 import ch.uzh.ifi.hase.soprafs23.entity.Statistics;
 import ch.uzh.ifi.hase.soprafs23.entity.User;
 import ch.uzh.ifi.hase.soprafs23.repository.StatisticsRepository;
@@ -15,6 +16,7 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
+import java.util.Map;
 import java.util.Objects;
 import java.util.UUID;
 
@@ -164,6 +166,23 @@ public class UserService {
       throw new ResponseStatusException(HttpStatus.BAD_REQUEST,
           String.format(baseErrorMessage));
     }
+  }
+
+  public void updateStatistics(Map<String, GameStats> gameStatsMap){
+      for(String name: gameStatsMap.keySet()){
+          Statistics userStatistics = getStatistics(name);
+          GameStats gameStats = gameStatsMap.get(name);
+          System.out.println(gameStatsMap.keySet() + "and the name is: " + name);
+          System.out.println("PlacedBlocks are :" + gameStats.getBlocksPlaced());
+          System.out.println("Gameswon are: " + gameStats.getGamesWon());
+          System.out.println("Minutesplayed are: " + gameStats.getMinutesPlayed());
+          userStatistics.setGamesWon(userStatistics.getGamesWon() + gameStats.getGamesWon());
+          userStatistics.setBlocksPlaced(userStatistics.getBlocksPlaced() + gameStats.getBlocksPlaced());
+          userStatistics.setGamesPlayed(userStatistics.getGamesPlayed() + 1);
+          userStatistics.setMinutesPlayed(userStatistics.getMinutesPlayed() + gameStats.getMinutesPlayed());
+          userStatistics.setWinPercentage((float)userStatistics.getGamesWon() / (float) userStatistics.getGamesPlayed() * 100);
+      }
+      statisticsRepository.flush();
   }
 
 }
