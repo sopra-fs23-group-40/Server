@@ -114,6 +114,7 @@ public class Game {
     }
 
     public Map<String, GameStats> endGame(){
+        countdown.stop();
         gameOver = true;
         duration = stopwatch.getMinutes();
         winner = Optional.of(findWinner());
