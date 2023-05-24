@@ -89,13 +89,14 @@ class GameControllerTest {
     }
 
     @Test
-    void leaveGame_Successful_ReturnAccpeted() throws Exception {
+    void leaveGame_Successful_ReturnAccepted() throws Exception {
         User user = new User();
         user.setUsername("host");
         user.setToken("testToken");
         userService.createUser(user);
 
         Game testGame = new Game();
+        given(gameService.getGameById(testGame.getId())).willReturn(testGame);
         testGame.addPlayer("host");
 
         MockHttpServletRequestBuilder postRequest = (post("/games/{gameId}/leaveGame", testGame.getId())
