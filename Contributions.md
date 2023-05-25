@@ -367,6 +367,9 @@ https://github.com/sopra-fs23-group-40/Server/issues/121
 Only let players place their first block in their corresponding corner.
 https://github.com/sopra-fs23-group-40/Server/issues/122
 
+Removed host after game starts => if host leaves, can create a new lobby.
+https://github.com/sopra-fs23-group-40/Server/issues/125
+
 ### Paul Grünenwald
 
 Design update [#46](https://github.com/sopra-fs23-group-40/Client/issues/46)
