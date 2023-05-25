@@ -354,6 +354,12 @@ Bug fixes:
 
 [Fixed bug regarding Interval (Interval didn't get cleared after leaving the game)](https://github.com/sopra-fs23-group-40/Client/commit/921fc8ba067e6d4f2b0adffc6506575abd00196e)
 
+[Added Alert if Move invalid](https://github.com/sopra-fs23-group-40/Client/commit/03ded237c37b7aa174efa53cb0d97f5c9b981cfb)
+
+[Changed Rules View](https://github.com/sopra-fs23-group-40/Client/commit/09446f135430376909c2e96280b544b14d824fad)
+
+[Added "Resign" and "Rules" PopUp In-Game](https://github.com/sopra-fs23-group-40/Client/commit/74222748efd48771e8ad2e802f707fa083e12609)
+
 ### Thomas Stoller 
 Remove unused Endpoints & Corresponding Tests in Gamecontroller(-Test).
 https://github.com/sopra-fs23-group-40/Server/issues/119
