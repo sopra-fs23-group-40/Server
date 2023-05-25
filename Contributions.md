@@ -382,6 +382,8 @@ Fixed a bug in the inventory (client): https://github.com/sopra-fs23-group-40/Cl
 
 Fixed a bug in the lobby overview: https://github.com/sopra-fs23-group-40/Client/issues/61
 
+Updated the game over screen to show the avatars from the external API and the remaining tiles (not blocks): https://github.com/sopra-fs23-group-40/Server/issues/124
+
 ### Justin Verhoek
 
 Fixed an issue where a long username created a mess in the lobby overview https://github.com/sopra-fs23-group-40/Client/issues/59
