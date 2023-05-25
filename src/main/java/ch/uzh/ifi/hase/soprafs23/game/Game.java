@@ -112,7 +112,7 @@ public class Game {
     public HashMap<String, Integer> getPlacedBlocks() {
         HashMap<String, Integer> placedBlocks = new HashMap<>();
         for (Player p : players) {
-            placedBlocks.put(p.getPlayerName(), p.getPlacedBlocks());
+            placedBlocks.put(p.getPlayerName(), p.getPlacedTiles());
         }
         return placedBlocks;
     }

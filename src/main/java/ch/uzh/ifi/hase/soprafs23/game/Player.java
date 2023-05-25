@@ -78,6 +78,10 @@ public class Player {
         return inventory.getPlacedBlocks();
     }
 
+    public int getPlacedTiles() {
+        return inventory.getPlacedTiles();
+    }
+
     public int getUnplacedTiles(){
         return inventory.getUnplacedTiles();
     }
