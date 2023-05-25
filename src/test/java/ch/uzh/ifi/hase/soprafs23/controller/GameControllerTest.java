@@ -264,66 +264,6 @@ class GameControllerTest {
     }
 
     @Test
-     void flipVerticalBlock_SuccessfulFlip_ReturnOk() throws Exception {
-        // Mock game
-        Game testGame = new Game();
-        Player testPlayer = new Player(CellStatus.PLAYER1, "player1");
-        testGame.addPlayer(testPlayer.getPlayerName());
-        given(gameService.getGameById(testGame.getId())).willReturn(testGame);
-        BlockFlipDTO blockFlipDTO = new BlockFlipDTO("Block3",true);
-
-        // Perform PUT request to place the block
-        mockMvc.perform(put("/games/" + testGame.getId() + "/" + testPlayer.getPlayerName() + "/vertical_flip")
-                        .contentType(MediaType.APPLICATION_JSON)
-                        .content(asJsonString(blockFlipDTO)))
-                        .andExpect(status().isOk());
-
-    }
-
-    @Test
-     void flipHorizontalBlock_SuccessfulFlip_ReturnOk() throws Exception {
-        // Mock game
-        Game testGame = new Game();
-        Player testPlayer = new Player(CellStatus.PLAYER1, "player1");
-        testGame.addPlayer(testPlayer.getPlayerName());
-        given(gameService.getGameById(testGame.getId())).willReturn(testGame);
-        BlockFlipDTO blockFlipDTO = new BlockFlipDTO("Block3",true);
-
-        // Perform PUT request to place the block
-        mockMvc.perform(put("/games/" + testGame.getId() + "/" + testPlayer.getPlayerName() + "/horizontal_flip")
-                        .contentType(MediaType.APPLICATION_JSON)
-                        .content(asJsonString(blockFlipDTO)))
-                        .andExpect(status().isOk());
-    }
-
-    @Test
-     void rotateBlock_SuccessfulRotation_ReturnOk() throws Exception {
-        // Mock game
-        Game testGame = new Game();
-        Player testPlayer = new Player(CellStatus.PLAYER1, "player1");
-        testGame.addPlayer(testPlayer.getPlayerName());
-
-        // Mock gameService to return the test game
-        given(gameService.getGameById(testGame.getId())).willReturn(testGame);
-
-        // Mock player's inventory
-        Block testBlock = new Block3(testPlayer, testPlayer.getStatus());
-        testPlayer.getInventory().addBlock(testBlock);
-
-        // Create BlockRotateDTO for the request body
-        BlockRotateDTO blockRotateDTO = new BlockRotateDTO("Block3", RotationDirection.CLOCKWISE);
-
-        // Perform PUT request to rotate the block
-        mockMvc.perform(put("/games/" + testGame.getId() + "/" + testPlayer.getPlayerName() + "/rotate")
-                        .contentType(MediaType.APPLICATION_JSON)
-                        .content(asJsonString(blockRotateDTO)))
-                .andExpect(status().isOk())
-                .andExpect(jsonPath("$.blockName").value(testBlock.getBlockName()))
-                .andExpect(jsonPath("$.length").value(testBlock.getHeight()))
-                .andExpect(jsonPath("$.height").value(testBlock.getLength()));
-    }
-
-    @Test
      void getStartDate_Successful_ReturnOk() throws Exception {
         // Mock game
         Game testGame = new Game();

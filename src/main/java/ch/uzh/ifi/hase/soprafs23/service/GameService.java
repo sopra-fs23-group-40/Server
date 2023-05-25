@@ -53,5 +53,14 @@ public class GameService {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND,
                     "No player with username: "+ username + " was found in given game.");
         }
+        boolean allGone = true;
+        for(Player p : game.getPlayers()){
+            if(p.isInGame()){
+               allGone = false;
+            }
+        }
+        if(allGone){
+            games.remove(gameId);
+        }
     }
 }
