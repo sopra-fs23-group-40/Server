@@ -344,6 +344,12 @@ Created the tests for the GameController endpoints https://github.com/sopra-fs23
 ## Week 7
 
 ### Karoline Siarsky
+Bug fixes:
+https://github.com/sopra-fs23-group-40/Server/commit/7f0ad6383144b556abbaad02208c859cf8efa2d1
+
+https://github.com/sopra-fs23-group-40/Server/commit/b56b14b14c2a930a7a79d7c81c18e1b9a7c9331e
+
+https://github.com/sopra-fs23-group-40/Client/commit/921fc8ba067e6d4f2b0adffc6506575abd00196e
 
 ### Thomas Stoller 
 
