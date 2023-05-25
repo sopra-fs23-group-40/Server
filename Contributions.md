@@ -352,6 +352,17 @@ https://github.com/sopra-fs23-group-40/Server/commit/b56b14b14c2a930a7a79d7c81c1
 https://github.com/sopra-fs23-group-40/Client/commit/921fc8ba067e6d4f2b0adffc6506575abd00196e
 
 ### Thomas Stoller 
+Remove unused Endpoints & Corresponding Tests in Gamecontroller(-Test).
+https://github.com/sopra-fs23-group-40/Server/issues/119
+
+Delete Game if every player left it.
+https://github.com/sopra-fs23-group-40/Server/issues/120
+
+Taking gametime after player leaves to update statistics then.
+https://github.com/sopra-fs23-group-40/Server/issues/121
+
+Only let players place their first block in their corresponding corner.
+https://github.com/sopra-fs23-group-40/Server/issues/122
 
 ### Paul Grünenwald
 
