@@ -1,6 +1,5 @@
 package ch.uzh.ifi.hase.soprafs23.controller;
 
-import ch.uzh.ifi.hase.soprafs23.constant.RotationDirection;
 import ch.uzh.ifi.hase.soprafs23.entity.Lobby;
 import ch.uzh.ifi.hase.soprafs23.entity.User;
 import ch.uzh.ifi.hase.soprafs23.game.Game;
@@ -8,9 +7,7 @@ import ch.uzh.ifi.hase.soprafs23.game.GameBoard;
 import ch.uzh.ifi.hase.soprafs23.game.Inventory;
 import ch.uzh.ifi.hase.soprafs23.game.Player;
 import ch.uzh.ifi.hase.soprafs23.game.blocks.*;
-import ch.uzh.ifi.hase.soprafs23.rest.dto.BlockFlipDTO;
 import ch.uzh.ifi.hase.soprafs23.rest.dto.BlockPlaceDTO;
-import ch.uzh.ifi.hase.soprafs23.rest.dto.BlockRotateDTO;
 import ch.uzh.ifi.hase.soprafs23.rest.dto.PlayerGetDTO;
 import ch.uzh.ifi.hase.soprafs23.service.*;
 import com.fasterxml.jackson.core.JsonProcessingException;
@@ -173,6 +170,23 @@ class GameControllerTest {
         // then
         mockMvc.perform(postRequest)
                 .andExpect(status().isCreated());
+    }
+
+    @Test
+    void getPlayerCanPlaceBrick_Successful_ReturnOk() throws Exception{
+        // Mock game, player, and inventory
+        Game testGame = new Game();
+        Player testPlayer = new Player(CellStatus.PLAYER1, "player1");
+        testGame.addPlayer(testPlayer.getPlayerName());
+
+        // Mock gameService to return the test game
+        given(gameService.getGameById(testGame.getId())).willReturn(testGame);
+
+        // Perform GET request to retrieve player inventory
+        mockMvc.perform(get("/games/" + testGame.getId() + "/" + testPlayer.getPlayerName() + "/can_place_brick"))
+                .andExpect(status().isOk())
+                .andExpect(content().contentType(MediaType.APPLICATION_JSON))
+                .andExpect(jsonPath("$").value(true));
     }
 
     @Test

@@ -1,7 +1,6 @@
 package ch.uzh.ifi.hase.soprafs23.controller;
 
 import ch.uzh.ifi.hase.soprafs23.constant.LobbyStatus;
-import ch.uzh.ifi.hase.soprafs23.constant.RotationDirection;
 import ch.uzh.ifi.hase.soprafs23.entity.*;
 import ch.uzh.ifi.hase.soprafs23.game.Game;
 import ch.uzh.ifi.hase.soprafs23.game.GameBoard;
@@ -125,6 +124,23 @@ public class GameController {
 
         // Add the player to the game using the addPlayer method
         return game.addPlayer(playerName);
+    }
+
+    @GetMapping("/games/{gameId}/{username}/can_place_brick")
+    @ResponseStatus(HttpStatus.OK)
+    @ResponseBody
+    public boolean getPlayerCanPlaceBrick(@PathVariable String gameId, @PathVariable String username) {
+
+        // Retrieve the player object from the game by gameId and playerId
+        Game game = gameService.getGameById(gameId);
+        if(game == null) throw new ResponseStatusException(HttpStatus.NOT_FOUND,
+                "Game with gameId " + gameId + " not found!");
+        Player player = game.getPlayerByUsername(username);
+        if(player == null) throw new ResponseStatusException(HttpStatus.NOT_FOUND,
+                "Player with username " + username + " not found!");
+
+        // Return if the player can still place a block
+        return game.canPlaceBrick(player);
     }
 
     @GetMapping("/games/{gameId}/{username}/inventory")
