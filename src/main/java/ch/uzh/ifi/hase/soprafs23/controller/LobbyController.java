@@ -36,8 +36,6 @@ public class LobbyController {
         List<Lobby> lobbies = lobbyService.getLobbies();
         List<LobbyGetDTO> lobbyGetDTOs = new ArrayList<>();
 
-        // TODO: Authentication with token
-
         // convert each user to the API representation
         for (Lobby lobby : lobbies) {
             if (lobby.getStatus() == LobbyStatus.WAITING) {

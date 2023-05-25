@@ -19,8 +19,6 @@ import java.util.UUID;
 @Transactional
 public class LobbyService {
 
-    //private final Logger log = LoggerFactory.getLogger(LobbyService.class);
-
     private final LobbyRepository lobbyRepository;
 
     @Autowired
@@ -94,7 +92,6 @@ public class LobbyService {
         }
         lobbyRepository.delete(id_lobby);
         lobbyRepository.flush();
-        // TODO: Inform other players about this change (lobby deleted)
     }
 
     public boolean checkIfHost(String username, long id) {
@@ -121,21 +118,16 @@ public class LobbyService {
         lobby.setCurrentPlayers(lobby.getCurrentPlayers() + 1);
         lobbyRepository.save(lobby);
         lobbyRepository.flush();
-        // TODO: Inform other players about this change (player joined)
     }
 
     public void joinLobby(Long id, String passcode, String username) {
-        // TODO: maybe check if player already in a lobby? But if one is already in a lobby,
-        //  the frontend should redirect the user to the lobby if the user wants to access another page
         Lobby lobby = getLobby(id);
 
-        // TODO: might change column with "int maxPlayers" in Lobby. Atm, default lobby size is 4
         if(lobby.getCurrentPlayers() >= lobby.getMaxPlayers()) {
             String baseErrorMessage = "The lobby is already full!";
             throw new ResponseStatusException(HttpStatus.CONFLICT, String.format(baseErrorMessage));
         }
 
-        // check if lobby getPlayerList already contains the player
         String[] list = lobby.getPlayerList().split(",");
         for (String s : list) {
             if (s.equals(username)) {
