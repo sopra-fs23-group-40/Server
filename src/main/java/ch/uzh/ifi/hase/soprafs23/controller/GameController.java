@@ -80,8 +80,14 @@ public class GameController {
         UserAuthDTO userAuthDTO = DTOMapper.INSTANCE.convertVariablesToUserAuthDTO(username, token);
         userService.checkAuthentication(userAuthDTO.getUsername(), userAuthDTO.getToken());
         gameService.leaveGame(gameId, username);
-        Game game = gameService.getGameById(gameId);
-        game.nextPlayersTurn();
+        try {
+            //if this doesn't throw an exception, there is still a player left in the game after leaving
+            Game game = gameService.getGameById(gameId);
+            game.nextPlayersTurn();
+        }
+        catch(RuntimeException ignored) {
+
+        }
     }
 
     @GetMapping("/games/{gameId}/currentPlayer")
@@ -250,7 +256,7 @@ public class GameController {
 
         // Check whether move is valid
         if (!gameBoard.canPlacePiece(blockPlaceDTO.getRow(), blockPlaceDTO.getColumn(), block)) {
-            block.resetRotation(oldShape);
+            block.setShape(oldShape);
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Invalid move");
         }
 

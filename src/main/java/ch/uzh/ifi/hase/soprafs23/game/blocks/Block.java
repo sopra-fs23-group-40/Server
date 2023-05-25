@@ -7,7 +7,7 @@ public abstract class Block {
     protected boolean played;
     protected CellStatus cellStatus;
     protected Cell[][] shape;
-    protected int numberOfSquares; //maybe useful for end of the game
+    protected int numberOfSquares;
     protected int length;
     protected int height;
 
@@ -30,13 +30,6 @@ public abstract class Block {
     }
 
     public void setShape(Cell[][] shape) {
-        this.shape = shape;
-        this.length = shape[0].length;
-        this.height = shape.length;
-    }
-
-
-    public void resetRotation(Cell[][] shape){
         this.shape = shape;
         this.length = shape[0].length;
         this.height = shape.length;

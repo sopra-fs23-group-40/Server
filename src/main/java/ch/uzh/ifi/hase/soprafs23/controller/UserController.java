@@ -14,9 +14,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
-import java.util.ArrayList;
-import java.util.List;
-
 /**
  * User Controller
  * This class is responsible for handling all REST request that are related to
@@ -55,23 +52,6 @@ public class UserController {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST,
                     String.format(baseErrorMessage));
         }
-    }
-
-    // TODO: Delete/Change this method to getAllLobbies
-    @GetMapping("/users")
-    @ResponseStatus(HttpStatus.OK)
-    @ResponseBody
-    public List<UserGetDTO> getAllUsers(@RequestHeader(value = "token") String token) {
-        checkToken(token);
-        // fetch all users in the internal representation
-        List<User> users = userService.getUsers();
-        List<UserGetDTO> userGetDTOs = new ArrayList<>();
-
-        // convert each user to the API representation
-        for (User user : users) {
-            userGetDTOs.add(DTOMapper.INSTANCE.convertEntityToUserGetDTO(user));
-        }
-        return userGetDTOs;
     }
 
     /***
