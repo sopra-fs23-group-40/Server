@@ -16,6 +16,8 @@ import org.springframework.web.server.ResponseStatusException;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.BDDMockito.given;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
 
 public class LobbyServiceTest {
 
@@ -42,11 +44,11 @@ public class LobbyServiceTest {
     }
 
     @Test
-    public void createLobby_Successful(){
+     void createLobby_Successful(){
         Lobby createdLobby =  lobbyService.createLobby(testLobby.getHost());
 
         // then
-        Mockito.verify(lobbyRepository, Mockito.times(1)).save(Mockito.any());
+        verify(lobbyRepository, times(1)).save(Mockito.any());
 
         assertEquals(testLobby.getName(), createdLobby.getName());
         assertEquals(testLobby.getHost(), createdLobby.getHost());
@@ -56,7 +58,7 @@ public class LobbyServiceTest {
     }
 
     @Test
-    public void changeLobbytype_Successful(){
+     void changeLobbytype_Successful(){
         Lobby createdLobby =  lobbyService.createLobby(testLobby.getHost());
         //check the lobby type before
         assertEquals(testLobby.getLobbyType(), createdLobby.getLobbyType());
@@ -74,7 +76,7 @@ public class LobbyServiceTest {
     }
 
     @Test
-    public void changeLobbytype_NotHostAnyLobby_ReturnBadRequest(){
+     void changeLobbytype_NotHostAnyLobby_ReturnBadRequest(){
         Lobby createdLobby =  lobbyService.createLobby(testLobby.getHost());
         createdLobby.setLobbyId(2L);
         ResponseStatusException exception = assertThrows(ResponseStatusException.class,
@@ -84,7 +86,7 @@ public class LobbyServiceTest {
     }
 
     @Test
-    public void changeLobbytype_WrongLobby_ReturnBadRequest(){
+     void changeLobbytype_WrongLobby_ReturnBadRequest(){
         Lobby createdLobby =  lobbyService.createLobby(testLobby.getHost());
         createdLobby.setLobbyId(2L);
         given(lobbyRepository.findByHost(createdLobby.getHost())).willReturn(createdLobby);
@@ -95,17 +97,17 @@ public class LobbyServiceTest {
     }
 
     @Test
-    public void deleteLobby_Successful(){
+     void deleteLobby_Successful(){
         Lobby createdLobby =  lobbyService.createLobby(testLobby.getHost());
         createdLobby.setLobbyId(2L);
         given(lobbyRepository.findByHost(createdLobby.getHost())).willReturn(createdLobby);
         given(lobbyRepository.findByLobbyId(createdLobby.getLobbyId())).willReturn(createdLobby);
         lobbyService.deleteLobby(createdLobby.getHost(), createdLobby.getLobbyId());
-        Mockito.verify(lobbyRepository, Mockito.times(1)).delete(Mockito.any());
+        verify(lobbyRepository, times(1)).delete(Mockito.any());
     }
 
     @Test
-    public void leaveLobby_Successful(){
+     void leaveLobby_Successful(){
         Lobby createdLobby =  lobbyService.createLobby(testLobby.getHost());
         createdLobby.setLobbyId(2L);
         createdLobby.setPlayerList("testUsername,deletePlayer");
@@ -115,13 +117,13 @@ public class LobbyServiceTest {
         lobbyService.leaveLobby("deletePlayer", createdLobby.getLobbyId());
 
         //2 times because of createLobby and leaveLobby
-        Mockito.verify(lobbyRepository, Mockito.times(2)).save(Mockito.any());
+        verify(lobbyRepository, times(2)).save(Mockito.any());
         assertEquals(1, createdLobby.getCurrentPlayers());
         assertEquals("testUsername", createdLobby.getPlayerList());
     }
 
     @Test
-    public void leaveLobby_UserNotInLobby_ReturnBadRequest(){
+     void leaveLobby_UserNotInLobby_ReturnBadRequest(){
         Lobby createdLobby =  lobbyService.createLobby(testLobby.getHost());
         createdLobby.setLobbyId(2L);
         createdLobby.setPlayerList("testUsername,deletePlayer");
@@ -135,7 +137,7 @@ public class LobbyServiceTest {
     }
 
     @Test
-    public void checkIfHost_Successful(){
+     void checkIfHost_Successful(){
         Lobby createdLobby =  lobbyService.createLobby(testLobby.getHost());
         createdLobby.setLobbyId(2L);
         given(lobbyRepository.findByLobbyId(createdLobby.getLobbyId())).willReturn(createdLobby);
@@ -143,15 +145,52 @@ public class LobbyServiceTest {
     }
 
     @Test
-    public void joinLobby_Successful(){
+     void joinLobby_Successful(){
         Lobby createdLobby =  lobbyService.createLobby(testLobby.getHost());
         createdLobby.setLobbyId(2L);
         given(lobbyRepository.findByLobbyId(createdLobby.getLobbyId())).willReturn(createdLobby);
 
         lobbyService.joinLobby(createdLobby.getLobbyId(), createdLobby.getLobbyToken(), "player1");
 
-        Mockito.verify(lobbyRepository, Mockito.times(2)).save(Mockito.any());
+        verify(lobbyRepository, times(2)).save(Mockito.any());
         assertEquals(2, createdLobby.getCurrentPlayers());
         assertEquals("testUsername,player1", createdLobby.getPlayerList());
+    }
+
+    @Test
+    void testLobbySetStatus(){
+        Lobby testLobby = new Lobby();
+        testLobby.setLobbyId(1L);
+        testLobby.setStatus(LobbyStatus.WAITING);
+
+        given(lobbyRepository.findByLobbyId(testLobby.getLobbyId())).willReturn(testLobby);
+        lobbyService.setStatus(testLobby.getLobbyId(), LobbyStatus.INGAME);
+
+        assertEquals(LobbyStatus.INGAME, testLobby.getStatus());
+        verify(lobbyRepository, times(1)).flush();
+    }
+
+    @Test
+    void testLobbySetGameId(){
+        Lobby testLobby = new Lobby();
+        testLobby.setLobbyId(1L);
+
+        given(lobbyRepository.findByLobbyId(testLobby.getLobbyId())).willReturn(testLobby);
+        lobbyService.setGameId(testLobby.getLobbyId(), String.valueOf(2L));
+
+        assertEquals("2", testLobby.getGameId());
+        verify(lobbyRepository, times(1)).flush();
+    }
+
+    @Test
+    void testLobbyRemoveHost(){
+        Lobby testLobby = new Lobby();
+        testLobby.setLobbyId(1L);
+
+        given(lobbyRepository.findByLobbyId(testLobby.getLobbyId())).willReturn(testLobby);
+        lobbyService.removeHost(testLobby.getLobbyId());
+
+        assertEquals("", testLobby.getHost());
+        verify(lobbyRepository, times(1)).flush();
     }
 }
