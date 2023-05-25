@@ -46,8 +46,10 @@ public class GameService {
         Game game = getGameById(gameId);
         Player player = game.getPlayerByUsername(username);
         if(player != null) {
-            player.setInGame(false);
-            game.setDuration(player);
+            if(player.isInGame()){
+                player.setInGame(false);
+                game.setDuration(player);
+            }
         }
         else {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND,
