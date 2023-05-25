@@ -69,6 +69,7 @@ public class GameController {
 
         lobbyService.setStatus(lobbyId, LobbyStatus.INGAME);
         lobbyService.setGameId(lobbyId, game.getId());
+        lobbyService.removeHost(lobbyId);
         // Return the ID of the newly created game
         return game.getId();
     }

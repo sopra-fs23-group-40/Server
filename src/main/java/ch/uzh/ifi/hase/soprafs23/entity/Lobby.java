@@ -29,7 +29,7 @@ public class Lobby implements Serializable {
     @Column(nullable = false)
     private String host;
 
-    @Column(nullable = false, unique = true)
+    @Column(nullable = false)
     private String name;
 
     @Column(nullable = false, unique = true)

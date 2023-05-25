@@ -79,13 +79,6 @@ public class LobbyService {
         lobbyRepository.save(id_lobby);
         lobbyRepository.flush();
         return id_lobby.getLobbyType();
-        // TODO: Inform other players about this change (lobby type changed)
-    }
-
-    public void changeLobbyStatus(Lobby lobby, LobbyStatus status) {
-        lobby.setStatus(status);
-        lobbyRepository.save(lobby);
-        lobbyRepository.flush();
     }
 
     public void deleteLobby(String username, long id) {
@@ -205,6 +198,12 @@ public class LobbyService {
     public void setGameId(long lobbyId, String gameId){
         Lobby lobbyToChange = getLobby(lobbyId);
         lobbyToChange.setGameId(gameId);
+        lobbyRepository.flush();
+    }
+
+    public void removeHost(long lobbyId){
+        Lobby lobbyToChange = getLobby(lobbyId);
+        lobbyToChange.setHost("");
         lobbyRepository.flush();
     }
 }
